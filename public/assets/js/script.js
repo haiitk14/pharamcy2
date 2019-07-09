@@ -85,13 +85,13 @@ function submitDelete() {
         var url = $(this).data('url');
         var data = {'id':id, '_token':$('meta[name="csrf-token"]').attr('content')};
         swal({
-            title: "Chú ý!",
-            text: "Bạn có chắc chắn muốn xóa dữ liệu?",
+            title: "Warning!",
+            text: "Are you sure delete?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'OK',
-            cancelButtonText: 'Hủy',
+            cancelButtonText: 'Cancel',
             cancelButtonColor: '#d33',
             html: true
           },

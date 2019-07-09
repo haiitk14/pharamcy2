@@ -17,7 +17,7 @@
                         <table id="data-table-item" class="table table-bordered table-hover display">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>No</th>
                                     <th>{{ __('Code') }}</th>
                                     <th>{{ __('Name') }}</th>
                                     <th>{{ __('Phone') }}</th>
@@ -27,33 +27,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @foreach ($customers as $item)
                                 <tr class="data-row">
-                                    <td class="align-middle sort">1</td>
-                                    <td class="align-middle name">NVA</td>
-                                    <td class="align-middle name">Tom</td>
-                                    <td class="align-middle name">0123456789</td>
-                                    <td class="align-middle name">USA</td>
-                                    <td class="text-center"><a href="javascript:;" class="edit-item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
-                                    <td class="text-center"><a href="javascript:;" class="submit-delete"  ><i class="fa fa-lg fa-trash" aria-hidden="true"></i></a></td>
-                                </tr>
-                                <tr class="data-row">
-                                    <td class="align-middle sort">2</td>
-                                    <td class="align-middle name">NVB</td>
-                                    <td class="align-middle name">Jerry</td>
-                                    <td class="align-middle name">0123456789</td>
-                                    <td class="align-middle name">Japan</td>
-                                    <td class="text-center"><a href="javascript:;" class="edit-item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
-                                    <td class="text-center"><a href="javascript:;" class="submit-delete"  ><i class="fa fa-lg fa-trash" aria-hidden="true"></i></a></td>
-                                </tr>
-                                <tr class="data-row">
-                                    <td class="align-middle sort">3</td>
-                                    <td class="align-middle name">NVC</td>
-                                    <td class="align-middle name">Cr Ronaldo</td>
-                                    <td class="align-middle name">0123456789</td>
-                                    <td class="align-middle name">Portugal</td>
-                                    <td class="text-center"><a href="javascript:;" class="edit-item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
-                                    <td class="text-center"><a href="javascript:;" class="submit-delete"  ><i class="fa fa-lg fa-trash" aria-hidden="true"></i></a></td>
-                                </tr>
+                                    <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle code">{{ $item->code }}</td>
+                                    <td class="align-middle full_name">{{ $item->full_name }}</td>
+                                    <td class="align-middle phone">{{ $item->phone }}</td>
+                                    <td class="align-middle address">{{ $item->address }}</td>
+                                    <td class="text-center">
+                                        <a href="javascript:;" class="edit-item" data-id="{{ $item->id }}">
+                                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="javascript:;" class="submit-delete" data-id="{{ $item->id }}" data-url="{{ route('admin.customer.destroy') }}">
+                                            <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                               </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -66,8 +59,76 @@
 @endsection
 @section('script')
 <script>
-	$(document).ready(function() {
+    $(document).ready(function() {
 		$('#data-table-item').DataTable();
+        var form = $('form[name=frmAdminCustomerModal]');
+        var modalId = $('#form-modal-customer');
+        var titleAdd = '{{ __('Thêm mới') }}';
+        var titleEdit = '{{ __('Sửa') }}';
+        var actionAdd = '{{ route('admin.customer.create') }}';
+        var actionEdit = '{{ route('admin.customer.update') }}';
+
+        // edit item
+        $(document).on('click', ".edit-item", function() {
+            $(this).addClass('edit-item-trigger-clicked');
+            var options = {
+              'backdrop': 'static'
+            };
+
+            modalId.modal(options)
+        });
+
+        // on modal edit item show
+        modalId.on('show.bs.modal', function() {
+            var el = $(".edit-item-trigger-clicked"); // See how its usefull right here? 
+            if (el.length > 0) {
+                var row = el.closest(".data-row");
+
+                // get the data
+                var id = el.data('id');
+                var code = row.children(".code").text();
+                var full_name = row.children(".full_name").text();
+                var phone = row.children(".phone").text();
+                var address = row.children(".address").text();
+
+                // fill the data in the input fields
+                $('#modalLabel span').text(titleEdit);
+                form.attr('method', 'PUT');
+                form.attr('action', actionEdit);
+                form.find('input[name=id]').val(id);
+                form.find('input[name=code]').val(code);
+                form.find('input[name=full_name]').val(full_name);
+                form.find('input[name=phone]').val(phone);
+                form.find('textarea[name=address]').val(address);
+            }
+            
+        });
+
+        // on modal edit item hide
+        modalId.on('hide.bs.modal', function() {
+            $('.edit-item-trigger-clicked').removeClass('edit-item-trigger-clicked');
+            $('#modalLabel span').text(titleAdd);
+            form.trigger("reset");
+            form.attr('method', 'POST');
+            form.attr('action', actionAdd);
+        })
+
+        // save data
+        $('#btn-save').click(function() {
+            var serviceId = form.find('select[name=service_id]');
+            var name = form.find('input[name=name]');
+            if (serviceId.val() == '') {
+                toastr.error('{{ __('validation.required_select', ['attribute' => 'Dịch vụ']) }}');
+                serviceId.focus();
+                return false;
+            }
+
+            if (name.val().trim() == '') {
+                toastr.error('{{ __('validation.required', ['attribute' => 'Tên']) }}');
+                name.focus();
+                return false;
+            }
+        })
 	});
 </script>
 @endsection

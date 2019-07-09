@@ -19,15 +19,29 @@ Route::group(['prefix' => 'admin'], function () {
     //default
     Route::get('/', ['uses' => 'Admin\DashboardController@index','as' => 'adminHome']);
 
-    // Category route
-    Route::group(['prefix' => 'category'], function() {
-        Route::get('/customer', 'Admin\CustomerController@index')->name('admin.category.customer');
-        Route::get('/product', 'Admin\ProductController@index')->name('admin.category.product');
-        Route::get('/manufature', 'Admin\ManufatureController@index')->name('admin.category.manufature');
-        Route::get('/ingredients', 'Admin\IngredientsController@index')->name('admin.category.ingredients');
-        Route::get('/formula', 'Admin\FormulaController@index')->name('admin.category.formula');
-        Route::get('/comments', 'Admin\CommentsController@index')->name('admin.category.comments');
+    Route::group(['prefix' => 'customer'], function() {
+        Route::get('/', 'Admin\CustomerController@index')->name('admin.customer');
+        Route::post('/create', 'Admin\CustomerController@create')->name('admin.customer.create');
+        Route::post('/update', 'Admin\CustomerController@update')->name('admin.customer.update');
+        Route::delete('/destroy', 'Admin\CustomerController@destroy')->name('admin.customer.destroy');
+   
     });
+    Route::group(['prefix' => 'product'], function() {
+        Route::get('/', 'Admin\ProductController@index')->name('admin.product');
+    });
+    Route::group(['prefix' => 'manufature'], function() {
+        Route::get('/', 'Admin\ManufatureController@index')->name('admin.manufature');
+    });
+    Route::group(['prefix' => 'ingredients'], function() {
+        Route::get('/', 'Admin\IngredientsController@index')->name('admin.ingredients');
+    });
+    Route::group(['prefix' => 'formula'], function() {
+        Route::get('/', 'Admin\FormulaController@index')->name('admin.formula');
+    });
+    Route::group(['prefix' => 'comments'], function() {
+        Route::get('/', 'Admin\CommentsController@index')->name('admin.comments');
+    });
+
     Route::group(['prefix' => 'report'], function() {
         Route::get('/salesorder', 'Admin\SalesOrderController@index')->name('admin.report.salesorder');
       
