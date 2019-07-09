@@ -10,3 +10,7 @@ composer install
 ```
 php artisan key:generate
 ```
+* Generate struture database (No data)
+```
+php artisan migrate
+```
