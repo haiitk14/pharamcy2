@@ -16,6 +16,8 @@
     <link href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <!-- DateTimePicker -->
+    <link href="{{ asset('assets/plugins/datetimepicker/css/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
     <!-- Custom CSS -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
@@ -102,8 +104,10 @@
     <script src="{{ asset('assets/js/jquery.safeform.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
     <!-- create at 2019/06/13 by haidt -->
-    <script src="{{ asset('assets/js/custom/main.js') }}"></script>
+    <!-- <script src="{{ asset('assets/js/custom/main.js') }}"></script> -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <script src="{{ asset('assets/plugins/datetimepicker/js/daterangepicker.js') }}"></script>
+
 
 
     @section('script')

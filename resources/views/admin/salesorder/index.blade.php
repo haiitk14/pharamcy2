@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-sm-6 row">
                                 <label for="ipd" class="col-sm-2 col-form-label">IPD</label>
-                                <div class="col-sm-8">
+                                <div class="col-sm-6">
                                     <input type="text" class="form-control" id="ipd" placeholder="IPD">
                                 </div>
                             </div>
@@ -35,22 +35,32 @@
                         <div class="row form-group">
                             <label for="product" class="col-sm-2 col-form-label">Product *</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="product">
+                                <select class="form-control" id="product" title="{{ __('Product') }}">
+                                    <option value="">{{ __('Choose') }}</option>
+                                    @foreach ($data['products'] as $product)
+                                    <option value="{{ $product->name }}">{{ $product->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="customer" class="col-sm-2 col-form-label">Customer *</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="customer" >
+                                <select class="form-control" id="customer" title="{{ __('Customer') }}">
+                                    <option value="">{{ __('Choose') }}</option>
+                                    @foreach ($data['customers'] as $customer)
+                                    <option value="{{ $customer->full_name }}">{{ $customer->full_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="manufatureby" class="col-sm-2 col-form-label">Manufature by:</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="manufatureby">
-                                    <option value="1">Pharmaxx</option>
-                                    <option value="2">I.P.D (Ampharco USA)</option>
-                                    <option value="3">Exxelife</option>
+                                    <option value="Pharmaxx">Pharmaxx</option>
+                                    <option value="I.P.D (Ampharco USA)">I.P.D (Ampharco USA)</option>
+                                    <option value="Exxelife">Exxelife</option>
                                 </select>
                             </div>
                         </div>
@@ -69,7 +79,12 @@
                         <div class="row form-group">
                             <label for="formula" class="col-sm-2 col-form-label">Formula</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="formula">
+                                <select class="form-control" id="formula" title="{{ __('Customer') }}">
+                                    <option value="">{{ __('Choose') }}</option>
+                                    @foreach ($data['formulas'] as $formula)
+                                    <option value="{{ $formula->name }}">{{ $formula->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -81,7 +96,7 @@
                         <div class="row form-group">
                             <label for="date" class="col-sm-2 col-form-label">Date *</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="date">
+                                <input type="text" class="form-control date" id="date">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -149,12 +164,13 @@
                             <div class="col-sm-10">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Ingredients *</th>
-                                        <th>per Serving *</th>
-                                    </tr>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Ingredients *</th>
+                                            <th>per Serving *</th>
+                                        </tr>
                                     </thead>
+                                    
                                     <tbody>
                                         <tr>
                                             <td>1</td>
@@ -163,37 +179,26 @@
                                         </tr>
                                         <tr>
                                             <td>2</td>
-                                            <td>Panax Ginseng 80% Extract</td>
-                                            <td>700</td>
+                                            <td>Red Ginseng Extract</td>
+                                            <td>100</td>
                                         </tr>
                                         <tr>
                                             <td>3</td>
-                                            <td>Marine Oil (30% omega 3 DHA/EPA)</td>
-                                            <td>1000</td>
+                                            <td>Red Ginseng Extract</td>
+                                            <td>100</td>
                                         </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Resveratrol 98% Extract</td>
-                                            <td>50</td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Vitamin K (MK7)</td>
-                                            <td>0.5</td>
-                                        </tr>
-                                       
                                     </tbody>
                                     <tbody>
                                         <tr>
                                             <th colspan="3">Inactive Ingredients</th>
                                         </tr>   
                                         <tr>
-                                            <td>6</td>
+                                            <td>1</td>
                                             <td>Lecithin</td>
                                             <td>30</td>
                                         </tr>
                                         <tr>
-                                            <td>7</td>
+                                            <td>2</td>
                                             <td>Beewax</td>
                                             <td>40</td>
                                         </tr>
@@ -428,6 +433,13 @@
 @section('script')
 <script>
 	$(document).ready(function() {
+        $('.date').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            minYear: 1901,
+            maxYear: parseInt(moment().format('YYYY'),10)
+        });
+
         $("#print").click(function(){
             setDataIntoFormPrint();
         });
@@ -437,8 +449,9 @@
         $("#productprint").html($("#product").val());
         $("#customerprint").html($("#customer").val());
 
-        var manufatureby = $("#manufatureby").val();
-        $("#manufaturebyprint").html(manufatureby == 1 ? 'Pharmaxx' : manufatureby == 2 ? 'I.P.D (Ampharco USA)' : 'Exxelife');
+        // var manufatureby = $("#manufatureby").val();
+        $("#manufaturebyprint").html($("#manufatureby").val());
+        // $("#manufaturebyprint").html(manufatureby == 1 ? 'Pharmaxx' : manufatureby == 2 ? 'I.P.D (Ampharco USA)' : 'Exxelife');
         $("#addressprint").html($("#address").val());
         $("#poprint").html($("#po").val());
         $("#formulaprint").html($("#formula").val());
@@ -466,7 +479,7 @@
         var divToPrint=document.getElementById(elm);
         var newWin=window.open('','Print-Window');
         newWin.document.open();
-        newWin.document.write('<html><head><style> table th { border: 1px solid #dee2e6; } table td { border: 1px solid #dee2e6; } </style></head><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+        newWin.document.write('<html><head><style> table th { border: 1px solid #dee2e6; } table td { border: 1px solid #dee2e6; } div span { margin-left: 30px; } </style></head><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
         newWin.document.close();
         setTimeout(function(){newWin.close();},10);
     }
