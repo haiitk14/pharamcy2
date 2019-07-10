@@ -38,10 +38,7 @@ class SalesOrderController
             'products' => Product::where('is_delete', 0)->get(),
             'customers' => Customer::where('is_delete', 0)->get(),
             'formulas' => Formula::where('is_delete', 0)->get(),
-            'ingredients' => [
-                'inactive' => $ingredients->where('inactive', 0),
-                'active' => $ingredients->where('inactive', 1),
-            ],
+            'ingredients' => $ingredients
         ];
 
 

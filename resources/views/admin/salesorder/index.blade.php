@@ -36,7 +36,7 @@
                             <label for="product" class="col-sm-2 col-form-label">Product *</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="product" title="{{ __('Product') }}">
-                                    <option value="">{{ __('Choose') }}</option>
+                                    <option value="">{{ __('None') }}</option>
                                     @foreach ($data['products'] as $product)
                                     <option value="{{ $product->name }}">{{ $product->name }}</option>
                                     @endforeach
@@ -47,7 +47,7 @@
                             <label for="customer" class="col-sm-2 col-form-label">Customer *</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="customer" title="{{ __('Customer') }}">
-                                    <option value="">{{ __('Choose') }}</option>
+                                    <option value="">{{ __('None') }}</option>
                                     @foreach ($data['customers'] as $customer)
                                     <option value="{{ $customer->full_name }}">{{ $customer->full_name }}</option>
                                     @endforeach
@@ -80,7 +80,7 @@
                             <label for="formula" class="col-sm-2 col-form-label">Formula</label>
                             <div class="col-sm-4">
                                 <select class="form-control" id="formula" title="{{ __('Customer') }}">
-                                    <option value="">{{ __('Choose') }}</option>
+                                    <option value="">{{ __('None') }}</option>
                                     @foreach ($data['formulas'] as $formula)
                                     <option value="{{ $formula->name }}">{{ $formula->name }}</option>
                                     @endforeach
@@ -161,6 +161,30 @@
                             <label for="wtmg" class="col-sm-2 col-form-label">Wt (mg) </label>
                         </div>
                         <div class="row form-group">
+                            <div class="col-sm-8">
+                                <select class="form-control" name="ingredient"  title="Choose Ingredient">
+                                    <option value="">None</option>
+                                    <optgroup label="Active">
+                                    @foreach ($data['ingredients'] as $ingredient)
+                                    @if ($ingredient->inactive == 0)
+                                        <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                    @endif
+                                    @endforeach
+                                    </optgroup>
+                                    <optgroup label="InActive">
+                                    @foreach ($data['ingredients'] as $ingredient)
+                                    @if ($ingredient->inactive == 1)
+                                        <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                    @endif
+                                    @endforeach
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <a href="javascript:;" id="add-ingredient" title="Add Ingredient" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Add</a>
+                            </div>
+                        </div>
+                        <div class="row form-group">
                             <div class="col-sm-10">
                                 <table class="table table-bordered">
                                     <thead>
@@ -168,39 +192,14 @@
                                             <th>No</th>
                                             <th>Ingredients *</th>
                                             <th>per Serving *</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-                                    
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Red Ginseng Extract</td>
-                                            <td>100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Red Ginseng Extract</td>
-                                            <td>100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Red Ginseng Extract</td>
-                                            <td>100</td>
-                                        </tr>
+                                    <tbody id="data-active">
                                     </tbody>
-                                    <tbody>
+                                    <tbody id="data-inactive">
                                         <tr>
-                                            <th colspan="3">Inactive Ingredients</th>
-                                        </tr>   
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Lecithin</td>
-                                            <td>30</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Beewax</td>
-                                            <td>40</td>
+                                            <th colspan="4">Inactive Ingredients</th>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -433,6 +432,11 @@
 @section('script')
 <script>
 	$(document).ready(function() {
+        var formDataView = $("#dataview");
+        var formDataPrint = $("#dataprint");
+        var dataIng =  {!! json_encode($data['ingredients']->toArray()) !!}; 
+        var dataTableIng = [];
+
         $('.date').daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
@@ -443,7 +447,40 @@
         $("#print").click(function(){
             setDataIntoFormPrint();
         });
+
+        $("#add-ingredient").click(function(){
+            var ingredient = formDataView.find("select[name=ingredient]").val();
+
+            if (ingredient == "") {
+                toastr.error('{{ __('The ingredient not empty.') }}');
+               return false;
+            }
+            
+            if (checkItemExistArray(dataTableIng, ingredient)) {
+                toastr.error('{{ __('The ingredient exist.') }}');
+                return false;
+            }
+
+            $.each(dataIng , function(index, item) { 
+                if (item.id == ingredient) {
+                    dataTableIng.push(item);
+                }
+            });
+            addRowTableIngredients(dataTableIng);
+            formDataView.find("select[name=ingredient]").val("");
+        });
+        $(document).on('click', "a.delingredient", function() {
+            var idR = $(this).data('id');
+            var arrayTemp = dataTableIng;
+            for (var i = 0 ; i < arrayTemp.length; i++) {
+                if (arrayTemp[i].id == Number(idR)) {
+                    dataTableIng.splice(i, 1);
+                }
+            }
+            addRowTableIngredients(dataTableIng);
+        });
     }); 
+
     var setDataIntoFormPrint = function() {
         $("#ipdprint").html($("#ipd").val());
         $("#productprint").html($("#product").val());
@@ -475,6 +512,7 @@
         $("#wtmgprint").html($("#wtmg").val());
         print("dataprint");
     }
+    
     var print = function(elm) {
         var divToPrint=document.getElementById(elm);
         var newWin=window.open('','Print-Window');
@@ -482,6 +520,41 @@
         newWin.document.write('<html><head><style> table th { border: 1px solid #dee2e6; } table td { border: 1px solid #dee2e6; } div span { margin-left: 30px; } </style></head><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
         newWin.document.close();
         setTimeout(function(){newWin.close();},10);
+    }
+
+    var addRowTableIngredients = function(data) {
+        $("#data-active, #data-inactive").html("");
+        var strActive = "";
+        var strInActive = "<tr><th colspan='4'>Inactive Ingredients</th></tr>";
+
+        var num = 1;
+        for (var i = 0; i < data.length; i++) {
+
+            if (data[i].inactive == 0) {
+                strActive += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
+                num++;
+            }
+        }
+        for (var i = 0; i < data.length; i++) {
+            
+            if (data[i].inactive == 1) {
+                strInActive += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>"
+                num++;
+            }
+        }
+        $("#data-active").html(strActive);
+        $("#data-inactive").html(strInActive);
+    }
+
+    var checkItemExistArray = function(array, id) {
+        var res = false;
+        $.each(array , function(index, item) { 
+            if (item.id == id) {
+                res = true;
+                return false;
+            }
+        });
+        return res;
     }
 </script>
 @endsection
