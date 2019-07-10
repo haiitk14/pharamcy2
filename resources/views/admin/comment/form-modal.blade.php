@@ -1,4 +1,4 @@
-<div id="form-modal-service" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraDefaultModalLabel" aria-hidden="true">
+<div id="form-modal-comment" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraDefaultModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,13 +7,13 @@
 			      <span aria-hidden="true">&times;</span>
 			    </button>
 			</div>
-			<form name="frmAdminServiceModal" method="POST"  class="submit-form">
+			<form name="frmAdminCommentModal" method="POST" action="{{ route('admin.comment.create') }}"  class="submit-form">
 				{{ csrf_field() }}
 				<input type="hidden" name="id">
 			    <div class="modal-body">
 					<div class="form-group">
-			            <label>{{ __('Comment') }} (<span class="text-danger">*</span>)</label>
-			            <textarea name="" class="form-control"></textarea>
+			            <label>{{ __('Content') }} (<span class="text-danger">*</span>)</label>
+			            <textarea name="content" class="form-control"></textarea>
 			        </div>
 			      
 			    </div>

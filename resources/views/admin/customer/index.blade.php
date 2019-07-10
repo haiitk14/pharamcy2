@@ -8,7 +8,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="text-left form-group col-xl-12">
-                        <button class="btn btn-primary m-l-5" type="button" data-toggle="modal" data-target="#form-modal-service" data-backdrop="static" data-keyboard="false">
+                        <button class="btn btn-primary m-l-5" type="button" data-toggle="modal" data-target="#form-modal-customer" data-backdrop="static" data-keyboard="false">
                             {{ __('Add new') }}
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </button>
@@ -63,8 +63,8 @@
 		$('#data-table-item').DataTable();
         var form = $('form[name=frmAdminCustomerModal]');
         var modalId = $('#form-modal-customer');
-        var titleAdd = '{{ __('Thêm mới') }}';
-        var titleEdit = '{{ __('Sửa') }}';
+        var titleAdd = '{{ __('Add new') }}';
+        var titleEdit = '{{ __('Edit') }}';
         var actionAdd = '{{ route('admin.customer.create') }}';
         var actionEdit = '{{ route('admin.customer.update') }}';
 
@@ -115,17 +115,17 @@
 
         // save data
         $('#btn-save').click(function() {
-            var serviceId = form.find('select[name=service_id]');
-            var name = form.find('input[name=name]');
-            if (serviceId.val() == '') {
-                toastr.error('{{ __('validation.required_select', ['attribute' => 'Dịch vụ']) }}');
-                serviceId.focus();
+            var code = form.find('input[name=code]');
+            var full_name = form.find('input[name=full_name]');
+            if (code.val() == '') {
+                toastr.error('{{ __('The code field is required.') }}');
+                code.focus();
                 return false;
             }
 
-            if (name.val().trim() == '') {
-                toastr.error('{{ __('validation.required', ['attribute' => 'Tên']) }}');
-                name.focus();
+            if (full_name.val().trim() == '') {
+                toastr.error('{{ __('The full name field is required.') }}');
+                full_name.focus();
                 return false;
             }
         })

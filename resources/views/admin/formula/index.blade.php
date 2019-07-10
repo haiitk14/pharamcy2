@@ -8,7 +8,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="text-left form-group col-xl-12">
-                        <button class="btn btn-primary m-l-5" type="button" data-toggle="modal" data-target="#form-modal-service" data-backdrop="static" data-keyboard="false">
+                        <button class="btn btn-primary m-l-5" type="button" data-toggle="modal" data-target="#form-modal-formula" data-backdrop="static" data-keyboard="false">
                             {{ __('Add new') }}
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </button>
@@ -17,35 +17,31 @@
                         <table id="data-table-item" class="table table-bordered table-hover display">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>No</th>
                                     <th>{{ __('Name') }}</th>
-                                    <th>{{ __('Formula') }}</th>
+                                    <th>{{ __('Content') }}</th>
                                     <th class="text-center" width="5%">{{ __('Edit') }}</th>
                                     <th class="text-center" width="5%">{{ __('Delete') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($formulas as $item)
                                 <tr class="data-row">
-                                    <td class="align-middle sort">1</td>
-                                    <td class="align-middle name">Name formula 1</td>
-                                    <td class="align-middle name">A + B + C</td>
-                                    <td class="text-center"><a href="javascript:;" class="edit-item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
-                                    <td class="text-center"><a href="javascript:;" class="submit-delete"  ><i class="fa fa-lg fa-trash" aria-hidden="true"></i></a></td>
+                                    <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle name">{{ $item->name }}</td>
+                                    <td class="align-middle content">{{ $item->content }}</td>
+                                    <td class="text-center">
+                                        <a href="javascript:;" class="edit-item" data-id="{{ $item->id }}">
+                                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="javascript:;" class="submit-delete" data-id="{{ $item->id }}" data-url="{{ route('admin.formula.destroy') }}">
+                                            <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
                                 </tr>
-                                <tr class="data-row">
-                                    <td class="align-middle sort">2</td>
-                                    <td class="align-middle name">Name formula 2</td>
-                                    <td class="align-middle name">A + B + C</td>
-                                    <td class="text-center"><a href="javascript:;" class="edit-item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
-                                    <td class="text-center"><a href="javascript:;" class="submit-delete"  ><i class="fa fa-lg fa-trash" aria-hidden="true"></i></a></td>
-                                </tr>
-                                <tr class="data-row">
-                                    <td class="align-middle sort">3</td>
-                                    <td class="align-middle name">Name formula 3</td>
-                                    <td class="align-middle name">A + B + C</td>
-                                    <td class="text-center"><a href="javascript:;" class="edit-item"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></a></td>
-                                    <td class="text-center"><a href="javascript:;" class="submit-delete"  ><i class="fa fa-lg fa-trash" aria-hidden="true"></i></a></td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -58,8 +54,73 @@
 @endsection
 @section('script')
 <script>
+	
 	$(document).ready(function() {
 		$('#data-table-item').DataTable();
+        var form = $('form[name=frmAdminFormulaModal]');
+        var modalId = $('#form-modal-formula');
+        var titleAdd = '{{ __('Add new') }}';
+        var titleEdit = '{{ __('Edit') }}';
+        var actionAdd = '{{ route('admin.formula.create') }}';
+        var actionEdit = '{{ route('admin.formula.update') }}';
+
+        // edit item
+        $(document).on('click', ".edit-item", function() {
+            $(this).addClass('edit-item-trigger-clicked');
+            var options = {
+              'backdrop': 'static'
+            };
+
+            modalId.modal(options)
+        });
+
+        // on modal edit item show
+        modalId.on('show.bs.modal', function() {
+            var el = $(".edit-item-trigger-clicked"); // See how its usefull right here? 
+            if (el.length > 0) {
+                var row = el.closest(".data-row");
+
+                // get the data
+                var id = el.data('id');
+                var name = row.children(".name").text();
+                var content = row.children(".content").text();
+
+                // fill the data in the input fields
+                $('#modalLabel span').text(titleEdit);
+                form.attr('method', 'PUT');
+                form.attr('action', actionEdit);
+                form.find('input[name=id]').val(id);
+                form.find('input[name=name]').val(name);
+                form.find('textarea[name=content]').val(content);
+            }
+        });
+
+        // on modal edit item hide
+        modalId.on('hide.bs.modal', function() {
+            $('.edit-item-trigger-clicked').removeClass('edit-item-trigger-clicked');
+            $('#modalLabel span').text(titleAdd);
+            form.trigger("reset");
+            form.attr('method', 'POST');
+            form.attr('action', actionAdd);
+        })
+
+        // save data
+        $('#btn-save').click(function() {
+            var name = form.find('input[name=name]');
+            var content = form.find('textarea[name=content]');
+
+            if (name.val().trim() == '') {
+                toastr.error('{{ __('The name field is required.') }}');
+                name.focus();
+                return false;
+            }
+
+            if (content.val() == '') {
+                toastr.error('{{ __('The content field is required.') }}');
+                content.focus();
+                return false;
+            }
+        })
 	});
 </script>
 @endsection

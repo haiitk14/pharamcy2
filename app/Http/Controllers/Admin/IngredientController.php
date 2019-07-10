@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Ingredient;
 use Validator;
-use App\Model\Customer;
 
-class CustomerController
+class IngredientController
 {
 	/**
      * @var string $pageName
@@ -19,7 +19,7 @@ class CustomerController
      */
     public function __construct()
     {
-        $this->pageName = 'Customers';
+        $this->pageName = 'Ingredient';
     }
 
 	/**
@@ -30,9 +30,9 @@ class CustomerController
     public function index()
     {
         $pageName = $this->pageName;
-        $customers = Customer::where('is_using', 1)->get();
+        $ingredients = Ingredient::where('is_using', 1)->get();
 
-        return view('admin.customer.index', compact('pageName', 'customers'));
+        return view('admin.ingredient.index', compact('pageName', 'ingredients'));
     }
 
     public function create(Request $request) 
@@ -40,8 +40,8 @@ class CustomerController
         if ($request->ajax()) {
             $input = $request->all();
             $validator = Validator::make($input, [
-                'full_name' => 'required',
-                'code' => 'required',
+                'name' => 'required',
+                'per_serving' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -49,12 +49,11 @@ class CustomerController
                 return response()->json(compact(['errors']), 422);
             }
 
-            $customer=new Customer();
-            $customer->full_name = $request->get('full_name');
-            $customer->code = $request->get('code');
-            $customer->address = $request->get('address');
-            $customer->phone = $request->get('phone');
-            $response = $customer->save();
+            $ingredient = new Ingredient();
+            $ingredient->name = $request->get('name');
+            $ingredient->per_serving = $request->get('per_serving');
+            $ingredient->inactive = $request->get('inactive');
+            $response = $ingredient->save();
             
             $result = [];
             if ($response) {
@@ -78,8 +77,9 @@ class CustomerController
             $input = $request->all();
             $validator = Validator::make($input, [
                 'id' => 'required',
-                'code' => 'required',
-                'full_name' => 'required',
+                'name' => 'required',
+                'per_serving' => 'required',
+                'inactive' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -88,13 +88,12 @@ class CustomerController
             }
             
             $id = $request->get('id');
-            $item = Customer::find($id);
+            $item = Ingredient::find($id);
             if ($item) {
-                $response = Customer::where('id', $id)->update([
-                        'code'=> $request->get('code'),
-                        'full_name' => $request->get('full_name'),
-                        'phone'=> $request->get('phone'),
-                        'address' => $request->get('address'),
+                $response = Ingredient::where('id', $id)->update([
+                        'name'=> $request->get('name'),
+                        'per_serving' => $request->get('per_serving'),
+                        'inactive' => $request->get('inactive'),
                     ]);
                 $result = [];
                 if ($response) {
@@ -128,7 +127,7 @@ class CustomerController
             }
 
             $id = $request->get('id');
-            $item = Customer::find($id);
+            $item = Ingredient::find($id);
             if ($item) {
                 $response = $item->delete();
                 $result = [];

@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\Comment;
 use Validator;
-use App\Model\Customer;
 
-class CustomerController
+class CommentController
 {
 	/**
      * @var string $pageName
@@ -19,7 +19,7 @@ class CustomerController
      */
     public function __construct()
     {
-        $this->pageName = 'Customers';
+        $this->pageName = 'Comments';
     }
 
 	/**
@@ -30,9 +30,9 @@ class CustomerController
     public function index()
     {
         $pageName = $this->pageName;
-        $customers = Customer::where('is_using', 1)->get();
+        $comments = Comment::where('is_using', 1)->get();
 
-        return view('admin.customer.index', compact('pageName', 'customers'));
+        return view('admin.comment.index', compact('pageName', 'comments'));
     }
 
     public function create(Request $request) 
@@ -40,8 +40,7 @@ class CustomerController
         if ($request->ajax()) {
             $input = $request->all();
             $validator = Validator::make($input, [
-                'full_name' => 'required',
-                'code' => 'required',
+                'content' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -49,12 +48,9 @@ class CustomerController
                 return response()->json(compact(['errors']), 422);
             }
 
-            $customer=new Customer();
-            $customer->full_name = $request->get('full_name');
-            $customer->code = $request->get('code');
-            $customer->address = $request->get('address');
-            $customer->phone = $request->get('phone');
-            $response = $customer->save();
+            $comment = new Comment();
+            $comment->content = $request->get('content');
+            $response = $comment->save();
             
             $result = [];
             if ($response) {
@@ -78,8 +74,7 @@ class CustomerController
             $input = $request->all();
             $validator = Validator::make($input, [
                 'id' => 'required',
-                'code' => 'required',
-                'full_name' => 'required',
+                'content' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -88,13 +83,10 @@ class CustomerController
             }
             
             $id = $request->get('id');
-            $item = Customer::find($id);
+            $item = Comment::find($id);
             if ($item) {
-                $response = Customer::where('id', $id)->update([
-                        'code'=> $request->get('code'),
-                        'full_name' => $request->get('full_name'),
-                        'phone'=> $request->get('phone'),
-                        'address' => $request->get('address'),
+                $response = Comment::where('id', $id)->update([
+                        'content' => $request->get('content'),
                     ]);
                 $result = [];
                 if ($response) {
@@ -128,7 +120,7 @@ class CustomerController
             }
 
             $id = $request->get('id');
-            $item = Customer::find($id);
+            $item = Comment::find($id);
             if ($item) {
                 $response = $item->delete();
                 $result = [];

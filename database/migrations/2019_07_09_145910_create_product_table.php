@@ -17,7 +17,6 @@ class CreateProductTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('code')->nullable();
-            $table->boolean('inactive')->default(0);
             $table->boolean('is_delete')->default(0);
             $table->boolean('is_using')->default(1);
             $table->integer('create_by')->nullable();

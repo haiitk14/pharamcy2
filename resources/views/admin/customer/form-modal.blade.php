@@ -13,20 +13,20 @@
 			    <div class="modal-body">
 					<div class="form-group">
 			            <label>{{ __('Code') }} (<span class="text-danger">*</span>)</label>
-			            <input type="text" title="Nhập mã khách hàng" name="code" class="form-control">
+			            <input type="text" title="Code customer" name="code" class="form-control">
 			        </div>
 			        <div class="form-group">
 			            <label>{{ __('Full name') }} (<span class="text-danger">*</span>)</label>
-			            <input type="text" title="Nhập họ tên khách hàng" name="full_name" class="form-control">
+			            <input type="text" title="Full name" name="full_name" class="form-control">
 			        </div>
 
 			        <div class="form-group">
 			            <label>{{ __('Phone') }}</label>
-			            <input type="text" title="Nhập số điện thoại khách hàng" name="phone" class="form-control">
+			            <input type="text" title="Number phone" name="phone" class="form-control">
 			        </div>
 					<div class="form-group">
 			            <label>{{ __('Address') }}</label>
-						<textarea name="address" title="Nhập địa chỉ khách hàng" class="form-control"></textarea>
+						<textarea name="address" title="Address" class="form-control"></textarea>
 			        </div>
 			    </div>
 			    <div class="modal-footer">

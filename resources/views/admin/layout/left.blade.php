@@ -15,9 +15,9 @@
                         <li><a href="{{ route('admin.customer') }}">{{ __('Customers') }}</a></li>
                         <li><a href="{{ route('admin.product') }}">{{ __('Products') }}</a></li>
                         <li><a href="{{ route('admin.manufature') }}">{{ __('Manufature') }}</a></li>
-                        <li><a href="{{ route('admin.ingredients') }}">{{ __('Ingredients') }}</a></li>
+                        <li><a href="{{ route('admin.ingredient') }}">{{ __('Ingredient') }}</a></li>
                         <li><a href="{{ route('admin.formula') }}">{{ __('Formula') }}</a></li>
-                        <li><a href="{{ route('admin.comments') }}">{{ __('Comments') }}</a></li>
+                        <li><a href="{{ route('admin.comment') }}">{{ __('Comments') }}</a></li>
                     </ul>
                 </li>
                 <li class="submenu">

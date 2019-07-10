@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Manufature extends Model
 {
+    protected $table='manufature';
     /**
      * @var array
      */
