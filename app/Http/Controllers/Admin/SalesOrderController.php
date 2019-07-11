@@ -8,6 +8,7 @@ use App\Model\Product;
 use App\Model\Customer;
 use App\Model\Formula;
 use App\Model\Ingredient;
+use App\Model\Comment;
 
 class SalesOrderController
 {
@@ -32,13 +33,18 @@ class SalesOrderController
     public function index()
     {
         $pageName = $this->pageName;
-        $ingredients = Ingredient::where('is_delete', 0)->get();
+		$products = Product::where('is_delete', 0)->get();
+		$customers = Customer::where('is_delete', 0)->get();
+		$formulas = Formula::where('is_delete', 0)->get();
+		$ingredients = Ingredient::where('is_delete', 0)->get();
+		$comments = Comment::where('is_delete', 0)->get();
 
         $data = [
-            'products' => Product::where('is_delete', 0)->get(),
-            'customers' => Customer::where('is_delete', 0)->get(),
-            'formulas' => Formula::where('is_delete', 0)->get(),
-            'ingredients' => $ingredients
+            'products' => $products,
+            'customers' => $customers,
+            'formulas' => $formulas,
+            'ingredients' => $ingredients,
+			'comments' => $comments,
         ];
 
 
