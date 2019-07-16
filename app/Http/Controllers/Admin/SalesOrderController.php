@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Model\Manufature;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Model\Product;
 use App\Model\Customer;
 use App\Model\Formula;
