@@ -38,6 +38,7 @@ class SalesOrderController
 		$formulas = Formula::where('is_delete', 0)->get();
 		$ingredients = Ingredient::where('is_delete', 0)->get();
 		$comments = Comment::where('is_delete', 0)->get();
+        $manufatures = Manufature::where('is_delete', 0)->get();
 
         $data = [
             'products' => $products,
@@ -45,6 +46,7 @@ class SalesOrderController
             'formulas' => $formulas,
             'ingredients' => $ingredients,
 			'comments' => $comments,
+            'manufatures' => $manufatures
         ];
 
 
