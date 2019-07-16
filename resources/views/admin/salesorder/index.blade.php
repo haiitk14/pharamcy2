@@ -57,10 +57,11 @@
                         <div class="row form-group">
                             <label for="manufatureby" class="col-sm-2 col-form-label">Manufature by:</label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="manufatureby">
-                                    <option value="Pharmaxx">Pharmaxx</option>
-                                    <option value="I.P.D (Ampharco USA)">I.P.D (Ampharco USA)</option>
-                                    <option value="Exxelife">Exxelife</option>
+                                <select class="form-control" name="manufatureby" title="{{ __('Manufature') }}">
+                                    <option value="">{{ __('None') }}</option>
+                                    @foreach ($data['manufatures'] as $manufatures)
+                                        <option value="{{ $manufatures->id }}">{{ $manufatures->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
