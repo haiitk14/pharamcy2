@@ -101,7 +101,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 text-center">
-                            <h5>Specification</h5>
+                            <h4>Specification</h4>
                             </div>
                         </div>
                         <div class="row form-group ">
@@ -150,7 +150,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 ">
-                            <h5>Formulary Specification</h5>
+                            <h4>Formulary Specification</h4>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -205,7 +205,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 ">
-                            <h5>Comments or Additional Instructions</h5>
+                            <h4>Comments or Additional Instructions</h4>
                             </div>
                         </div>
 						 <div class="row form-group">
@@ -230,6 +230,36 @@
                                 </table>
                             </div>
                             
+                        </div>
+                        <div class="row form-group">
+                            <h4>ExxelUSA</h4>
+                            <table style="width: 100%; border: 0px solid #CCC; border-collapse: collapse; ">
+                                <tr style="border-bottom: 3px solid;">
+                                    <td colspan="2" style="border: none;"></td>
+                                    <td style="border: none;  border-left: 3px solid; border-right: 3px solid;">Position</td>
+                                    <td style="border: none;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none;">Approved by</td>
+                                    <td style="border: none;">Name</td>
+                                    <td style="border: none;">Title</td>
+                                    <td style="border: none;">Date</td>
+                                </tr>
+                            </table>
+                            <h4 style="margin-top: 100px;">Pharmaxx (tick)</h4>
+                            <table style="width: 100%; border: 0px solid #CCC; border-collapse: collapse; ">
+                                <tr  style="border-bottom: 3px solid;">
+                                    <td colspan="2" style="border: none;"></td>
+                                    <td style="border: none; border-left: 3px solid; border-right: 3px solid;">Position</td>
+                                    <td style="border: none;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none;">Approved by</td>
+                                    <td style="border: none;">Name</td>
+                                    <td style="border: none;">Title</td>
+                                    <td style="border: none;">Date</td>
+                                </tr>
+                            </table>
                         </div>
                     </form>
                     <form id="dataprint" class="d-none">
@@ -274,7 +304,7 @@
                         </div>
                         <div >
                             <div style="text-align: center">
-                            <h5>Specification</h5>
+                            <h4>Specification</h4>
                             </div>
                         </div>
                         <div style="display: flex;">
@@ -303,7 +333,7 @@
                         </div>
                         <div>
                             <div >
-                            <h5>Formulary Specification</h5>
+                            <h4>Formulary Specification</h4>
                             </div>
                         </div>
                         <div>
@@ -339,6 +369,36 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div>
+                            <h4>ExxelUSA</h4>
+                            <table style="width: 100%; border: 0px solid #CCC; border-collapse: collapse; ">
+                                <tr style="border-bottom: 3px solid;">
+                                    <td colspan="2" style="border: none;"></td>
+                                    <td style="border: none;  border-left: 3px solid; border-right: 3px solid;">Position</td>
+                                    <td style="border: none;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none;">Approved by</td>
+                                    <td style="border: none;">Name</td>
+                                    <td style="border: none;">Title</td>
+                                    <td style="border: none;">Date</td>
+                                </tr>
+                            </table>
+                            <h4 style="margin-top: 500px;">Pharmaxx (tick)</h4>
+                            <table style="width: 100%; border: 0px solid #CCC; border-collapse: collapse; ">
+                                <tr  style="border-bottom: 3px solid;">
+                                    <td colspan="2" style="border: none;"></td>
+                                    <td style="border: none; border-left: 3px solid; border-right: 3px solid;">Position</td>
+                                    <td style="border: none;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none;">Approved by</td>
+                                    <td style="border: none;">Name</td>
+                                    <td style="border: none;">Title</td>
+                                    <td style="border: none;">Date</td>
+                                </tr>
+                            </table>
                         </div>
                     </form>
                 </div>
