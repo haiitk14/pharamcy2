@@ -48,7 +48,12 @@ class ProductController
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
-
+            $checkExist = Product::where('code', $request->get('code'))->count();
+            
+            if ($checkExist > 0) {
+                $errors = ["Code exists"];
+                return response()->json(compact(['errors']), 422);
+            }
             $product=new Product();
             $product->code = $request->get('code');
             $product->name = $request->get('name');
@@ -82,6 +87,12 @@ class ProductController
 
             if ($validator->fails()) {
                 $errors = $validator->errors()->all();
+                return response()->json(compact(['errors']), 422);
+            }
+            $checkExist = Product::where('code', $request->get('code'))->where('id', '<>', $request->get('id'))->count();
+            
+            if ($checkExist > 0) {
+                $errors = ["Code exists"];
                 return response()->json(compact(['errors']), 422);
             }
             

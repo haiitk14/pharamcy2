@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property bigint $id
+ * @property string $code
  * @property string $name
- * @property double $per_serving
  * @property boolean $inactive
  * @property boolean $is_delete
  * @property boolean $is_using
@@ -23,6 +23,6 @@ class Ingredient extends Model
      /**
      * @var array
      */
-    protected $fillable = ['name', 'per_serving', 'inactive', 'is_delete', 'is_using', 'create_at', 'create_by', 'update_at', 'update_by'];
+    protected $fillable = ['code', 'name', 'inactive', 'is_delete', 'is_using', 'create_at', 'create_by', 'update_at', 'update_by'];
 
 }

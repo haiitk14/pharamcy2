@@ -10,8 +10,14 @@
                     <a href="#"><i class="fa fa-object-group" aria-hidden="true"></i><span> {{ __('Servies') }} </span> </a>
                 </li>
                 <li class="submenu">
-                    <a href="#" class="subdrop"><i class="fa fa-book" aria-hidden="true"></i> <span> {{ __('Categorys') }} </span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled" style="display: block;" >
+                    <a href="#" @php if ($controller == 'CustomerController' || $controller == 'ProductController' || $controller == 'ManufatureController'
+                    || $controller == 'IngredientController' || $controller == 'FormulaController' || $controller == 'CommentController') 
+                    echo ' class="subdrop" style="display: block"'; @endphp>
+                    <i class="fa fa-book" aria-hidden="true"></i> <span> {{ __('Categorys') }} </span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" @php if ($controller == 'CustomerController' || $controller == 'ProductController' || $controller == 'ManufatureController'
+                    || $controller == 'IngredientController' || $controller == 'FormulaController' || $controller == 'CommentController') 
+                    echo ' style="display: block"'; @endphp>
                         <li><a href="{{ route('admin.customer') }}">{{ __('Customers') }}</a></li>
                         <li><a href="{{ route('admin.product') }}">{{ __('Products') }}</a></li>
                         <li><a href="{{ route('admin.manufature') }}">{{ __('Manufature') }}</a></li>
@@ -21,10 +27,22 @@
                     </ul>
                 </li>
                 <li class="submenu">
-                    <a href="#" class="subdrop"><i class="fa fa-user-o" aria-hidden="true"></i> <span> {{ __('Report') }} </span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled" style="display: block;">
+                    <a href="#" @php if ($controller == 'SalesOrderController') 
+                    echo ' class="subdrop"'; @endphp>
+                        <i class="fa fa-user-o" aria-hidden="true"></i> <span> {{ __('Report') }} </span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="list-unstyled" @php if ($controller == 'SalesOrderController') 
+                    echo ' style="display: block"'; @endphp>
                         <li><a href="{{ route('admin.report.salesorder') }}">{{ __('Sales Order') }}</a></li>
-                        </ul>
+                        <li><a href="javascript:;">{{ __('Formula') }}</a></li>
+                        <li><a href="javascript:;">{{ __('Mfg Spec') }}</a></li>
+                        <li><a href="javascript:;">{{ __('Cost') }}</a></li>
+                        <li><a href="javascript:;">{{ __('Mixing') }}</a></li>
+                        <li><a href="javascript:;">{{ __('Inventory') }}</a></li>
+                        <li><a href="javascript:;">{{ __('Encasulation') }}</a></li>
+                        <li><a href="javascript:;">{{ __('Inspection') }}</a></li>
+                        <li><a href="javascript:;">{{ __('Polish') }}</a></li>
+                    </ul>
                 </li>
             </ul>
             <div class="clearfix"></div>

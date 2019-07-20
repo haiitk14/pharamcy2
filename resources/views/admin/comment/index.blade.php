@@ -67,7 +67,6 @@
             var options = {
               'backdrop': 'static'
             };
-
             modalId.modal(options)
         });
 

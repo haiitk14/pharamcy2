@@ -104,7 +104,6 @@
     <script src="{{ asset('assets/js/jquery.safeform.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
     <!-- create at 2019/06/13 by haidt -->
-    <!-- <script src="{{ asset('assets/js/custom/main.js') }}"></script> -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="{{ asset('assets/plugins/datetimepicker/js/daterangepicker.js') }}"></script>
 
@@ -115,18 +114,18 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-
+            // $("#sidebar-menu ul li a").removeClass("subdrop");
             // update profile action
-            $('#btn-save-profile').click(function() {
-                let form = $('form[name=frmUserProfileModal]');
+            // $('#btn-save-profile').click(function() {
+            //     let form = $('form[name=frmUserProfileModal]');
 
-                let password = form.find('input[name=password]');
-                if(password.val().length < 6 && password.val().trim() != '') {
-                    toastr.error('{{ __('validation.min.numeric', ['attribute' => 'Mật khẩu', 'min' => 6]) }}');
-                    password.focus();
-                    return false;
-                }
-            })
+            //     let password = form.find('input[name=password]');
+            //     if(password.val().length < 6 && password.val().trim() != '') {
+            //         toastr.error('{{ __('validation.min.numeric', ['attribute' => 'Mật khẩu', 'min' => 6]) }}');
+            //         password.focus();
+            //         return false;
+            //     }
+            // })
         });
     </script>
 </body>

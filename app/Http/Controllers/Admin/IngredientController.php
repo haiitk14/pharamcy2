@@ -40,18 +40,23 @@ class IngredientController
         if ($request->ajax()) {
             $input = $request->all();
             $validator = Validator::make($input, [
+                'code' => 'required',
                 'name' => 'required',
-                'per_serving' => 'required',
             ]);
 
             if ($validator->fails()) {
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
-
+            $checkExist = Ingredient::where('code', $request->get('code'))->count();
+            
+            if ($checkExist > 0) {
+                $errors = ["Code exists"];
+                return response()->json(compact(['errors']), 422);
+            }
             $ingredient = new Ingredient();
+            $ingredient->code = $request->get('code');
             $ingredient->name = $request->get('name');
-            $ingredient->per_serving = $request->get('per_serving');
             $ingredient->inactive = $request->get('inactive');
             $response = $ingredient->save();
             
@@ -77,8 +82,8 @@ class IngredientController
             $input = $request->all();
             $validator = Validator::make($input, [
                 'id' => 'required',
+                'code' => 'required',
                 'name' => 'required',
-                'per_serving' => 'required',
                 'inactive' => 'required',
             ]);
 
@@ -86,15 +91,21 @@ class IngredientController
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
+            $checkExist = Ingredient::where('code', $request->get('code'))->where('id', '<>', $request->get('id'))->count();
+            
+            if ($checkExist > 0) {
+                $errors = ["Code exists"];
+                return response()->json(compact(['errors']), 422);
+            }
             
             $id = $request->get('id');
             $item = Ingredient::find($id);
             if ($item) {
                 $response = Ingredient::where('id', $id)->update([
-                        'name'=> $request->get('name'),
-                        'per_serving' => $request->get('per_serving'),
-                        'inactive' => $request->get('inactive'),
-                    ]);
+                    'code' => $request->get('code'),
+                    'name'=> $request->get('name'),
+                    'inactive' => $request->get('inactive'),
+                ]);
                 $result = [];
                 if ($response) {
                     $message = "Success";

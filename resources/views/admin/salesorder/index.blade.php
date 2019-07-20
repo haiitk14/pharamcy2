@@ -478,8 +478,8 @@
             var id = $(this).val();
             var str = "";
             // <b>Pharmaxx, Inc.</b><br>
-            //                     30590 Cochise Circle, Murrieta, CA 92563
-            //                     <br> Tel. (951) 599-8010;
+            // 30590 Cochise Circle, Murrieta, CA 92563
+            // <br> Tel. (951) 599-8010;
             $.each(dataManufatures, function (index, value) {
                 if (id == value.id ) {
                     str += "<b>" + value.name +  "</b><br> " + value.address + "<br>Tel. " + value.phone + ";"; 
@@ -533,15 +533,6 @@
 		formDataPrint.find(".orderprint").html(order);
 
         print("dataprint");
-    }
-    
-    var print = function(elm) {
-        var divToPrint=document.getElementById(elm);
-        var newWin=window.open('','Print-Window');
-        newWin.document.open();
-        newWin.document.write('<html><head><style> table th { border: 1px solid #dee2e6; } table td { border: 1px solid #dee2e6; } div span { margin-left: 30px; } </style></head><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
-        newWin.document.close();
-        setTimeout(function(){newWin.close();},10);
     }
 
     var addRowTableIngredients = function(data) {

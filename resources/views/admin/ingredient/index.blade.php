@@ -18,8 +18,8 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>{{ __('Code') }}</th>
                                     <th>{{ __('Name') }}</th>
-                                    <th>{{ __('Per serving') }}</th>
                                     <th>{{ __('Inactive') }}</th>
                                     <th class="text-center" width="5%">{{ __('Edit') }}</th>
                                     <th class="text-center" width="5%">{{ __('Delete') }}</th>
@@ -29,8 +29,8 @@
                                 @foreach ($ingredients as $item)
                                 <tr class="data-row">
                                     <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle code">{{ $item->code }}</td>
                                     <td class="align-middle name">{{ $item->name }}</td>
-                                    <td class="align-middle per_serving">{{ $item->per_serving }}</td>
                                     <td class="align-middle inactive">{{ $item->inactive == 1 ? 'Yes' : 'No' }}</td>
                                     <td class="text-center">
                                         <a href="javascript:;" class="edit-item" data-id="{{ $item->id }}">
@@ -71,7 +71,6 @@
             var options = {
               'backdrop': 'static'
             };
-
             modalId.modal(options)
         });
 
@@ -83,8 +82,8 @@
 
                 // get the data
                 var id = el.data('id');
+                var code = row.children(".code").text();
                 var name = row.children(".name").text();
-                var per_serving = row.children(".per_serving").text();
                 var inactive = row.children(".inactive").text();
 
                 // fill the data in the input fields
@@ -92,8 +91,8 @@
                 form.attr('method', 'PUT');
                 form.attr('action', actionEdit);
                 form.find('input[name=id]').val(id);
+                form.find('input[name=code]').val(code);
                 form.find('input[name=name]').val(name);
-                form.find('input[name=per_serving]').val(per_serving);
                 form.find('select[name=inactive]').val(inactive == "Yes" ? 1 : 0);
             }
         });
@@ -109,18 +108,18 @@
 
         // save data
         $('#btn-save').click(function() {
+            var code = form.find('input[name=code]');
             var name = form.find('input[name=name]');
-            var per_serving = form.find('input[name=per_serving]');
+
+            if (code.val() == '') {
+                toastr.error('{{ __('The code field is required.') }}');
+                code.focus();
+                return false;
+            }
 
             if (name.val().trim() == '') {
                 toastr.error('{{ __('The name field is required.') }}');
                 name.focus();
-                return false;
-            }
-
-            if (per_serving.val() == '') {
-                toastr.error('{{ __('The per serving field is required.') }}');
-                per_serving.focus();
                 return false;
             }
         })

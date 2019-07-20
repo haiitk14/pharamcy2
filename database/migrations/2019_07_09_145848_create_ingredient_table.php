@@ -15,8 +15,8 @@ class CreateIngredientTable extends Migration
     {
         Schema::create('ingredient', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('code')->nullable();
             $table->string('name')->nullable();
-            $table->double('per_serving')->nullable();
             $table->boolean('inactive')->default(0);
             $table->boolean('is_delete')->default(0);
             $table->boolean('is_using')->default(1);

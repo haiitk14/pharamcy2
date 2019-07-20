@@ -48,7 +48,12 @@ class CustomerController
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
-
+            $checkExist = Customer::where('code', $request->get('code'))->count();
+            
+            if ($checkExist > 0) {
+                $errors = ["Code exists"];
+                return response()->json(compact(['errors']), 422);
+            }
             $customer=new Customer();
             $customer->full_name = $request->get('full_name');
             $customer->code = $request->get('code');
@@ -86,7 +91,12 @@ class CustomerController
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
+            $checkExist = Customer::where('code', $request->get('code'))->where('id', '<>', $request->get('id'))->count();
             
+            if ($checkExist > 0) {
+                $errors = ["Code exists"];
+                return response()->json(compact(['errors']), 422);
+            }
             $id = $request->get('id');
             $item = Customer::find($id);
             if ($item) {

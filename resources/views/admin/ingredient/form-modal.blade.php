@@ -12,12 +12,12 @@
 				<input type="hidden" name="id">
 			    <div class="modal-body">
 					<div class="form-group">
+						<label>{{ __('Code') }} (<span class="text-danger">*</span>)</label>
+						<input type="text" title="Enter Code" name="code" class="form-control code1">
+					</div>
+					<div class="form-group">
 			            <label>{{ __('Name') }} (<span class="text-danger">*</span>)</label>
 			            <input type="text" title="Enter Name" name="name" class="form-control">
-			        </div>
-			        <div class="form-group">
-			            <label>{{ __('Per-serving') }} (<span class="text-danger">*</span>)</label>
-			            <input type="text" title="Enter Per Serving" name="per_serving" class="form-control">
 			        </div>
 					<div class="form-group">
 			            <label>{{ __('Inactive') }}</label>
