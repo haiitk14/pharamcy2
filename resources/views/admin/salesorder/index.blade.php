@@ -15,15 +15,13 @@
                     </div>
                     <form id="dataview" >
                         <div class="row form-group">
-                            <div class="col-sm-6">
-                                <b>Pharmaxx, Inc.</b><br>
-                                30590 Cochise Circle, Murrieta, CA 92563
-                                <br> Tel. (951) 599-8010;
+                            <div class="col-sm-6 info-manufature">
+                               
                             </div>
                             <div class="col-sm-6 row">
                                 <label for="ipd" class="col-sm-2 col-form-label">IPD</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="ipd"  placeholder="IPD">
+                                    <input type="text" class="form-control" title="Enter IPD" name="ipd"  placeholder="IPD">
                                 </div>
                             </div>
                         </div>
@@ -35,7 +33,7 @@
                         <div class="row form-group">
                             <label for="product" class="col-sm-2 col-form-label">Product *</label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="product" title="{{ __('Product') }}">
+                                <select class="form-control" title="Select Product" name="product" title="{{ __('Product') }}">
                                     <option value="">{{ __('None') }}</option>
                                     @foreach ($data['products'] as $product)
                                     <option value="{{ $product->name }}">{{ $product->name }}</option>
@@ -46,7 +44,7 @@
                         <div class="row form-group">
                             <label for="customer" class="col-sm-2 col-form-label">Customer *</label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="customer" title="{{ __('Customer') }}">
+                                <select class="form-control" title="Select Customer" name="customer" title="{{ __('Customer') }}">
                                     <option value="">{{ __('None') }}</option>
                                     @foreach ($data['customers'] as $customer)
                                     <option value="{{ $customer->full_name }}">{{ $customer->full_name }}</option>
@@ -55,9 +53,15 @@
                             </div>
                         </div>
                         <div class="row form-group">
+                            <label for="address" class="col-sm-2 col-form-label">Address:</label>
+                            <div class="col-sm-8">
+                                <textarea name="address" title="Enter Address" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
                             <label for="manufatureby" class="col-sm-2 col-form-label">Manufature by:</label>
                             <div class="col-sm-8">
-                                <select class="form-control" name="manufatureby" title="{{ __('Manufature') }}">
+                                <select class="form-control" name="manufatureby" title="{{ __('Select Manufature') }}">
                                     <option value="">{{ __('None') }}</option>
                                     @foreach ($data['manufatures'] as $manufatures)
                                         <option value="{{ $manufatures->id }}">{{ $manufatures->name }}</option>
@@ -65,27 +69,11 @@
                                 </select>
                             </div>
                         </div>
+                        
                         <div class="row form-group">
-                            <label for="address" class="col-sm-2 col-form-label">Address:</label>
-                            <div class="col-sm-8">
-								<textarea name="address" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <label for="po" class="col-sm-2 col-form-label">P.O.</label>
+                            <label for="formula" class="col-sm-2 col-form-label">Formula number</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="po">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <label for="formula" class="col-sm-2 col-form-label">Formula</label>
-                            <div class="col-sm-4">
-                                <select class="form-control" name="formula" title="{{ __('Customer') }}">
-                                    <option value="">{{ __('None') }}</option>
-                                    @foreach ($data['formulas'] as $formula)
-                                    <option value="{{ $formula->name }}">{{ $formula->name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" title="Enter Formula number" class="form-control" name="formula">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -153,13 +141,6 @@
                             <div class="col-sm-12 ">
                             <h4>Formulary Specification</h4>
                             </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-sm-4"></div>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" name="wtmg">
-                            </div>
-                            <label for="wtmg" class="col-sm-2 col-form-label">Wt (mg) </label>
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-8">
@@ -265,10 +246,8 @@
                     </form>
                     <form id="dataprint" class="d-none">
                         <div style="display: flex;">
-                            <div style="margin-right: 12rem; width: 18rem;">
-                                <b>Pharmaxx, Inc.</b><br>
-                                    30590 Cochise Circle, Murrieta, CA 92563
-                                    <br> Tel. (951) 599-8010;
+                            <div style="margin-right: 12rem; width: 18rem;" class="info-manufature">
+                               
                             </div>
                             <div>
                                 <b>IPD: <span class="ipdprint"></span></b>
@@ -292,10 +271,7 @@
                             <div >Address: <span class="addressprint"></span> </div>
                         </div>
                         <div >
-                            <div>P.O.: <span class="poprint"></span> </div> 
-                        </div>
-                        <div >
-                            <div>Formula: <span class="formulaprint"></span> </div> 
+                            <div>Formula number: <span class="formulaprint"></span> </div> 
                         </div>
                         <div>
                             <div >Revision: <span class="revisionprint"></span> </div>
@@ -336,10 +312,6 @@
                             <div >
                             <h4>Formulary Specification</h4>
                             </div>
-                        </div>
-                        <div>
-                            <div></div>
-                            <div><span class="wtmgprint"></span> Wt (mg) </div>
                         </div>
                         <div>
                             <div>
@@ -417,6 +389,7 @@
         var dataTableIng = [];
 		var dataComments =  {!! json_encode($data['comments']->toArray()) !!}; 
         var dataTableComments = [];
+        var dataManufatures = {!! json_encode($data['manufatures']->toArray()) !!}; 
 
 		/* Init datetime */
         $('.date').daterangepicker({
@@ -499,6 +472,24 @@
             addRowTableComments(dataTableComments);
         });
 		/* end */
+
+        /* Change  */
+        formDataView.find("select[name=manufatureby]").change(function() {
+            var id = $(this).val();
+            var str = "";
+            // <b>Pharmaxx, Inc.</b><br>
+            //                     30590 Cochise Circle, Murrieta, CA 92563
+            //                     <br> Tel. (951) 599-8010;
+            $.each(dataManufatures, function (index, value) {
+                if (id == value.id ) {
+                    str += "<b>" + value.name +  "</b><br> " + value.address + "<br>Tel. " + value.phone + ";"; 
+                    return false;
+                }
+            });
+            formDataView.find(".info-manufature").html(str);
+            formDataPrint.find(".info-manufature").html(str);
+        });      
+        /* end */
     }); 
 
     var setDataIntoFormPrint = function() {
@@ -510,7 +501,6 @@
 		var customer = formDataView.find("select[name=customer]").val();
 		var manufatureby = formDataView.find("select[name=manufatureby]").val();
 		var address = formDataView.find("textarea[name=address]").val();
-		var po = formDataView.find("input[name=po]").val();
 		var formula = formDataView.find("select[name=formula]").val();
 		var revision = formDataView.find("input[name=revision]").val();
 		var date = formDataView.find("input[name=date]").val();
@@ -528,14 +518,12 @@
 		var color = formDataView.find("input[name=color]").val();
 		var filling = formDataView.find("input[name=filling]").val();
 		var order = formDataView.find("input[name=order]").val();
-		var wtmg = formDataView.find("input[name=wtmg]").val();
 
 		formDataPrint.find(".ipdprint").html(ipd);
 		formDataPrint.find(".productprint").html(product);
 		formDataPrint.find(".customerprint").html(customer);
 		formDataPrint.find(".manufaturebyprint").html(manufatureby);
 		formDataPrint.find(".addressprint").html(address);
-		formDataPrint.find(".poprint").html(po);
 		formDataPrint.find(".formulaprint").html(formula);
 		formDataPrint.find(".revisionprint").html(revision);
 		formDataPrint.find(".dateprint").html(date);
@@ -543,7 +531,6 @@
 		formDataPrint.find(".colorprint").html(color);
 		formDataPrint.find(".fillingprint").html(filling);
 		formDataPrint.find(".orderprint").html(order);
-		formDataPrint.find(".wtmgprint").html(wtmg);
 
         print("dataprint");
     }
