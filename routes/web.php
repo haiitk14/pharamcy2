@@ -60,6 +60,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'report'], function() {
         Route::get('/salesorder', 'Admin\SalesOrderController@index')->name('admin.report.salesorder');
         Route::post('/saveform', 'Admin\SalesOrderController@saveForm')->name('admin.report.saveform');
+        Route::get('/formula', 'Admin\ReportFormulaController@index')->name('admin.report.formula');
 
     });
 });

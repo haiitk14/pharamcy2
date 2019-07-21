@@ -425,9 +425,9 @@
             showDropdowns: true,
             minYear: 1901,
             maxYear: parseInt(moment().format('YYYY'),10),
-            locale: {
-                format: 'YYYY/MM/DD'
-            }
+            // locale: {
+            //     format: 'YYYY/MM/DD'
+            // }
         });
 
 
@@ -574,7 +574,7 @@
                 manufature_id: manufature_id,
                 formula_number: formula_number,
                 revision: revision,
-                date: date,
+                date: moment(new Date(date)).format("YYYY-MM-DD"),
                 is_softgel: is_softgel,
                 is_tablet: is_tablet,
                 is_hardcapsule: is_hardcapsule,
