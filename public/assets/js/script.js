@@ -171,3 +171,19 @@ var print = function(elm) {
     newWin.document.close();
     setTimeout(function(){newWin.close();},10);
 }
+
+var sendData = function( type, url, data, funcCallBack) {
+    $.ajax({
+        type: type, // POST, GET, PUT
+        url: url, 
+        data: data, // data format json
+    }).done(function(result) {
+        console.log(result);
+        funcCallBack(result);
+    }).fail(function(response) {
+        var errors = $.parseJSON(response.responseText);
+        $.each(errors.errors, function(index, value) {
+            toastr.error(value);
+        });
+    }).always(function() {});
+}

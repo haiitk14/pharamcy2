@@ -15,7 +15,7 @@ class CreateSalesordercommentsTable extends Migration
     {
         Schema::create('salesorder_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('custom_request_id');
+            $table->integer('customrequest_id');
             $table->integer('comment_id');
             $table->timestamps();
         });

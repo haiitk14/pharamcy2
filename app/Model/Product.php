@@ -24,4 +24,8 @@ class Product extends Model
      */
     protected $fillable = ['name', 'code', 'is_delete', 'is_using', 'create_at', 'create_by', 'update_at', 'update_by'];
 
+    public function customrequest()
+    {
+        return $this->hasMany('App\Model\CustomRequest', 'product_id');
+    }
 }

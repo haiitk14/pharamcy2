@@ -8,9 +8,14 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="text-left form-group col-xl-12">
-                        <button class="btn btn-primary" id="print" type="button">
-                            {{ __('Print') }}
+                        <button class="btn btn-outline-primary" id="print" title="Print" type="button">
+                          
                             <i class="fa fa-print" aria-hidden="true"></i>
+                            {{ __('Print') }}
+                        </button>
+                        <button class="btn btn-outline-primary" id="save-form" title="Save Form" type="button">
+                            <i class="fa fa-save" aria-hidden="true"></i>
+                            {{ __('Save') }}
                         </button>
                     </div>
                     <form id="dataview" >
@@ -36,7 +41,7 @@
                                 <select class="form-control" title="Select Product" name="product" title="{{ __('Product') }}">
                                     <option value="">{{ __('None') }}</option>
                                     @foreach ($data['products'] as $product)
-                                    <option value="{{ $product->name }}">{{ $product->name }}</option>
+                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -47,7 +52,7 @@
                                 <select class="form-control" title="Select Customer" name="customer" title="{{ __('Customer') }}">
                                     <option value="">{{ __('None') }}</option>
                                     @foreach ($data['customers'] as $customer)
-                                    <option value="{{ $customer->full_name }}">{{ $customer->full_name }}</option>
+                                    <option value="{{ $customer->id }}">{{ $customer->full_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -174,7 +179,7 @@
                                             <th>No</th>
                                             <th>Ingredients *</th>
                                             <th>per Serving *</th>
-                                            <th></th>
+                                            <th width="5%">Del</th>
                                         </tr>
                                     </thead>
                                     <tbody id="data-active">
@@ -211,7 +216,6 @@
                                    
                                 </table>
                             </div>
-                            
                         </div>
                         <div class="row form-group">
                             <h4>ExxelUSA</h4>
@@ -265,10 +269,10 @@
                             <div>Customer: <span class="customerprint"></span></div>
                         </div>
                         <div>
-                            <div>Manufature by: <span class="manufaturebyprint"></span> </div> 
+                            <div >Address: <span class="addressprint"></span> </div>
                         </div>
                         <div>
-                            <div >Address: <span class="addressprint"></span> </div>
+                            <div>Manufature by: <span class="manufaturebyprint"></span> </div> 
                         </div>
                         <div >
                             <div>Formula number: <span class="formulaprint"></span> </div> 
@@ -378,6 +382,29 @@
             </div>
         </div>
     </div>
+    <!-- The Modal -->
+    <div class="modal fade" id="modal-perserving">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Per Serving</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form name="frmPerServingModal">
+                        <div class="row form-group">
+                            <input type="number" min="0.1" class="form-control" name="value_perserving" placeholder="Enter Per Serving" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="save-perserving">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @section('script')
@@ -390,15 +417,21 @@
 		var dataComments =  {!! json_encode($data['comments']->toArray()) !!}; 
         var dataTableComments = [];
         var dataManufatures = {!! json_encode($data['manufatures']->toArray()) !!}; 
+        var modalPerServing = $("#modal-perserving");
 
 		/* Init datetime */
         $('.date').daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
             minYear: 1901,
-            maxYear: parseInt(moment().format('YYYY'),10)
+            maxYear: parseInt(moment().format('YYYY'),10),
+            locale: {
+                format: 'YYYY/MM/DD'
+            }
         });
 
+
+        /* Print */
         $("#print").click(function(){
             setDataIntoFormPrint();
         });
@@ -419,6 +452,7 @@
 
             $.each(dataIng , function(index, item) { 
                 if (item.id == ingredient) {
+                    item.per_serving = 0;
                     dataTableIng.push(item);
                 }
             });
@@ -436,7 +470,30 @@
             }
             addRowTableIngredients(dataTableIng);
         });
-		/* end */
+
+        $(document).on('click', "a.addperserving", function() {
+            // var idR = $(this).data('id');
+            var tr = $(this).closest("tr").addClass("item-add");
+            modalPerServing.find("input[name=value_perserving]").val($(this).text());
+            modalPerServing.modal("show");
+        });
+
+        $("#save-perserving").click(function() {
+            var per = modalPerServing.find("input[name=value_perserving]").val();
+            var idR = $(".item-add").find(".addperserving").data("id");
+
+            $.each(dataTableIng , function(index, item) { 
+                if (item.id == idR) {
+                    item.per_serving = per;
+                }
+            });
+            addRowTableIngredients(dataTableIng);
+            $(".addperserving").closest("tr").removeClass("item-add");
+            modalPerServing.find("input[name=value_perserving]").val("");
+            modalPerServing.modal("hide");
+        });
+
+        /* end */
 
 		/* Process table Comments*/
 		$("#add-comment").click(function(){
@@ -471,9 +528,9 @@
             }
             addRowTableComments(dataTableComments);
         });
-		/* end */
+        /* end */
 
-        /* Change  */
+        /* Change Manufature */
         formDataView.find("select[name=manufatureby]").change(function() {
             var id = $(this).val();
             var str = "";
@@ -489,7 +546,51 @@
             formDataView.find(".info-manufature").html(str);
             formDataPrint.find(".info-manufature").html(str);
         });      
-        /* end */
+
+        
+        /* Save */
+        $("#save-form").click(function() {
+            var ipd = formDataView.find("input[name=ipd]").val();
+            var product_id = formDataView.find("select[name=product]").val();
+            var customer_id = formDataView.find("select[name=customer]").val();
+            var address = formDataView.find("textarea[name=address]").val();
+            var manufature_id = formDataView.find("select[name=manufatureby]").val();
+            var formula_number = formDataView.find("input[name=formula]").val();
+            var revision = formDataView.find("input[name=revision]").val();
+            var date = formDataView.find("input[name=date]").val();
+            var is_softgel = $('input[name=softgel]').is(":checked") ? 1 : 0;
+            var is_tablet = $('input[name=tablet]').is(":checked") ? 1 : 0;
+            var is_hardcapsule = $('input[name=hardcapsule]').is(":checked") ? 1 : 0;
+            var size_type = formDataView.find("input[name=size]").val();
+            var color_logo = formDataView.find("input[name=color]").val();
+            var filling_wt = formDataView.find("input[name=filling]").val();
+            var order = formDataView.find("input[name=order]").val();
+
+            var data = {
+                ipd: ipd,
+                product_id: product_id,
+                customer_id: customer_id,
+                address: address,
+                manufature_id: manufature_id,
+                formula_number: formula_number,
+                revision: revision,
+                date: date,
+                is_softgel: is_softgel,
+                is_tablet: is_tablet,
+                is_hardcapsule: is_hardcapsule,
+                size_type: size_type,
+                color_logo: color_logo,
+                filling_wt: filling_wt,
+                order: order,
+                listIngredients:  JSON.stringify(dataTableIng), 
+                listComments:  JSON.stringify(dataTableComments), 
+            };
+            sendData('POST', '{{ route('admin.report.saveform') }}', data, function(message){
+                $.each(message, function (index, value) {
+                    toastr.success(value);
+                });
+            });
+        });
     }); 
 
     var setDataIntoFormPrint = function() {
@@ -501,7 +602,7 @@
 		var customer = formDataView.find("select[name=customer]").val();
 		var manufatureby = formDataView.find("select[name=manufatureby]").val();
 		var address = formDataView.find("textarea[name=address]").val();
-		var formula = formDataView.find("select[name=formula]").val();
+		var formula = formDataView.find("input[name=formula]").val();
 		var revision = formDataView.find("input[name=revision]").val();
 		var date = formDataView.find("input[name=date]").val();
 
@@ -538,15 +639,16 @@
     var addRowTableIngredients = function(data) {
         $("#data-active, #data-inactive, #data-active-print, #data-inactive-print").html("");
         var strActive = "";
-        var strInActive = "<tr><th colspan='4'>Inactive Ingredients</th></tr>";
+        var strInActive = "<tr><th colspan='5'>Inactive Ingredients</th></tr>";
 		var strActivePrint = "";
-        var strInActivePrint = "<tr><th colspan='4' style='text-align: left'>Inactive Ingredients</th></tr>";
+        var strInActivePrint = "<tr><th colspan='5' style='text-align: left'>Inactive Ingredients</th></tr>";
 
         var num = 1;
         for (var i = 0; i < data.length; i++) {
 
             if (data[i].inactive == 0) {
-                strActive += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
+                strActive += "<tr><td>" + num  + "</td><td>" + data[i].name + 
+                    "</td><td class='per-serving'><a href='javascript:;' data-id='" + data[i].id + "' class='addperserving' title='Edit Per Serving'>" + data[i].per_serving + "</a></td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
                 strActivePrint += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td></tr>";
                 num++;
             }
@@ -554,7 +656,8 @@
         for (var i = 0; i < data.length; i++) {
             
             if (data[i].inactive == 1) {
-                strInActive += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>"
+                strInActive += "<tr><td>" + num  + "</td><td>" + data[i].name + 
+                    "</td><td class='per-serving'><a href='javascript:;' data-id='" + data[i].id + "' class='addperserving' title='Edit Per Serving'>" + data[i].per_serving + "</a></td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
                 strInActivePrint += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td></tr>"
                 num++;
             }

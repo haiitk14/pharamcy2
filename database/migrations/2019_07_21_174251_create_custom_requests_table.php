@@ -15,23 +15,21 @@ class CreateCustomrequestTable extends Migration
     {
         Schema::create('customrequest', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('ipd');
+            $table->string('ipd')->nullable();
             $table->integer('product_id');
             $table->integer('customer_id');
-            $table->string('address');
-            $table->integer('manufature_id');
-            $table->string('formula_number');
-            $table->string('revision');
-            $table->date('date');
+            $table->string('address')->nullable();
+            $table->integer('manufature_id')->nullable();
+            $table->string('formula_number')->nullable();
+            $table->string('revision')->nullable();
+            $table->dateTime('date');
             $table->boolean('is_softgel')->default(0);
             $table->boolean('is_tablet')->default(0);
             $table->boolean('is_hardcapsule')->default(0);
-            $table->string('size_type');
-            $table->string('color_logo');
-            $table->string('filling_wt');
+            $table->string('size_type')->nullable();
+            $table->string('color_logo')->nullable();
+            $table->string('filling_wt')->nullable();
             $table->string('order');
-            $table->integer('salesorder_ingredients_id');
-            $table->integer('salesorder_comments_id');
             $table->integer('create_by')->nullable();
             $table->integer('update_by')->nullable();
             $table->timestamps();

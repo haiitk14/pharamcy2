@@ -15,8 +15,9 @@ class CreateSalesorderingredientsTable extends Migration
     {
         Schema::create('salesorder_ingredients', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('custom_request_id');
+            $table->integer('customrequest_id');
             $table->integer('ingredient_id');
+            $table->double('per_serving');
             $table->timestamps();
         });
     }

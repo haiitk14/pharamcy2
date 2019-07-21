@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CustomRequest extends Model
 {
-    protected $table='custom_request';
+    protected $table='customrequest';
 
     /**
      * @var array
@@ -52,22 +52,24 @@ class CustomRequest extends Model
         'color_logo', 
         'filling_wt', 
         'order', 
-        'salesorder_ingredients_id',
-        'salesorder_comments_id',
         'create_by', 
         'update_by',
         'create_at', 
         'update_at'
     ];
 
-    public function salesorder_ingredients()
+    public function product() 
     {
-        return $this->hasMany('App\Model\SalesOrderIngredients', 'salesorder_ingredients_id');
+        return $this->belongsTo('App\Model\Product', 'product_id');
     }
 
-    public function salesorder_comments()
+    public function customer() 
     {
-        return $this->hasMany('App\Model\SalesOrderComments', 'salesorder_comments_id');
+        return $this->belongsTo('App\Model\Customer', 'customer_id');
     }
 
+    public function manufature() 
+    {
+        return $this->belongsTo('App\Model\Manufature', 'manufature_id');
+    }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property bigint $id
- * @property int $custom_request_id
+ * @property int $customrequest_id
  * @property int $comment_id
  * @property timestamps $create_at
  * @property timestamps $update_at
@@ -20,7 +20,7 @@ class SalesOrderComments extends Model
      * @var array
      */
     protected $fillable = [
-        'custom_request_id', 
+        'customrequest_id', 
         'comment_id', 
         'create_at', 
         'update_at', 
