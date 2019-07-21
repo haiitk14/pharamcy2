@@ -29,7 +29,7 @@
                 <li class="submenu">
                     <a href="#" @php if ($controller == 'SalesOrderController') 
                     echo ' class="subdrop"'; @endphp>
-                        <i class="fa fa-user-o" aria-hidden="true"></i> <span> {{ __('Report') }} </span> <span class="menu-arrow"></span>
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i> <span> {{ __('Report') }} </span> <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled" @php if ($controller == 'SalesOrderController') 
                     echo ' style="display: block"'; @endphp>
