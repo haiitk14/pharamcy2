@@ -12,10 +12,6 @@
                             <i class="fa fa-print" aria-hidden="true"></i>
                             {{ __('Print') }}
                         </button>
-                        <button class="btn btn-outline-primary" id="save-form" title="Save Form" type="button">
-                            <i class="fa fa-save" aria-hidden="true"></i>
-                            {{ __('Save') }}
-                        </button>
                     </div>
                     <form id="formcustomrequest">
                         <div class="row form-group">
