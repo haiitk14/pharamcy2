@@ -29,11 +29,11 @@ class SalesOrderIngredients extends Model
 
     public function customrequest() 
     {
-        return $this->belongsTo('App\Model\CustomRequest', 'salesorder_ingredients_id');
+        return $this->belongsTo('App\Model\CustomRequest', 'customrequest_id');
     }
 
     public function ingredient() 
     {
-        return $this->belongsTo('App\Model\CustomRequest', 'salesorder_ingredients_id');
+        return $this->belongsTo('App\Model\Ingredient', 'ingredient_id');
     }
 }

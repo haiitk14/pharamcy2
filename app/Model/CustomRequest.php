@@ -72,4 +72,14 @@ class CustomRequest extends Model
     {
         return $this->belongsTo('App\Model\Manufature', 'manufature_id');
     }
+
+    // public function salesorder_comments() 
+    // {
+    //     return $this->hasMany('App\Model\SalesOrderComments', 'customrequest_id');
+    // }
+
+    public function salesorder_ingredients() 
+    {
+        return $this->hasMany('App\Model\SalesOrderIngredients', 'customrequest_id');
+    }
 }

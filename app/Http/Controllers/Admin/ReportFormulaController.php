@@ -37,9 +37,12 @@ class ReportFormulaController
     public function index()
     {
         $pageName = $this->pageName;
-        $customRequest = CustomRequest::orderBy('created_at', 'desc')->first();
+        $customRequests = CustomRequest::orderBy('created_at', 'desc')->get();
+        // $salesOrderIngredients = $customRequest != null ?  SalesOrderIngredients::where('customrequest_id', $customRequest->id)->orderBy('created_at', 'asc')->get() : null;
         $data = [
-            'customRequest' => $customRequest
+            'customRequests' => $customRequests,
+            'salesOrderIngredients' => null,
+            'customRequest' => null,
         ];
 
         return view('admin.report-formula.index', compact('pageName', 'data'));

@@ -30,4 +30,9 @@ class SalesOrderComments extends Model
     {
         return $this->belongsTo('App\Model\CustomRequest', 'salesorder_comments_id');
     }
+
+    public function customrequest() 
+    {
+        return $this->belongsTo('App\Model\CustomRequest', 'customrequest_id');
+    }
 }

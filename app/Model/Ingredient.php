@@ -23,6 +23,20 @@ class Ingredient extends Model
      /**
      * @var array
      */
-    protected $fillable = ['code', 'name', 'inactive', 'is_delete', 'is_using', 'create_at', 'create_by', 'update_at', 'update_by'];
+    protected $fillable = [
+        'code', 
+        'name', 
+        'inactive', 
+        'is_delete', 
+        'is_using', 
+        'create_at', 
+        'create_by', 
+        'update_at', 
+        'update_by'
+    ];
 
+    public function salesOrderIngredients()
+    {
+        return $this->hasMany('App\Model\SalesOrderIngredients', 'ingredient_id');
+    }
 }

@@ -9,7 +9,6 @@
                 <div class="card-body">
                     <div class="text-left form-group col-xl-12">
                         <button class="btn btn-outline-primary" id="print" title="Print" type="button">
-                          
                             <i class="fa fa-print" aria-hidden="true"></i>
                             {{ __('Print') }}
                         </button>
@@ -18,7 +17,20 @@
                             {{ __('Save') }}
                         </button>
                     </div>
-                    <form id="dataview" >
+                    <form>
+                        <div class="row form-group">
+                            <label for="address" class="col-sm-2 col-form-label">Select Custom Request</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" title="Select Custom Request" name="custom_request" title="{{ __('Select Custom Request') }}">
+                                    <option value="">{{ __('None') }}</option>
+                                    @foreach ($data['customRequests'] as $customRequest)
+                                    <option value="{{ $customRequest->id }}">{{ $customRequest->ipd }} - {{ $customRequest->manufature->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="dataview" class="d-none" >
                         <div class="row form-group">
                             <div class="col-sm-6">
                                 @if($data['customRequest'])
@@ -189,6 +201,7 @@
 @section('script')
 <script>
 	$(document).ready(function() {
+      
     }); 
 </script>
 @endsection
