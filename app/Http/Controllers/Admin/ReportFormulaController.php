@@ -114,4 +114,51 @@ class ReportFormulaController
             return response()->json(compact(['status']), 500);
         }    
     }
+
+    public function getCustomRequest(Request $request)
+    {
+        if ($request->ajax()) {
+            $input = $request->all();
+            
+            $validator = Validator::make($input, [
+                'id' => 'required',
+            ]);
+
+            $id = $request->get('id');
+
+            if ($validator->fails()) {
+                $errors = $validator->errors()->all();
+                return response()->json(compact(['errors']), 422);
+            }
+            $customRequest = CustomRequest::where('id', $id)->first();
+            $salesOrderIngredients = SalesOrderIngredients::where('customrequest_id', $id)->get();
+
+            foreach ($salesOrderIngredients as $value) {
+                $value['name_ingredient'] = $value->ingredient->name;
+                $value['code'] = $value->ingredient->code;
+                $value['req_wt'] = 0;
+                $value['purity'] = 0;
+                $value['overage'] = 0;
+                $value['input_wtmg'] = 0;
+                $value['input_wt_per_batch'] = 0;
+                $value['percent_softgel'] = 0;
+                $value['density'] = 0;
+                $value['volum'] = 0;
+            }
+            $result = [
+                'customRequest' => $customRequest,
+                'manufature' => $customRequest->manufature,
+                'customer' => $customRequest->customer,
+                'product' => $customRequest->product,
+                'salesOrderIngredients' => $salesOrderIngredients,
+                   
+            ]; 
+
+            return response()->json($result);
+
+            $status = 'error';
+
+            return response()->json(compact(['status']), 500);
+        } 
+    } 
 }
