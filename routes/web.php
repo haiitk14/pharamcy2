@@ -1,4 +1,5 @@
 <?php
+use App\Http\Middleware\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,14 @@ Route::group(['prefix' => 'admin'], function () {
 
     //default
     Route::get('/', ['uses' => 'Admin\DashboardController@index','as' => 'adminHome']);
+    //Login routes
+    Route::get('login', ['uses' => 'Admin\AuthController@login', 'as' => 'adminLogin']);
+    Route::post('login', ['uses' => 'Admin\AuthController@postLogin', 'as' => 'postlogin']);
+    // Route::post('profile', ['uses' => 'Admin\AuthController@profile', 'as' => 'admin.auth.profile']);
+    Route::get('logout', ['uses' => 'Admin\AuthController@logout', 'as' => 'adminLogout']);
 
     Route::group(['prefix' => 'customer'], function() {
-        Route::get('/', 'Admin\CustomerController@index')->name('admin.customer');
+        Route::get('/', 'Admin\CustomerController@index')->name('admin.customer')->middleware(Admin::class);
         Route::post('/create', 'Admin\CustomerController@create')->name('admin.customer.create');
         Route::post('/update', 'Admin\CustomerController@update')->name('admin.customer.update');
         Route::delete('/destroy', 'Admin\CustomerController@destroy')->name('admin.customer.destroy');
@@ -69,3 +75,7 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('/', function () {
     return redirect('admin');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

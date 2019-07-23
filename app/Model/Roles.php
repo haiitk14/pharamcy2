@@ -11,12 +11,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $is_delete
  */
 
-class Role extends Model
+class Roles extends Model
 {
+    protected $table='roles';
      /**
      * @var array
      */
-    protected $fillable = ['name', 'is_active', 'is_delete'];
+    protected $fillable = ['name', 'code', 'is_active', 'is_delete'];
 
     protected $casts = [
         'permissions' => 'array',
@@ -27,7 +28,7 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->hasMany('App\User','id', 'role_id');
+        return $this->hasMany('App\User','id', 'roles_code');
     }
 
     /**

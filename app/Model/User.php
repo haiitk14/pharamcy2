@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email
  * @property string $name
  * @property string $remember_token
- * @property boolean $role_id
+ * @property boolean $roles_code
  * @property boolean $is_delete
  */
 class User extends Model
@@ -19,7 +19,18 @@ class User extends Model
     /**
      * @var array
      */
-    protected $fillable = ['username', 'password', 'email', 'name', 'role_id', 'is_active', 'is_delete'];
+    protected $fillable = [
+        'username', 
+        'password', 
+        'email', 
+        'name', 
+        'roles_code', 
+        'is_active', 
+        'is_delete', 
+        'remember_token', 
+        'create_at', 
+        'update_at'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -33,29 +44,6 @@ class User extends Model
      */
     public function roles()
     {
-        return $this->belongsto('App\Model\Role', 'role_id', 'id');
+        return $this->belongsto('App\Model\Roles', 'roles_code');
     }
-
-    /**
-     * Checks if User has access to $permissions.
-     */
-    public function hasAccess(array $permissions) : bool
-    {
-        // check if the permission is available in any role
-        foreach ($this->roles as $role) {
-            if($role->hasAccess($permissions)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks if the user belongs to role.
-     */
-    public function inRole(string $roleSlug)
-    {
-        return $this->roles()->where('slug', $roleSlug)->count() == 1;
-    }
-
 }
