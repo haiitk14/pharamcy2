@@ -33,6 +33,8 @@
         }
     </style>
     <!-- END -->
+    <!-- import Knockoutjs -->
+    <script src = "https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js" type = "text/javascript"></script>
 </head>
 
 <body class="adminbody">
