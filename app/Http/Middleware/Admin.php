@@ -20,10 +20,9 @@ class Admin
             if (Auth::user()->roles_code == 'admin' && Auth::user()->is_delete == 0) {
                 return $next($request);
             }
-
-            Auth::logout();
+            // Auth::logout();
         }
 
-        return redirect('/admin/login');
+        return redirect('/');
     }
 }

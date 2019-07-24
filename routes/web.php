@@ -1,6 +1,4 @@
 <?php
-use App\Http\Middleware\Admin;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,14 +23,13 @@ Route::group(['prefix' => 'admin'], function () {
     // Route::post('profile', ['uses' => 'Admin\AuthController@profile', 'as' => 'admin.auth.profile']);
     Route::get('logout', ['uses' => 'Admin\AuthController@logout', 'as' => 'adminLogout']);
 
-    Route::group(['prefix' => 'customer'], function() {
-        Route::get('/', 'Admin\CustomerController@index')->name('admin.customer')->middleware(Admin::class);
+    Route::group(['prefix' => 'customer', 'middleware' => ['admin']], function() {
+        Route::get('/', 'Admin\CustomerController@index')->name('admin.customer');
         Route::post('/create', 'Admin\CustomerController@create')->name('admin.customer.create');
         Route::post('/update', 'Admin\CustomerController@update')->name('admin.customer.update');
         Route::delete('/destroy', 'Admin\CustomerController@destroy')->name('admin.customer.destroy');
-   
     });
-    Route::group(['prefix' => 'product'], function() {
+    Route::group(['prefix' => 'product', 'middleware' => 'user'], function() {
         Route::get('/', 'Admin\ProductController@index')->name('admin.product');
         Route::post('/create', 'Admin\ProductController@create')->name('admin.product.create');
         Route::post('/update', 'Admin\ProductController@update')->name('admin.product.update');

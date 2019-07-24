@@ -13,13 +13,17 @@ class RoleSTableSeed extends Seeder
     public function run()
     {
         Roles::query()->delete();
-        $author = Roles::create([
+        $superadmin = Roles::create([
             'code' => 'super-admin',
             'name' => 'Supper Administrator', 
         ]);
-        $editor = Roles::create([
+        $admin = Roles::create([
             'code' => 'admin',
             'name' => 'Administrator', 
+        ]);
+        $user = Roles::create([
+            'code' => 'user',
+            'name' => 'User', 
         ]);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class SuperAdmin
+class User
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class SuperAdmin
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            if (Auth::user()->roles_code == 'super-admin') {
+            if (Auth::user()->roles_code == 'user' && Auth::user()->is_delete == 0) {
                 return $next($request);
             }
         }

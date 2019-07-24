@@ -28,5 +28,13 @@ class UsersTableSeed extends Seeder
         $user2->password = Hash::make('password');
         $user2->roles_code = 'admin';
         $user2->save();
+
+        $user3 = new User();
+        $user3->name = 'Do Truong Hai';
+        $user3->username = 'haidt';
+        $user3->email = '';
+        $user3->password = Hash::make('password');
+        $user3->roles_code = 'user';
+        $user3->save();
     }
 }

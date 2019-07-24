@@ -61,7 +61,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($userData)) {
             
-            if (Auth::user()->roles_code != 'super-admin' && Auth::user()->roles_code != 'admin' ) {
+            if (Auth::user()->roles_code != 'super-admin' && Auth::user()->roles_code != 'admin' && Auth::user()->roles_code != 'user' ) {
                 Auth::logout();
                 return response('Unauthorized action.', 403);
             } else {
