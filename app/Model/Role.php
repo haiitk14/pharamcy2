@@ -6,17 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property bigint $id
+ * @property string $code
  * @property string $name
- * @property boolean $is_active
- * @property boolean $is_delete
+ * @property boolean $created_at
+ * @property boolean $updated_at
  */
 
 class Role extends Model
 {
+    protected $table='roles';
      /**
      * @var array
      */
-    protected $fillable = ['name', 'is_active', 'is_delete'];
+    protected $fillable = ['code' ,'name', 'created_at', 'updated_at'];
 
     protected $casts = [
         'permissions' => 'array',
@@ -27,26 +29,6 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->hasMany('App\User','id', 'role_id');
-    }
-
-    /**
-     * Check role access with permissions
-     */
-    public function hasAccess(array $permissions) : bool
-    {
-        foreach ($permissions as $permission) {
-            if ($this->hasPermission($permission))
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * Check role has permission
-     */
-    private function hasPermission(string $permission) : bool
-    {
-        return $this->permissions[$permission] ?? false;
+        return $this->hasMany('App\User','id', 'roles_code');
     }
 }

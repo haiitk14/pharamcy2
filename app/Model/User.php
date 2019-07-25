@@ -11,51 +11,47 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email
  * @property string $name
  * @property string $remember_token
- * @property boolean $role_id
+ * @property boolean $roles_code
  * @property boolean $is_delete
+ * @property boolean $is_admin
+ * @property boolean $is_superadmin
+ * @property boolean $is_user
  */
 class User extends Model
 {
     /**
      * @var array
      */
-    protected $fillable = ['username', 'password', 'email', 'name', 'role_id', 'is_active', 'is_delete'];
+    protected $fillable = [
+        'roles_code', 
+        'name', 
+        'username', 
+        'email', 
+        'password', 
+        'is_active', 
+        'is_delete', 
+        'is_admin', 
+        'is_superadmin',
+        'is_user',
+        'created_at',
+        'updated_at'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = ['password'];
+    protected $hidden = ['password','remember_token'];
 
     /**
      * The roles that belong to the user.
      */
     public function roles()
     {
-        return $this->belongsto('App\Model\Role', 'role_id', 'id');
+        return $this->belongsto('App\Model\Role', 'roles_code', 'id');
     }
 
-    /**
-     * Checks if User has access to $permissions.
-     */
-    public function hasAccess(array $permissions) : bool
-    {
-        // check if the permission is available in any role
-        foreach ($this->roles as $role) {
-            if($role->hasAccess($permissions)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks if the user belongs to role.
-     */
-    public function inRole(string $roleSlug)
-    {
-        return $this->roles()->where('slug', $roleSlug)->count() == 1;
-    }
+    
 
 }

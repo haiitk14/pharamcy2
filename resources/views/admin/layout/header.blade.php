@@ -129,7 +129,7 @@ top bar navigation -->
                     <a href="javascript:;" class="dropdown-item notify-item" data-toggle="modal" data-target="#form-modal-profile" data-backdrop="static" data-keyboard="false">
                         <i class="fa fa-user"></i> <span>{{ __('Profile') }}</span>
                     </a>
-                    <a href="#" class="dropdown-item notify-item">
+                <a href="{{ route('adminLogout') }}" class="dropdown-item notify-item">
                         <i class="fa fa-power-off"></i> <span>{{ _('Logout') }}</span>
                     </a>
                     
