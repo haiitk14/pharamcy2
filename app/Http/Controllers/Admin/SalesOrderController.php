@@ -13,6 +13,7 @@ use App\Model\CustomRequest;
 use Validator;
 use App\Model\SalesOrderIngredients;
 use App\Model\SalesOrderComments;
+use Auth;
 
 class SalesOrderController
 {
@@ -89,6 +90,7 @@ class SalesOrderController
             $customRequest->color_logo = $request->get('color_logo');
             $customRequest->filling_wt = $request->get('filling_wt');
             $customRequest->order = $request->get('order');
+            $customRequest->create_by = Auth::user()->id;
             $response = $customRequest->save();
 
             $dataIngredient = json_decode($request->get('listIngredients'));
@@ -99,6 +101,7 @@ class SalesOrderController
                 $salesOrderIngredients->customrequest_id = intval($customRequest->id);
                 $salesOrderIngredients->ingredient_id = intval($value->id);
                 $salesOrderIngredients->per_serving = doubleval($value->per_serving);
+                $salesOrderIngredients->create_by = Auth::user()->id;
                 $salesOrderIngredients->save();
             }
 
@@ -106,6 +109,7 @@ class SalesOrderController
                 $salesOrderComments = new SalesOrderComments();
                 $salesOrderComments->customrequest_id = intval($customRequest->id);
                 $salesOrderComments->comment_id = intval($value->id);
+                $salesOrderComments->create_by = Auth::user()->id;
                 $salesOrderComments->save();
             }
             $result = [];

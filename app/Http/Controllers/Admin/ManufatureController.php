@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Manufature;
 use Validator;
+use Auth;
 
 class ManufatureController
 {
@@ -20,6 +21,10 @@ class ManufatureController
     public function __construct()
     {
         $this->pageName = 'Manufature';
+
+        if (!Auth::check()) {
+            return redirect()->intended('/404');
+        }
     }
 
 	/**
@@ -30,7 +35,7 @@ class ManufatureController
     public function index()
     {
         $pageName = $this->pageName;
-        $manufatures = Manufature::where('is_using', 1)->get();
+        $manufatures = Manufature::where('create_by', Auth::user()->id)->get();
 
         return view('admin.manufature.index', compact('pageName', 'manufatures'));
     }
@@ -54,6 +59,7 @@ class ManufatureController
             $manufature->name = $request->get('name');
             $manufature->address = $request->get('address');
             $manufature->phone = $request->get('phone');
+            $manufature->create_by = Auth::user()->id;
             $response = $manufature->save();
             
             $result = [];
@@ -95,6 +101,7 @@ class ManufatureController
                         'name'=> $request->get('name'),
                         'address' => $request->get('address'),
                         'phone' => $request->get('phone'),
+                        'update_by' => Auth::user()->id,
                     ]);
                 $result = [];
                 if ($response) {

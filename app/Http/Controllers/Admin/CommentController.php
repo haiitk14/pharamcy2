@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Comment;
 use Validator;
+use Auth;
 
 class CommentController
 {
@@ -20,6 +21,10 @@ class CommentController
     public function __construct()
     {
         $this->pageName = 'Comments';
+
+        if (!Auth::check()) {
+            return redirect()->intended('/404');
+        }
     }
 
 	/**
@@ -30,7 +35,7 @@ class CommentController
     public function index()
     {
         $pageName = $this->pageName;
-        $comments = Comment::where('is_using', 1)->get();
+        $comments = Comment::where('create_by', Auth::user()->id)->get();
 
         return view('admin.comment.index', compact('pageName', 'comments'));
     }
@@ -50,6 +55,7 @@ class CommentController
 
             $comment = new Comment();
             $comment->content = $request->get('content');
+            $comment->create_by = Auth::user()->id;
             $response = $comment->save();
             
             $result = [];
@@ -87,6 +93,7 @@ class CommentController
             if ($item) {
                 $response = Comment::where('id', $id)->update([
                         'content' => $request->get('content'),
+                        'update_by' => Auth::user()->id
                     ]);
                 $result = [];
                 if ($response) {

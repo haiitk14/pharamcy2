@@ -13,6 +13,7 @@ use App\Model\CustomRequest;
 use Validator;
 use App\Model\SalesOrderIngredients;
 use App\Model\SalesOrderComments;
+use Auth;
 
 class ReportFormulaController
 {
@@ -37,7 +38,7 @@ class ReportFormulaController
     public function index()
     {
         $pageName = $this->pageName;
-        $customRequests = CustomRequest::orderBy('created_at', 'desc')->get();
+        $customRequests = CustomRequest::where('create_by', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         // $salesOrderIngredients = $customRequest != null ?  SalesOrderIngredients::where('customrequest_id', $customRequest->id)->orderBy('created_at', 'asc')->get() : null;
         $data = [
             'customRequests' => $customRequests,
@@ -64,48 +65,14 @@ class ReportFormulaController
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
-            $customRequest = new CustomRequest();
-            $customRequest->ipd = $request->get('ipd');
-            $customRequest->product_id = $request->get('product_id');
-            $customRequest->customer_id = $request->get('customer_id');
-            $customRequest->address = $request->get('address');
-            $customRequest->manufature_id = $request->get('manufature_id');
-            $customRequest->formula_number = $request->get('formula_number');
-            $customRequest->revision = $request->get('revision');
-            $customRequest->date = $request->get('date');
-            $customRequest->is_softgel = $request->get('is_softgel');
-            $customRequest->is_tablet = $request->get('is_tablet');
-            $customRequest->is_hardcapsule = $request->get('is_hardcapsule');
-            $customRequest->size_type = $request->get('size_type');
-            $customRequest->color_logo = $request->get('color_logo');
-            $customRequest->filling_wt = $request->get('filling_wt');
-            $customRequest->order = $request->get('order');
-            $response = $customRequest->save();
-
-            $dataIngredient = json_decode($request->get('listIngredients'));
-            $dataComments = json_decode($request->get('listComments'));
-
-            foreach ($dataIngredient as $value) {
-                $salesOrderIngredients = new SalesOrderIngredients();
-                $salesOrderIngredients->customrequest_id = intval($customRequest->id);
-                $salesOrderIngredients->ingredient_id = intval($value->id);
-                $salesOrderIngredients->per_serving = doubleval($value->per_serving);
-                $salesOrderIngredients->save();
-            }
-
-            foreach ($dataComments as $value) {
-                $salesOrderComments = new SalesOrderComments();
-                $salesOrderComments->customrequest_id = intval($customRequest->id);
-                $salesOrderComments->comment_id = intval($value->id);
-                $salesOrderComments->save();
-            }
+           
             $result = [];
-            if ($response) {
-                $message = "Success";
-                $result = [
-                    'message' => $message
-                ];
-            }
+            // if ($response) {
+            //     $message = "Success";
+            //     $result = [
+            //         'message' => $message
+            //     ];
+            // }
 
             return response()->json($result);
 

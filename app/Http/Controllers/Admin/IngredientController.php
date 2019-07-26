@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Ingredient;
 use Validator;
+use Auth;
 
 class IngredientController
 {
@@ -20,6 +21,10 @@ class IngredientController
     public function __construct()
     {
         $this->pageName = 'Ingredient';
+
+        if (!Auth::check()) {
+            return redirect()->intended('/404');
+        }
     }
 
 	/**
@@ -30,7 +35,7 @@ class IngredientController
     public function index()
     {
         $pageName = $this->pageName;
-        $ingredients = Ingredient::where('is_using', 1)->get();
+        $ingredients = Ingredient::where('create_by', Auth::user()->id)->get();
 
         return view('admin.ingredient.index', compact('pageName', 'ingredients'));
     }
@@ -58,6 +63,7 @@ class IngredientController
             $ingredient->code = $request->get('code');
             $ingredient->name = $request->get('name');
             $ingredient->inactive = $request->get('inactive');
+            $ingredient->create_by = Auth::user()->id;
             $response = $ingredient->save();
             
             $result = [];
@@ -105,6 +111,7 @@ class IngredientController
                     'code' => $request->get('code'),
                     'name'=> $request->get('name'),
                     'inactive' => $request->get('inactive'),
+                    'update_by' => Auth::user()->id
                 ]);
                 $result = [];
                 if ($response) {

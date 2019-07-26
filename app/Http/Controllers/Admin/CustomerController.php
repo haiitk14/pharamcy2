@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use App\Model\Customer;
+use Auth;
 
 class CustomerController
 {
@@ -13,13 +14,17 @@ class CustomerController
      * @var string $pageName
      */
     protected $pageName;
-    
+
     /**
      * DashboardController constructor.
      */
     public function __construct()
     {
         $this->pageName = 'Customers';
+
+        if (!Auth::check()) {
+            return redirect()->intended('/404');
+        }
     }
 
 	/**
@@ -30,7 +35,8 @@ class CustomerController
     public function index()
     {
         $pageName = $this->pageName;
-        $customers = Customer::where('is_using', 1)->get();
+        $user = Auth::user();
+        $customers = Customer::where('create_by', $user->id)->get();
 
         return view('admin.customer.index', compact('pageName', 'customers'));
     }
@@ -59,6 +65,7 @@ class CustomerController
             $customer->code = $request->get('code');
             $customer->address = $request->get('address');
             $customer->phone = $request->get('phone');
+            $customer->create_by = Auth::user()->id;
             $response = $customer->save();
             
             $result = [];
@@ -105,6 +112,7 @@ class CustomerController
                         'full_name' => $request->get('full_name'),
                         'phone'=> $request->get('phone'),
                         'address' => $request->get('address'),
+                        'update_by' => Auth::user()->id
                     ]);
                 $result = [];
                 if ($response) {

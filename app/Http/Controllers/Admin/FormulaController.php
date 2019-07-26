@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use App\Model\Formula;
+use Auth;
 
 class FormulaController
 {
@@ -20,6 +21,10 @@ class FormulaController
     public function __construct()
     {
         $this->pageName = 'Formula';
+
+        if (!Auth::check()) {
+            return redirect()->intended('/404');
+        }
     }
 
 	/**
@@ -30,7 +35,7 @@ class FormulaController
     public function index()
     {
         $pageName = $this->pageName;
-        $formulas = Formula::where('is_using', 1)->get();
+        $formulas = Formula::where('create_by', Auth::user()->id)->get();
 
         return view('admin.formula.index', compact('pageName', 'formulas'));
     }
@@ -52,6 +57,7 @@ class FormulaController
             $formula = new Formula();
             $formula->name = $request->get('name');
             $formula->content = $request->get('content');
+            $formula->create_by = Auth::user()->id;
             $response = $formula->save();
             
             $result = [];
@@ -91,6 +97,7 @@ class FormulaController
                 $response = Formula::where('id', $id)->update([
                         'name'=> $request->get('name'),
                         'content' => $request->get('content'),
+                        'update_by' => Auth::user()->id
                     ]);
                 $result = [];
                 if ($response) {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use App\Model\Product;
+use Auth;
 
 class ProductController
 {
@@ -20,6 +21,10 @@ class ProductController
     public function __construct()
     {
         $this->pageName = 'Product';
+
+        if (!Auth::check()) {
+            return redirect()->intended('/404');
+        }
     }
 
 	/**
@@ -30,7 +35,8 @@ class ProductController
     public function index()
     {
         $pageName = $this->pageName;
-        $products = Product::where('is_using', 1)->get();
+        $user = Auth::user();
+        $products = Product::where('create_by', $user->id)->get();
 
         return view('admin.product.index', compact('pageName', 'products'));
     }
@@ -57,6 +63,7 @@ class ProductController
             $product=new Product();
             $product->code = $request->get('code');
             $product->name = $request->get('name');
+            $product->create_by = Auth::user()->id;
             $response = $product->save();
             
             $result = [];
@@ -102,6 +109,7 @@ class ProductController
                 $response = Product::where('id', $id)->update([
                         'code'=> $request->get('code'),
                         'name' => $request->get('name'),
+                        'update_by' => Auth::user()->id
                     ]);
                 $result = [];
                 if ($response) {
