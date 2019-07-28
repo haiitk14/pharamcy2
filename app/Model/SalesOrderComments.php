@@ -21,15 +21,15 @@ class SalesOrderComments extends Model
      */
     protected $fillable = [
         'customrequest_id', 
-        'comment_id', 
+        'comment', 
         'create_at', 
         'update_at', 
     ];
 
-    public function custom_request() 
-    {
-        return $this->belongsTo('App\Model\CustomRequest', 'salesorder_comments_id');
-    }
+    // public function custom_request() 
+    // {
+    //     return $this->belongsTo('App\Model\CustomRequest', 'salesorder_comments_id');
+    // }
 
     public function customrequest() 
     {

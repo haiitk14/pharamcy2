@@ -38,23 +38,13 @@
                         <div class="row form-group">
                             <label for="product" class="col-sm-2 col-form-label">Product *</label>
                             <div class="col-sm-8">
-                                <select class="form-control" title="Select Product" name="product" title="{{ __('Product') }}">
-                                    <option value="">{{ __('None') }}</option>
-                                    @foreach ($data['products'] as $product)
-                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" title="Enter Product" name="product">
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="customer" class="col-sm-2 col-form-label">Customer *</label>
                             <div class="col-sm-8">
-                                <select class="form-control" title="Select Customer" name="customer" title="{{ __('Customer') }}">
-                                    <option value="">{{ __('None') }}</option>
-                                    @foreach ($data['customers'] as $customer)
-                                    <option value="{{ $customer->id }}">{{ $customer->full_name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" title="Enter Customer" name="customer">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -197,12 +187,7 @@
                         </div>
 						 <div class="row form-group">
                             <div class="col-sm-8">
-                                <select class="form-control" name="comment"  title="Choose Comment">
-                                    <option value="">None</option>
-                                    @foreach ($data['comments'] as $comments)
-                                        <option value="{{ $comments->id }}">{{ $comments->content }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" title="Enter Comment" name="comment">
                             </div>
                             <div class="col-sm-2">
                                 <a href="javascript:;" id="add-comment" title="Add Comment" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Add</a>
@@ -497,7 +482,7 @@
 
 		/* Process table Comments*/
 		$("#add-comment").click(function(){
-            var comment = formDataView.find("select[name=comment]").val();
+            var comment = formDataView.find("input[name=comment]").val();
 
             if (comment == "") {
                 toastr.error('{{ __('The comment not empty.') }}');
@@ -509,20 +494,21 @@
                 return false;
             }
 
-            $.each(dataComments , function(index, item) { 
-                if (item.id == comment) {
-                    dataTableComments.push(item);
-                }
-            });
+            // $.each(dataComments , function(index, item) { 
+            //     if (item.id == comment) {
+            //         dataTableComments.push(item);
+            //     }
+            // });
+            dataTableComments.push({ content: comment });
             addRowTableComments(dataTableComments);
-            formDataView.find("select[name=comment]").val("");
+            formDataView.find("input[name=comment]").val("");
         });
 
         $(document).on('click', "a.delcomment", function() {
             var idR = $(this).data('id');
             var arrayTemp = dataTableComments;
             for (var i = 0 ; i < arrayTemp.length; i++) {
-                if (arrayTemp[i].id == Number(idR)) {
+                if (arrayTemp[i].content == String(idR)) {
                     dataTableComments.splice(i, 1);
                 }
             }
@@ -551,8 +537,8 @@
         /* Save */
         $("#save-form").click(function() {
             var ipd = formDataView.find("input[name=ipd]").val();
-            var product_id = formDataView.find("select[name=product]").val();
-            var customer_id = formDataView.find("select[name=customer]").val();
+            var product = formDataView.find("input[name=product]").val();
+            var customer = formDataView.find("input[name=customer]").val();
             var address = formDataView.find("textarea[name=address]").val();
             var manufature_id = formDataView.find("select[name=manufatureby]").val();
             var formula_number = formDataView.find("input[name=formula]").val();
@@ -568,8 +554,8 @@
 
             var data = {
                 ipd: ipd,
-                product_id: product_id,
-                customer_id: customer_id,
+                product: product,
+                customer: customer,
                 address: address,
                 manufature_id: manufature_id,
                 formula_number: formula_number,
@@ -585,6 +571,7 @@
                 listIngredients:  JSON.stringify(dataTableIng), 
                 listComments:  JSON.stringify(dataTableComments), 
             };
+            // console.log(data);
             sendData('POST', '{{ route('admin.report.saveform') }}', data, function(message){
                 $.each(message, function (index, value) {
                     toastr.success(value);
@@ -598,8 +585,8 @@
 		var formDataPrint = $("#dataprint");
 
 		var ipd = formDataView.find("input[name=ipd]").val();
-		var product = formDataView.find("select[name=product]").val();
-		var customer = formDataView.find("select[name=customer]").val();
+		var product = formDataView.find("input[name=product]").val();
+		var customer = formDataView.find("input[name=customer]").val();
 		var manufatureby = formDataView.find("select[name=manufatureby]").val();
 		var address = formDataView.find("textarea[name=address]").val();
 		var formula = formDataView.find("input[name=formula]").val();
@@ -674,7 +661,7 @@
 		var strPrint = "";
 
         for (var i = 0; i < data.length; i++) {
-            str += "<tr><td>" + (i + 1)  + "</td><td>" + data[i].content + "</td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delcomment' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
+            str += "<tr><td>" + (i + 1)  + "</td><td>" + data[i].content + "</td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].content + "' class='delcomment' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
             strPrint += "<tr><td>" + (i + 1)  + "</td><td>" + data[i].content + "</td></tr>";
         }
        
@@ -682,10 +669,10 @@
 		$("#data-comments-print").html(strPrint);
     }
 
-    var checkItemExistArray = function(array, id) {
+    var checkItemExistArray = function(array, comment) {
         var res = false;
         $.each(array , function(index, item) { 
-            if (item.id == id) {
+            if (item.content == comment) {
                 res = true;
                 return false;
             }

@@ -18,12 +18,12 @@
                     <ul class="list-unstyled" @php if ($controller == 'CustomerController' || $controller == 'ProductController' || $controller == 'ManufatureController'
                     || $controller == 'IngredientController' || $controller == 'FormulaController' || $controller == 'CommentController') 
                     echo ' style="display: block"'; @endphp>
-                        <li><a href="{{ route('admin.customer') }}">{{ __('Customers') }}</a></li>
-                        <li><a href="{{ route('admin.product') }}">{{ __('Products') }}</a></li>
+                        <li class="d-none"><a href="{{ route('admin.customer') }}">{{ __('Customers') }}</a></li>
+                        <li class="d-none"><a href="{{ route('admin.product') }}">{{ __('Products') }}</a></li>
                         <li><a href="{{ route('admin.manufature') }}">{{ __('Manufature') }}</a></li>
                         <li><a href="{{ route('admin.ingredient') }}">{{ __('Ingredient') }}</a></li>
                         <li><a href="{{ route('admin.formula') }}">{{ __('Formula') }}</a></li>
-                        <li><a href="{{ route('admin.comment') }}">{{ __('Comments') }}</a></li>
+                        <li class="d-none"><a href="{{ route('admin.comment') }}">{{ __('Comments') }}</a></li>
                     </ul>
                 </li>
                 <li class="submenu">

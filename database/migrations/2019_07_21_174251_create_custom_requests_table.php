@@ -16,8 +16,8 @@ class CreateCustomrequestTable extends Migration
         Schema::create('customrequest', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('ipd')->nullable();
-            $table->integer('product_id');
-            $table->integer('customer_id');
+            $table->string('product');
+            $table->string('customer');
             $table->string('address')->nullable();
             $table->integer('manufature_id')->nullable();
             $table->string('formula_number')->nullable();

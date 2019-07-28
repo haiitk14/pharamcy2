@@ -64,8 +64,8 @@ class SalesOrderController
             $input = $request->all();
             
             $validator = Validator::make($input, [
-                'product_id' => 'required',
-                'customer_id' => 'required',
+                'product' => 'required',
+                'customer' => 'required',
                 'date' => 'required',
                 'order' => 'required'
             ]);
@@ -76,8 +76,8 @@ class SalesOrderController
             }
             $customRequest = new CustomRequest();
             $customRequest->ipd = $request->get('ipd');
-            $customRequest->product_id = $request->get('product_id');
-            $customRequest->customer_id = $request->get('customer_id');
+            $customRequest->product = $request->get('product');
+            $customRequest->customer = $request->get('customer');
             $customRequest->address = $request->get('address');
             $customRequest->manufature_id = $request->get('manufature_id');
             $customRequest->formula_number = $request->get('formula_number');
@@ -90,7 +90,7 @@ class SalesOrderController
             $customRequest->color_logo = $request->get('color_logo');
             $customRequest->filling_wt = $request->get('filling_wt');
             $customRequest->order = $request->get('order');
-            $customRequest->create_by = Auth::user()->id;
+            //$customRequest->create_by = Auth::user()->id;
             $response = $customRequest->save();
 
             $dataIngredient = json_decode($request->get('listIngredients'));
@@ -101,15 +101,13 @@ class SalesOrderController
                 $salesOrderIngredients->customrequest_id = intval($customRequest->id);
                 $salesOrderIngredients->ingredient_id = intval($value->id);
                 $salesOrderIngredients->per_serving = doubleval($value->per_serving);
-                $salesOrderIngredients->create_by = Auth::user()->id;
                 $salesOrderIngredients->save();
             }
 
             foreach ($dataComments as $value) {
                 $salesOrderComments = new SalesOrderComments();
                 $salesOrderComments->customrequest_id = intval($customRequest->id);
-                $salesOrderComments->comment_id = intval($value->id);
-                $salesOrderComments->create_by = Auth::user()->id;
+                $salesOrderComments->comment = $value->content;
                 $salesOrderComments->save();
             }
             $result = [];

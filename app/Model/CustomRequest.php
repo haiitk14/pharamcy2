@@ -38,8 +38,8 @@ class CustomRequest extends Model
      */
     protected $fillable = [
         'ipd',
-        'product_id',
-        'customer_id', 
+        'product',
+        'customer', 
         'address', 
         'manufature_id', 
         'formula_number', 
@@ -58,25 +58,25 @@ class CustomRequest extends Model
         'update_at'
     ];
 
-    public function product() 
-    {
-        return $this->belongsTo('App\Model\Product', 'product_id');
-    }
+    // public function product() 
+    // {
+    //     return $this->belongsTo('App\Model\Product', 'product_id');
+    // }
 
-    public function customer() 
-    {
-        return $this->belongsTo('App\Model\Customer', 'customer_id');
-    }
+    // public function customer() 
+    // {
+    //     return $this->belongsTo('App\Model\Customer', 'customer_id');
+    // }
 
     public function manufature() 
     {
         return $this->belongsTo('App\Model\Manufature', 'manufature_id');
     }
 
-    // public function salesorder_comments() 
-    // {
-    //     return $this->hasMany('App\Model\SalesOrderComments', 'customrequest_id');
-    // }
+    public function salesorder_comments() 
+    {
+        return $this->hasMany('App\Model\SalesOrderComments', 'customrequest_id');
+    }
 
     public function salesorder_ingredients() 
     {
