@@ -81,13 +81,15 @@
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">9. Filling Wt:</label>
-                            <div class="col-sm-8 col-form-label filling-wt">
+                            <div class="col-sm-8 col-form-label" data-bind="text: numeral($root.model.fillWtInActive()).format('0,0.00')">
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label">10. Serving Size: </label>
                             <div class="col-sm-4">
-                                <input type="number" data-bind="value: model.servingSize" name="serving_size" value="0"  class="form-control" title="Enter Serving Size" placeholder="Enter Serving Size" >
+                                <input type="number" data-bind="value: model.servingSize, event: { change: function() {
+                                    $root.calculationArray();
+                                    } }" name="serving_size" value="0"  class="form-control" title="Enter Serving Size" placeholder="Enter Serving Size" >
                             </div>
                         </div>
                         <div class="row form-group">
@@ -154,75 +156,145 @@
                                                  } }" class="form-control">
                                             </td>
                                             
-                                            <td data-bind="text: per_tab() ? per_tab() : 0"></td>
-                                            <td data-bind="text: per_batch() ? per_batch() : 0"></td>
-                                            <td data-bind="text: tab100() ? tab100() : 0"></td>
+                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
                                         </tr>
                                         <!-- /ko -->
                                         <tr>
                                             <td colspan="7"></td>
-                                            <td data-bind="text: $root.model.fillWtColor()"></td>
-                                            <td data-bind="text: $root.model.sumPerBatch()"></td>
-                                            <td data-bind="text: $root.model.sumTab()"></td>
+                                            <td data-bind="text: numeral($root.model.fillWtColor()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumPerBatch()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumTab()).format('0,0.00')"></td>
                                         </tr>
                                     </tbody>
                                     <tbody class="table-shell">
-                                            <tr >
-                                                <td colspan="12"><b>Shell</b></td>
-                                            </tr>
-                                             <!-- ko foreach: arraySalesOrderIngredientsShell -->
-                                            <tr data-bind="attr: { 'data-id': id }">
-                                                <td data-bind="text: ($index() + 1)"></td>
-                                                <td data-bind="text: code"></td>
-                                                <td data-bind="text: name_ingredient"></td>
-                                                <td data-bind="text: per_serving"></td>
-                                                <td>
-                                                    <input type="number" data-bind="value: per_unit, event: { change: function() {
-                                                        per_serving(per_unit() * $root.model.servingSize());
-                                                        per_batch(per_tab() * $root.model.batchSize() * 1000000 );
-                                                     } }" class="form-control">
-                                                </td>
-                                                <td>
-                                                    <input type="number" data-bind="value: purity, event: { change: function() {
-                                                        per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                        per_batch(per_tab() * $root.model.batchSize() * 1000000 );
-                                                        $root.calculationFillWtShell();
-                                                        tab100(per_tab() / $root.model.fillWtColor());
-                                                     } }" class="form-control">
-                                                </td>
-                                                <td>
-                                                    <input type="number" data-bind="value: overage, event: { change: function() {
-                                                        per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                        per_batch(per_tab() * $root.model.batchSize() * 1000000 );
-                                                        $root.calculationFillWtShell();
-                                                        tab100(per_tab() / $root.model.fillWtColor());
-                                                     } }" class="form-control">
-                                                </td>
-                                                
-                                                <td data-bind="text: per_tab() ? per_tab() : 0"></td>
-                                                <td data-bind="text: per_batch() ? per_batch() : 0"></td>
-                                                <td data-bind="text: tab100() ? tab100() : 0"></td>
-                                            </tr>
-                                            <!-- /ko -->
-                                            <tr>
-                                                <td colspan="7"></td>
-                                                <td data-bind="text: $root.model.fillWtShell()"></td>
-                                                <td data-bind="text: $root.model.sumPerBatchShell()"></td>
-                                                <td data-bind="text: $root.model.sumTabShell()"></td>
-                                            </tr>
-                                        </tbody>
-                                    {{-- <tbody class="table-ingredients">
-                                    </tbody> --}}
-                                    
-                                    {{-- <tfoot>
+                                        <tr >
+                                            <td colspan="12"><b>Shell</b></td>
+                                        </tr>
+                                            <!-- ko foreach: arraySalesOrderIngredientsShell -->
+                                        <tr data-bind="attr: { 'data-id': id }">
+                                            <td data-bind="text: ($index() + 1)"></td>
+                                            <td data-bind="text: code"></td>
+                                            <td data-bind="text: name_ingredient"></td>
+                                            <td data-bind="text: per_serving"></td>
+                                            <td>
+                                                <input type="number" data-bind="value: per_unit, event: { change: function() {
+                                                    per_serving(per_unit() * $root.model.servingSize());
+                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    } }" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="number" data-bind="value: purity, event: { change: function() {
+                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
+                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    $root.calculationFillWtShell();
+                                                    tab100(per_tab() / $root.model.fillWtShell());
+                                                    } }" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="number" data-bind="value: overage, event: { change: function() {
+                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
+                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    $root.calculationFillWtShell();
+                                                    tab100(per_tab() / $root.model.fillWtShell());
+                                                    } }" class="form-control">
+                                            </td>
+                                            
+                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                        </tr>
+                                        <!-- /ko -->
+                                        <tr>
+                                            <td colspan="7"></td>
+                                            <td data-bind="text: numeral($root.model.fillWtShell()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumPerBatchShell()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumTabShell()).format('0,0.00')"></td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody class="table-inactive">
+                                        <tr >
+                                            <td colspan="12"><b>Active Ingredients</b></td>
+                                        </tr>
+                                        <!-- ko foreach: arraySalesOrderIngredientsActive -->
+                                        <tr data-bind="attr: { 'data-id': id }">
+                                            <td data-bind="text: ($index() + 1)"></td>
+                                            <td data-bind="text: code"></td>
+                                            <td data-bind="text: name_ingredient"></td>
+                                            <td>
+                                                <input type="number" data-bind="value: per_serving, event: { change: function() {
+                                                    per_unit(per_serving() / $root.model.servingSize());
+                                                    } }" class="form-control">
+                                            </td>
+                                            <td data-bind="text: numeral(per_unit()).format('0,0.00') "></td>
+                                            <td>
+                                                <input type="number" data-bind="value: purity, event: { change: function() {
+                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
+                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    $root.calculationFillWtInActive();
+                                                    tab100(per_tab() / $root.model.fillWtInActive());
+                                                    } }" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="number" data-bind="value: overage, event: { change: function() {
+                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
+                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    $root.calculationFillWtInActive();
+                                                    tab100(per_tab() / $root.model.fillWtInActive());
+                                                    } }" class="form-control">
+                                            </td>
+                                            
+                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                        </tr>
+                                        <!-- /ko -->
+                                        <tr >
+                                            <td colspan="12"><b>Inactive Ingredients</b></td>
+                                        </tr>
+                                        <!-- ko foreach: arraySalesOrderIngredientsInActive -->
+                                        <tr data-bind="attr: { 'data-id': id }">
+                                            <td data-bind="text: ($index() + 1)"></td>
+                                            <td data-bind="text: code"></td>
+                                            <td data-bind="text: name_ingredient"></td>
+                                            <td>
+                                                <input type="number" data-bind="value: per_serving, event: { change: function() {
+                                                    per_unit(per_serving() / $root.model.servingSize());
+                                                    } }" class="form-control">
+                                            </td>
+                                            <td data-bind="text: numeral(per_unit()).format('0,0.00') "></td>
+                                            <td>
+                                                <input type="number" data-bind="value: purity, event: { change: function() {
+                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
+                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    $root.calculationFillWtInActive();
+                                                    tab100(per_tab() / $root.model.fillWtInActive());
+                                                    } }" class="form-control">
+                                            </td>
+                                            <td>
+                                                <input type="number" data-bind="value: overage, event: { change: function() {
+                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
+                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    $root.calculationFillWtInActive();
+                                                    tab100(per_tab() / $root.model.fillWtInActive());
+                                                    } }" class="form-control">
+                                            </td>
+                                            
+                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                        </tr>
+                                        <!-- /ko -->
+
                                         <tr>
                                             <td colspan="6"></td>
                                             <td>Fill Wt</td>
-                                            <td data-bind="text: $root.model.fillWt"></td>
-                                            <td class="sum_input_wt_per_batch">0</td>
-                                            <td class="sum_percent_softgel">0</td>
+                                            <td data-bind="text: numeral($root.model.fillWtInActive()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumPerBatchInActive()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumTabInActive()).format('0,0.00')"></td>
                                         </tr>
-                                    </tfoot> --}}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -261,7 +333,7 @@
                             8. Color/Logo: <span class="color-logo"></span>
                         </div>
                         <div >
-                            9. Filling Wt: <span class="filling-wt"></span>
+                            9. Filling Wt: <span data-bind="text: numeral($root.model.fillWtInActive()).format('0,0.00')"></span>
                         </div>
                         <div >
                             10. Serving Size: <span class="serving_size"></span>
@@ -277,37 +349,128 @@
                         </div>
                         <div >
                             <div >
-                                <table  style="width: 100%">
+                                <table style="width: 100%">
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Code</th>
+                                            <th>RW No.</th>
                                             <th>Ingredients *</th>
-                                            <th>Serving <br>Wt.mg</th>
-                                            <th>Req Wt</th>
+                                            <th>Wt (mg) <br>per Serving</th>
+                                            <th  width="15%">Wt (mg) <br>per Unit</th>
                                             <th width="10%">Purity %</th>
                                             <th width="10%">Overage %</th>
-                                            <th>Input <br>Wt/mg</th>
-                                            <th>Input Wt <br>per batch</th>
-                                            <th>Percent <br>Softgel %</th>
-                                            <th width="10%">Density</th>
-                                            <th>Volum</th>
+                                            <th>Input <br>Wt/mg per tab</th>
+                                            <th>Input <br>Wt/kg per batch</th>
+                                            <th>%Tab</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-ingredients">
+                                    <tbody class="table-color">
+                                        <tr colspan="12">
+                                                <td colspan="12"><b>Color</b></td>
+                                        </tr>
+                                        <!-- ko foreach: arraySalesOrderIngredientsColor -->
+                                        <tr data-bind="attr: { 'data-id': id }">
+                                            <td data-bind="text: ($index() + 1)"></td>
+                                            <td data-bind="text: code"></td>
+                                            <td data-bind="text: name_ingredient"></td>
+                                            <td data-bind="text: per_serving"></td>
+                                            <td data-bind="text: per_unit">
+                                            </td>
+                                            <td data-bind="text: purity">
+                                            </td>
+                                            <td data-bind="text: overage">
+                                            </td>
+                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                        </tr>
+                                        <!-- /ko -->
+                                        <tr>
+                                            <td colspan="7"></td>
+                                            <td data-bind="text: numeral($root.model.fillWtColor()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumPerBatch()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumTab()).format('0,0.00')"></td>
+                                        </tr>
                                     </tbody>
-                                    <tfoot>
+                                    <tbody class="table-shell">
+                                        <tr >
+                                            <td colspan="12"><b>Shell</b></td>
+                                        </tr>
+                                            <!-- ko foreach: arraySalesOrderIngredientsShell -->
+                                        <tr data-bind="attr: { 'data-id': id }">
+                                            <td data-bind="text: ($index() + 1)"></td>
+                                            <td data-bind="text: code"></td>
+                                            <td data-bind="text: name_ingredient"></td>
+                                            <td data-bind="text: per_serving"></td>
+                                            <td data-bind="text: per_unit">
+                                            </td>
+                                            <td data-bind="text: purity">
+                                            </td>
+                                            <td data-bind="text: overage">
+                                            </td>
+                                            
+                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                        </tr>
+                                        <!-- /ko -->
+                                        <tr>
+                                            <td colspan="7"></td>
+                                            <td data-bind="text: numeral($root.model.fillWtShell()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumPerBatchShell()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumTabShell()).format('0,0.00')"></td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody class="table-inactive">
+                                        <tr >
+                                            <td colspan="12"><b>Active Ingredients</b></td>
+                                        </tr>
+                                        <!-- ko foreach: arraySalesOrderIngredientsActive -->
+                                        <tr data-bind="attr: { 'data-id': id }">
+                                            <td data-bind="text: ($index() + 1)"></td>
+                                            <td data-bind="text: code"></td>
+                                            <td data-bind="text: name_ingredient"></td>
+                                            <td data-bind="text: per_serving"></td>
+                                            <td data-bind="text: per_unit">
+                                            </td>
+                                            <td data-bind="text: purity">
+                                            </td>
+                                            <td data-bind="text: overage">
+                                            </td>
+                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                        </tr>
+                                        <!-- /ko -->
+                                        <tr >
+                                            <td colspan="12"><b>Inactive Ingredients</b></td>
+                                        </tr>
+                                        <!-- ko foreach: arraySalesOrderIngredientsInActive -->
+                                        <tr data-bind="attr: { 'data-id': id }">
+                                            <td data-bind="text: ($index() + 1)"></td>
+                                            <td data-bind="text: code"></td>
+                                            <td data-bind="text: name_ingredient"></td>
+                                            <td data-bind="text: per_serving"></td>
+                                            <td data-bind="text: per_unit">
+                                            </td>
+                                            <td data-bind="text: purity">
+                                            </td>
+                                            <td data-bind="text: overage">
+                                            </td>
+                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                        </tr>
+                                        <!-- /ko -->
+
                                         <tr>
                                             <td colspan="6"></td>
                                             <td>Fill Wt</td>
-                                            <td class="fill_wt">0</td>
-                                            <td class="sum_input_wt_per_batch">0</td>
-                                            <td class="sum_percent_softgel">0</td>
-                                            <td>Total</td>
-                                            <td class="total">0</td>
-
+                                            <td data-bind="text: numeral($root.model.fillWtInActive()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumPerBatchInActive()).format('0,0.00')"></td>
+                                            <td data-bind="text: numeral($root.model.sumTabInActive()).format('0,0.00')"></td>
                                         </tr>
-                                    </tfoot>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -329,6 +492,8 @@
         var dataListIngredients = [];
         self.arraySalesOrderIngredientsColor = ko.observableArray([]);
         self.arraySalesOrderIngredientsShell = ko.observableArray([]);
+        self.arraySalesOrderIngredientsActive = ko.observableArray([]);
+        self.arraySalesOrderIngredientsInActive = ko.observableArray([]);
         self.model = {
             servingSize: ko.observable(0),
             gelatinBatch: ko.observable(0),
@@ -341,6 +506,10 @@
             fillWtShell: ko.observable(0),
             sumPerBatchShell: ko.observable(0),
             sumTabShell: ko.observable(0),
+
+            fillWtInActive: ko.observable(0),
+            sumPerBatchInActive: ko.observable(0),
+            sumTabInActive: ko.observable(0),
         }
         self.calculationFillWt = function() {
             var fillWt = 0,  sumPerBatch = 0,  sumTab= 0;
@@ -368,6 +537,30 @@
             self.model.sumPerBatchShell(sumPerBatch);
             self.model.sumTabShell(sumTab);
         }
+        self.calculationFillWtInActive = function() {
+            var fillWt = 0,  sumPerBatch = 0,  sumTab= 0;
+            var arr = self.arraySalesOrderIngredientsActive().concat(self.arraySalesOrderIngredientsInActive());
+
+            $.each(arr, function( index, value ) {
+                fillWt += value.per_tab();
+                sumPerBatch += value.per_batch();
+                sumTab += value.tab100();
+            });
+            self.model.fillWtInActive(fillWt);
+            self.model.sumPerBatchInActive(sumPerBatch);
+            self.model.sumTabInActive(sumTab);
+        }
+        self.calculationArray = function() {
+            var arr = self.arraySalesOrderIngredientsActive();
+            var arr2 = self.arraySalesOrderIngredientsInActive();
+
+            $.each(arr, function( index, value ) {
+                value.per_unit(value.per_serving() / self.model.servingSize());
+            });
+            $.each(arr2, function( index, value ) {
+                value.per_unit(value.per_serving() / self.model.servingSize());
+            });
+        }
         $(document).ready(function() {
 
             $("#print").click(function(){
@@ -392,101 +585,6 @@
                 } else 
                     formDataView.addClass("d-none");
             });
-
-            // formDataView.find("input[name=serving_size]").change(function () {
-            //     var serving_size = Number($(this).val());
-            //     for (var i = 0; i < dataListIngredients.length; i++ ) {
-            //         dataListIngredients[i].serving_size = serving_size;
-            //         dataListIngredients[i].req_wt = serving_size * Number(dataListIngredients[i].per_serving);
-            //     }
-            //     console.log("serving_size");
-            //     showDataTableIngredients(dataListIngredients);
-            // });
-
-            formDataView.find("input[name=batch_size]").change(function () {
-                var batch_size = Number($(this).val());
-                for (var i = 0; i < dataListIngredients.length; i++ ) {
-                    dataListIngredients[i].batch_size = batch_size;
-                    dataListIngredients[i].input_wt_per_batch = calculationInputWtPerBatch(dataListIngredients[i].input_wtmg, batch_size);
-                }
-                console.log("batch_size");
-                showDataTableIngredients(dataListIngredients);
-            });
-
-            $(document).on('change', "input.purity", function() {
-            
-                if (checkThreeInputOver() == 0) {
-                    toastr.error("Enter Serving Size & Gelatin Batch & Batch size. Please...");
-                    return false;
-                }
-                var tr = $(this).closest("tr").addClass("item-change");
-                var id = tr.data("id");
-                var fillWt = numeral(formDataView.find(".fill_wt").text()).value();
-
-                if ($(this).val() == "" || $(this).val() == undefined) return false;
-                var purity = Number($(this).val());
-                
-                for (var i = 0; i < dataListIngredients.length; i++ ) {
-
-                    if (id == dataListIngredients[i].id) {
-                        dataListIngredients[i].purity = purity;
-                        dataListIngredients[i].input_wtmg = calculationInputWtmg(dataListIngredients[i].req_wt, dataListIngredients[i].purity , dataListIngredients[i].overage);
-                        dataListIngredients[i].input_wt_per_batch = calculationInputWtPerBatch(dataListIngredients[i].input_wtmg, dataListIngredients[i].batch_size);
-                        dataListIngredients[i].percent_softgel = calculationPercentSoftgel(dataListIngredients[i].input_wtmg, fillWt);
-                        dataListIngredients[i].volum = calculationVolum(dataListIngredients[i].input_wtmg, dataListIngredients[i].density);
-                        break;
-                    }
-                }
-                showDataTableIngredients(dataListIngredients);
-            });
-
-            $(document).on('change', "input.overage", function() {
-                if (checkThreeInputOver() == 0) {
-                    toastr.error("Enter Serving Size & Gelatin Batch & Batch size. Please...");
-                    return false;
-                }
-                var tr = $(this).closest("tr").addClass("item-change");
-                var id = tr.data("id");
-                var fillWt = numeral(formDataView.find(".fill_wt").text()).value();
-
-                if ($(this).val() == "" || $(this).val() == undefined) return false;
-                var overage = Number($(this).val());
-                
-                for (var i = 0; i < dataListIngredients.length; i++ ) {
-
-                    if (id == dataListIngredients[i].id ) {
-                        dataListIngredients[i].overage =  overage;
-                        dataListIngredients[i].input_wtmg = calculationInputWtmg(dataListIngredients[i].req_wt, dataListIngredients[i].purity , dataListIngredients[i].overage);
-                        dataListIngredients[i].input_wt_per_batch = calculationInputWtPerBatch(dataListIngredients[i].input_wtmg, dataListIngredients[i].batch_size);
-                        dataListIngredients[i].percent_softgel = calculationPercentSoftgel(dataListIngredients[i].input_wtmg, fillWt);
-                        dataListIngredients[i].volum = calculationVolum(dataListIngredients[i].input_wtmg, dataListIngredients[i].volum);
-                        break;
-                    }
-                }
-                showDataTableIngredients(dataListIngredients);
-            });
-
-            $(document).on('change', "input.density", function() {
-                if (checkThreeInputOver() == 0) {
-                    toastr.error("Enter Serving Size & Gelatin Batch & Batch size. Please...");
-                    return false;
-                }
-                var tr = $(this).closest("tr").addClass("item-change");
-                var id = tr.data("id");
-
-                if ($(this).val() == "" || $(this).val() == undefined) return false;
-                var density = Number($(this).val());
-                
-                for (var i = 0; i < dataListIngredients.length; i++ ) {
-
-                    if (id == dataListIngredients[i].id ) {
-                        dataListIngredients[i].density =  density;
-                        dataListIngredients[i].volum = calculationVolum(dataListIngredients[i].input_wtmg, density);
-                        break;
-                    }
-                }
-                showDataTableIngredients(dataListIngredients);
-            });
         });
         var showDataCustomRequest = function(data) {
 
@@ -497,12 +595,16 @@
             if (data.customRequest) {
                 var customRequest = data.customRequest;
                 self.model.batchSize(customRequest.order);
+                formDataView.find(".product-name").html(customRequest.product);
+                formDataView.find(".customer-full-name").html(customRequest.customer);
                 formDataView.find(".formula-number").html(customRequest.formula_number);
                 formDataView.find(".revision").html(customRequest.revision);
                 formDataView.find(".show-date").html(moment(customRequest.date).format('MM/DD/YYYY'));
                 formDataView.find(".size-type").html(customRequest.size_type);
                 formDataView.find(".color-logo").html(customRequest.color_logo);
 
+                formDataPrint.find(".product-name").html(customRequest.product);
+                formDataPrint.find(".customer-full-name").html(customRequest.customer);
                 formDataPrint.find(".formula-number").html(customRequest.formula_number);
                 formDataPrint.find(".revision").html(customRequest.revision);
                 formDataPrint.find(".show-date").html(moment(customRequest.date).format('MM/DD/YYYY'));
@@ -520,31 +622,39 @@
                 formDataPrint.find(".manufature-address").html(manufature.address);
                 formDataPrint.find(".manufature-phone").html(manufature.phone);
             }
-            if (data.customer) {
-                var customer = data.customer;
-                formDataView.find(".customer-full-name").html(customer.full_name);
-
-                formDataPrint.find(".customer-full-name").html(customer.full_name);
-            }
-            if (data.product) {
-                var product = data.product;
-                formDataView.find(".product-name").html(product.name);
-
-                formDataPrint.find(".product-name").html(product.name);
-            }
+            
         
             if (data.salesOrderIngredients) {
                 var dataSalesOrderIngredients = data.salesOrderIngredients;
                 dataListIngredients = data.salesOrderIngredients;
-                var arr = [];
                 var arrayIngredientsColor = [];
                 var arrayIngredientsShell = [];
+                var arrayIngredientsActive = [];
+                var arrayIngredientsInActive = [];
 
                 for (var i = 0; i < dataSalesOrderIngredients.length; i++) {
                     var item = dataSalesOrderIngredients[i];
 
-                    if (item.ingredient.inactive == 0 || item.ingredient.inactive == 1) {
-                        arr.push(item);
+                    
+                    if (item.ingredient.inactive == 0) {
+                        item.per_serving = ko.observable(item.per_serving);
+                        item.per_unit = ko.observable(0);
+                        item.purity = ko.observable(0);
+                        item.overage = ko.observable(0);
+                        item.per_tab = ko.observable(0);
+                        item.per_batch = ko.observable(0);
+                        item.tab100 = ko.observable(0);
+                        arrayIngredientsActive.push(item);
+                    }
+                    if (item.ingredient.inactive == 1) {
+                        item.per_serving = ko.observable(item.per_serving);
+                        item.per_unit = ko.observable(0);
+                        item.purity = ko.observable(0);
+                        item.overage = ko.observable(0);
+                        item.per_tab = ko.observable(0);
+                        item.per_batch = ko.observable(0);
+                        item.tab100 = ko.observable(0);
+                        arrayIngredientsInActive.push(item);
                     }
                     if (item.ingredient.inactive == 2) {
                         item.per_serving = ko.observable(0);
@@ -567,9 +677,10 @@
                         arrayIngredientsShell.push(item);
                     }
                 }
-                showDataTableIngredients(arr);
-                self.arraySalesOrderIngredientsColor(arrayIngredientsColor)
-                self.arraySalesOrderIngredientsShell(arrayIngredientsShell)
+                self.arraySalesOrderIngredientsColor(arrayIngredientsColor);
+                self.arraySalesOrderIngredientsShell(arrayIngredientsShell);
+                self.arraySalesOrderIngredientsActive(arrayIngredientsActive)
+                self.arraySalesOrderIngredientsInActive(arrayIngredientsInActive)
             }
 
         
