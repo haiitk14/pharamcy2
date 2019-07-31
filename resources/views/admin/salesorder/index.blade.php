@@ -141,19 +141,33 @@
                             <div class="col-sm-8">
                                 <select class="form-control" name="ingredient"  title="Choose Ingredient">
                                     <option value="">None</option>
+                                    <optgroup label="Color">
+                                        @foreach ($data['ingredients'] as $ingredient)
+                                            @if ($ingredient->inactive == 2)
+                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Shell">
+                                        @foreach ($data['ingredients'] as $ingredient)
+                                            @if ($ingredient->inactive == 3)
+                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
                                     <optgroup label="Active">
-                                    @foreach ($data['ingredients'] as $ingredient)
-                                    @if ($ingredient->inactive == 0)
-                                        <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
-                                    @endif
-                                    @endforeach
+                                        @foreach ($data['ingredients'] as $ingredient)
+                                            @if ($ingredient->inactive == 0)
+                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </optgroup>
                                     <optgroup label="InActive">
-                                    @foreach ($data['ingredients'] as $ingredient)
-                                    @if ($ingredient->inactive == 1)
-                                        <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
-                                    @endif
-                                    @endforeach
+                                        @foreach ($data['ingredients'] as $ingredient)
+                                            @if ($ingredient->inactive == 1)
+                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                            @endif
+                                        @endforeach
                                     </optgroup>
                                 </select>
                             </div>
@@ -172,6 +186,10 @@
                                             <th width="5%">Del</th>
                                         </tr>
                                     </thead>
+                                    <tbody id="data-color">
+                                    </tbody>
+                                    <tbody id="data-shell">
+                                    </tbody>
                                     <tbody id="data-active">
                                     </tbody>
                                     <tbody id="data-inactive">
@@ -312,6 +330,10 @@
                                         <th>per Serving *</th>
                                     </tr>
                                     </thead>
+                                    <tbody id="data-color-print">
+                                    </tbody>
+                                    <tbody id="data-shell-print">
+                                    </tbody>
                                     <tbody id="data-active-print">
                                     </tbody>
                                     <tbody id="data-inactive-print">
@@ -430,7 +452,7 @@
                return false;
             }
             
-            if (checkItemExistArray(dataTableIng, ingredient)) {
+            if (checkItemExistArrayIngredients(dataTableIng, ingredient)) {
                 toastr.error('{{ __('The ingredient exist.') }}');
                 return false;
             }
@@ -489,7 +511,7 @@
                return false;
             }
             
-            if (checkItemExistArray(dataTableComments, comment)) {
+            if (checkItemExistArrayComments(dataTableComments, comment)) {
                 toastr.error('{{ __('The comment exist.') }}');
                 return false;
             }
@@ -624,35 +646,99 @@
     }
 
     var addRowTableIngredients = function(data) {
-        $("#data-active, #data-inactive, #data-active-print, #data-inactive-print").html("");
+        $("#data-active, #data-inactive, #data-color, #data-shell, #data-active-print, #data-inactive-print, #data-color-print, #data-shell-print").html("");
         var strActive = "";
-        var strInActive = "<tr><th colspan='5'>Inactive Ingredients</th></tr>";
+        var strInActive = "";
+        var strColor = "";
+        var strShell = "";
 		var strActivePrint = "";
-        var strInActivePrint = "<tr><th colspan='5' style='text-align: left'>Inactive Ingredients</th></tr>";
+        var strInActivePrint = "";
+        var strColorPrint = "";
+        var strShellPrint = "";
 
         var num = 1;
+
+        var notHaveColor = true;
         for (var i = 0; i < data.length; i++) {
 
-            if (data[i].inactive == 0) {
-                strActive += "<tr><td>" + num  + "</td><td>" + data[i].name + 
-                    "</td><td class='per-serving'><a href='javascript:;' data-id='" + data[i].id + "' class='addperserving' title='Edit Per Serving'>" + data[i].per_serving + "</a></td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
-                strActivePrint += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td></tr>";
-                num++;
+            if (data[i].inactive != 2) {
+                continue;
             }
+
+            if (notHaveColor) {
+                strColor += "<tr><th colspan='5'>Color</th></tr>";
+                strColorPrint += "<tr><th colspan='5' style='text-align: left'>Color</th></tr>";
+                notHaveColor = false;
+            }
+            strColor += "<tr><td>" + num  + "</td><td>" + data[i].name +
+                "</td><td class='per-serving'><a href='javascript:;' data-id='" + data[i].id + "' class='addperserving' title='Edit Per Serving'>" + data[i].per_serving + "</a></td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
+            strColorPrint += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td></tr>";
+            num++;
         }
+
+        var notHaveShell = true;
         for (var i = 0; i < data.length; i++) {
-            
-            if (data[i].inactive == 1) {
-                strInActive += "<tr><td>" + num  + "</td><td>" + data[i].name + 
-                    "</td><td class='per-serving'><a href='javascript:;' data-id='" + data[i].id + "' class='addperserving' title='Edit Per Serving'>" + data[i].per_serving + "</a></td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
-                strInActivePrint += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td></tr>"
-                num++;
+
+            if (data[i].inactive != 3) {
+                continue;
             }
+
+            if (notHaveShell) {
+                strShell += "<tr><th colspan='5'>Shell</th></tr>";
+                strShellPrint += "<tr><th colspan='5' style='text-align: left'>Shell</th></tr>";
+                notHaveShell = false;
+            }
+
+            strShell += "<tr><td>" + num  + "</td><td>" + data[i].name +
+                "</td><td class='per-serving'><a href='javascript:;' data-id='" + data[i].id + "' class='addperserving' title='Edit Per Serving'>" + data[i].per_serving + "</a></td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
+            strShellPrint += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td></tr>";
+            num++;
         }
+
+        var notHaveActive = true;
+        for (var i = 0; i < data.length; i++) {
+
+            if (data[i].inactive != 0) {
+                continue;
+            }
+
+            if (notHaveActive) {
+                strActive += "<tr><th colspan='5'>Active</th></tr>"
+                strActivePrint += "<tr><th colspan='5' style='text-align: left'>Active</th></tr>";
+                notHaveActive = false;
+            }
+            strActive += "<tr><td>" + num  + "</td><td>" + data[i].name +
+                "</td><td class='per-serving'><a href='javascript:;' data-id='" + data[i].id + "' class='addperserving' title='Edit Per Serving'>" + data[i].per_serving + "</a></td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
+            strActivePrint += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td></tr>";
+            num++;
+        }
+
+        var notHaveInActive = true;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].inactive != 1) {
+                continue;
+            }
+
+            if (notHaveInActive) {
+                strInActive += "<tr><th colspan='5'>InActive</th></tr>";
+                strInActivePrint += "<tr><th colspan='5' style='text-align: left'>InActive</th></tr>";
+                notHaveInActive = false;
+            }
+
+            strInActive += "<tr><td>" + num  + "</td><td>" + data[i].name +
+                "</td><td class='per-serving'><a href='javascript:;' data-id='" + data[i].id + "' class='addperserving' title='Edit Per Serving'>" + data[i].per_serving + "</a></td><td class='text-center'> <a href='javascript:;' data-id='" + data[i].id + "' class='delingredient' title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a> </td></tr>";
+            strInActivePrint += "<tr><td>" + num  + "</td><td>" + data[i].name + "</td><td>" + data[i].per_serving + "</td></tr>"
+            num++;
+        }
+
+        $("#data-color").html(strColor);
+        $("#data-shell").html(strShell);
         $("#data-active").html(strActive);
         $("#data-inactive").html(strInActive);
-		$("#data-active-print").html(strActivePrint);
+        $("#data-active-print").html(strActivePrint);
         $("#data-inactive-print").html(strInActivePrint);
+        $("#data-color-print").html(strColorPrint);
+        $("#data-shell-print").html(strShellPrint);
     }
 
 	var addRowTableComments = function(data) {
@@ -669,7 +755,17 @@
 		$("#data-comments-print").html(strPrint);
     }
 
-    var checkItemExistArray = function(array, comment) {
+    var checkItemExistArrayIngredients = function(array, id) {
+        var res = false;
+        $.each(array , function(index, item) { 
+            if (item.id == Number(id)) {
+                res = true;
+                return false;
+            }
+        });
+        return res;
+    }
+    var checkItemExistArrayComments = function(array, comment) {
         var res = false;
         $.each(array , function(index, item) { 
             if (item.content == comment) {

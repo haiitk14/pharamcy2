@@ -20,7 +20,7 @@
                                     <th>No</th>
                                     <th>{{ __('Code') }}</th>
                                     <th>{{ __('Name') }}</th>
-                                    <th>{{ __('Inactive') }}</th>
+                                    <th>{{ __('Type') }}</th>
                                     <th class="text-center" width="5%">{{ __('Edit') }}</th>
                                     <th class="text-center" width="5%">{{ __('Delete') }}</th>
                                 </tr>
@@ -31,7 +31,22 @@
                                     <td class="align-middle">{{ $loop->iteration }}</td>
                                     <td class="align-middle code">{{ $item->code }}</td>
                                     <td class="align-middle name">{{ $item->name }}</td>
-                                    <td class="align-middle inactive">{{ $item->inactive == 1 ? 'Yes' : 'No' }}</td>
+                                    <td class="align-middle inactive">
+                                        @switch($item->inactive)
+                                            @case(1)
+                                            {{'InActive'}}
+                                            @break
+                                            @case(0)
+                                            {{'Active'}}
+                                            @break
+                                            @case(2)
+                                            {{'Color'}}
+                                            @break
+                                            @case(3)
+                                            {{'Shell'}}
+                                            @break
+                                        @endswitch
+                                    </td>
                                     <td class="text-center">
                                         <a href="javascript:;" class="edit-item" data-id="{{ $item->id }}">
                                             <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
@@ -93,7 +108,20 @@
                 form.find('input[name=id]').val(id);
                 form.find('input[name=code]').val(code);
                 form.find('input[name=name]').val(name);
-                form.find('select[name=inactive]').val(inactive == "Yes" ? 1 : 0);
+                var type = 0;
+
+                switch (inactive.trim()) {
+                    case "InActive":
+                        type = 1;
+                        break;
+                    case "Color":
+                        type = 2;
+                        break;
+                    case "Shell":
+                        type = 3;
+                        break;
+                }
+                form.find('select[name=inactive]').val(type);
             }
         });
 

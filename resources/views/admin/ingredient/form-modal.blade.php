@@ -20,10 +20,12 @@
 			            <input type="text" title="Enter Name" name="name" class="form-control">
 			        </div>
 					<div class="form-group">
-			            <label>{{ __('Inactive') }}</label>
-			            <select class="form-control" name="inactive">
-							<option value="1">Yes</option>
-							<option value="0">No</option>
+			            <label>{{ __('Type') }}</label>
+						<select class="form-control" name="inactive">
+							<option value="0">Active</option>
+							<option value="1">InActive</option>
+							<option value="2">Color</option>
+							<option value="3">Shell</option>
 						</select>
 			        </div>
 			    </div>
