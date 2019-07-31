@@ -106,8 +106,7 @@
     <!-- create at 2019/06/13 by haidt -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="{{ asset('assets/plugins/datetimepicker/js/daterangepicker.js') }}"></script>
-
-
+    <script src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"></script>
 
     @section('script')
     @show

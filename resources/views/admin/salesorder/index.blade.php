@@ -129,7 +129,7 @@
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label">Order * </label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="order">
+                                <input type="number" class="form-control" name="order">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -589,7 +589,7 @@
                 size_type: size_type,
                 color_logo: color_logo,
                 filling_wt: filling_wt,
-                order: order,
+                order: Number(order),
                 listIngredients:  JSON.stringify(dataTableIng), 
                 listComments:  JSON.stringify(dataTableComments), 
             };
