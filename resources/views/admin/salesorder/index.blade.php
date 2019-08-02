@@ -127,9 +127,9 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label for="order" class="col-sm-2 col-form-label">Order * </label>
+                            <label for="order" class="col-sm-2 col-form-label">Order quantity (unit) * </label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" name="order">
+                                <input type="text" class="form-control" name="order">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -313,7 +313,7 @@
                             <div>Filling Wt: <span class="fillingprint"></span></div> 
                         </div>
                         <div>
-                            <div >Order: <span class="orderprint"></span> </div>
+                            <div >Order quantity (unit): <span class="orderprint"></span> </div>
                         </div>
                         <div>
                             <div >
@@ -589,7 +589,7 @@
                 size_type: size_type,
                 color_logo: color_logo,
                 filling_wt: filling_wt,
-                order: Number(order),
+                order: numeral(order).value(),
                 listIngredients:  JSON.stringify(dataTableIng), 
                 listComments:  JSON.stringify(dataTableComments), 
             };
@@ -600,6 +600,14 @@
                 });
             });
         });
+
+        /**
+		 * Event change giá trị trong form Order
+		 */
+         formDataView.find("input[name=order]").change(function() {
+			var price = numeral($(this).val()).format('0,0');
+			$( this ).val(price);
+		});
     }); 
 
     var setDataIntoFormPrint = function() {

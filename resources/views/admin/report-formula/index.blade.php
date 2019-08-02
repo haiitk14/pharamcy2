@@ -100,7 +100,7 @@
                         </div>
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label">12. Batch size: </label>
-                            <div class="col-sm-8 col-form-label" data-bind="text: model.batchSize">
+                            <div class="col-sm-8 col-form-label" data-bind="text: numeral(model.batchSize()).format('0,0')">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -136,28 +136,28 @@
                                             <td>
                                                 <input type="number" data-bind="value: per_unit, event: { change: function() {
                                                     per_serving(per_unit() * $root.model.servingSize());
-                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
                                                  } }" class="form-control">
                                             </td>
                                             <td>
                                                 <input type="number" data-bind="value: purity, event: { change: function() {
                                                     per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
                                                     $root.calculationFillWt();
-                                                    tab100(per_tab() / $root.model.fillWtColor());
+                                                    tab100(per_tab() / $root.model.fillWtInActive());
                                                  } }" class="form-control">
                                             </td>
                                             <td>
                                                 <input type="number" data-bind="value: overage, event: { change: function() {
                                                     per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
                                                     $root.calculationFillWt();
-                                                    tab100(per_tab() / $root.model.fillWtColor());
+                                                    tab100(per_tab() / $root.model.fillWtInActive());
                                                  } }" class="form-control">
                                             </td>
                                             
                                             <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_batch() "></td>
                                             <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
                                         </tr>
                                         <!-- /ko -->
@@ -181,13 +181,13 @@
                                             <td>
                                                 <input type="number" data-bind="value: per_unit, event: { change: function() {
                                                     per_serving(per_unit() * $root.model.servingSize());
-                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
                                                     } }" class="form-control">
                                             </td>
                                             <td>
                                                 <input type="number" data-bind="value: purity, event: { change: function() {
                                                     per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
                                                     $root.calculationFillWtShell();
                                                     tab100(per_tab() / $root.model.fillWtShell());
                                                     } }" class="form-control">
@@ -195,7 +195,7 @@
                                             <td>
                                                 <input type="number" data-bind="value: overage, event: { change: function() {
                                                     per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
                                                     $root.calculationFillWtShell();
                                                     tab100(per_tab() / $root.model.fillWtShell());
                                                     } }" class="form-control">
@@ -231,7 +231,7 @@
                                             <td>
                                                 <input type="number" data-bind="value: purity, event: { change: function() {
                                                     per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
                                                     $root.calculationFillWtInActive();
                                                     tab100(per_tab() / $root.model.fillWtInActive());
                                                     } }" class="form-control">
@@ -239,7 +239,7 @@
                                             <td>
                                                 <input type="number" data-bind="value: overage, event: { change: function() {
                                                     per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
                                                     $root.calculationFillWtInActive();
                                                     tab100(per_tab() / $root.model.fillWtInActive());
                                                     } }" class="form-control">
