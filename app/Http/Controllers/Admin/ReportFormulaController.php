@@ -40,12 +40,14 @@ class ReportFormulaController
         $pageName = $this->pageName;
         // $customRequests = CustomRequest::where('create_by', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         $customRequests = CustomRequest::orderBy('created_at', 'desc')->get();
+        $ingredients = Ingredient::where('is_delete', 0)->get();
 
         // $salesOrderIngredients = $customRequest != null ?  SalesOrderIngredients::where('customrequest_id', $customRequest->id)->orderBy('created_at', 'asc')->get() : null;
         $data = [
             'customRequests' => $customRequests,
             'salesOrderIngredients' => null,
             'customRequest' => null,
+            'ingredients' => $ingredients
         ];
 
         return view('admin.report-formula.index', compact('pageName', 'data'));

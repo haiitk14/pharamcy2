@@ -102,9 +102,46 @@
                             <label for="order" class="col-sm-2 col-form-label">12. Batch size: </label>
                             <div class="col-sm-8 col-form-label" data-bind="text: numeral(model.batchSize()).format('0,0')">
                             </div>
+                           
                         </div>
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label">13. </label>
+                            <div class="col-sm-6">
+                                <select class="form-control" name="ingredient_formula"  title="Choose Ingredient">
+                                    <option value="">None</option>
+                                    <optgroup label="Color">
+                                        @foreach ($data['ingredients'] as $ingredient)
+                                            @if ($ingredient->inactive == 2)
+                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Shell">
+                                        @foreach ($data['ingredients'] as $ingredient)
+                                            @if ($ingredient->inactive == 3)
+                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Active">
+                                        @foreach ($data['ingredients'] as $ingredient)
+                                            @if ($ingredient->inactive == 0)
+                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="InActive">
+                                        @foreach ($data['ingredients'] as $ingredient)
+                                            @if ($ingredient->inactive == 1)
+                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <a href="javascript:;" id="add-ingredient" title="Add Ingredient" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Add</a>
+                            </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 table-responsive">
@@ -113,18 +150,19 @@
                                         <tr>
                                             <th>No</th>
                                             <th>RW No.</th>
-                                            <th>Ingredients *</th>
+                                            <th width="14%">Ingredients *</th>
                                             <th>Wt (mg) <br>per Serving</th>
-                                            <th  width="15%">Wt (mg) <br>per Unit</th>
+                                            <th  width="12%">Wt (mg) <br>per Unit</th>
                                             <th width="10%">Purity %</th>
                                             <th width="10%">Overage %</th>
                                             <th>Input <br>Wt/mg per tab</th>
                                             <th>Input <br>Wt/kg per batch</th>
                                             <th>%Tab</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-color">
-                                        <tr colspan="12">
+                                        <tr colspan="13">
                                                 <td colspan="12"><b>Color</b></td>
                                         </tr>
                                         <!-- ko foreach: arraySalesOrderIngredientsColor -->
@@ -157,8 +195,13 @@
                                             </td>
                                             
                                             <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: per_batch() "></td>
+                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0 "></td>
                                             <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                            <td class='text-center'> 
+                                                <a href='javascript:;' data-bind="click: $root.removeColor" title='Delete Item'>
+                                                    <i class='fa fa-lg fa-trash' aria-hidden='true'></i>
+                                                </a> 
+                                            </td>
                                         </tr>
                                         <!-- /ko -->
                                         <tr>
@@ -170,7 +213,7 @@
                                     </tbody>
                                     <tbody class="table-shell">
                                         <tr >
-                                            <td colspan="12"><b>Shell</b></td>
+                                            <td colspan="13"><b>Shell</b></td>
                                         </tr>
                                             <!-- ko foreach: arraySalesOrderIngredientsShell -->
                                         <tr data-bind="attr: { 'data-id': id }">
@@ -204,6 +247,11 @@
                                             <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
                                             <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
                                             <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                            <td class='text-center'> 
+                                                <a href='javascript:;' data-bind="click: $root.removeShell" title='Delete Item'>
+                                                    <i class='fa fa-lg fa-trash' aria-hidden='true'></i>
+                                                </a> 
+                                            </td>
                                         </tr>
                                         <!-- /ko -->
                                         <tr>
@@ -215,7 +263,7 @@
                                     </tbody>
                                     <tbody class="table-inactive">
                                         <tr >
-                                            <td colspan="12"><b>Active Ingredients</b></td>
+                                            <td colspan="13"><b>Active Ingredients</b></td>
                                         </tr>
                                         <!-- ko foreach: arraySalesOrderIngredientsActive -->
                                         <tr data-bind="attr: { 'data-id': id }">
@@ -248,6 +296,11 @@
                                             <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
                                             <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
                                             <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                            <td class='text-center'> 
+                                                <a href='javascript:;' data-bind="click: $root.removeActive" title='Delete Item'>
+                                                    <i class='fa fa-lg fa-trash' aria-hidden='true'></i>
+                                                </a> 
+                                            </td>
                                         </tr>
                                         <!-- /ko -->
                                         <tr >
@@ -267,7 +320,7 @@
                                             <td>
                                                 <input type="number" data-bind="value: purity, event: { change: function() {
                                                     per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
                                                     $root.calculationFillWtInActive();
                                                     tab100(per_tab() / $root.model.fillWtInActive());
                                                     } }" class="form-control">
@@ -275,7 +328,7 @@
                                             <td>
                                                 <input type="number" data-bind="value: overage, event: { change: function() {
                                                     per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() * 1000000 );
+                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
                                                     $root.calculationFillWtInActive();
                                                     tab100(per_tab() / $root.model.fillWtInActive());
                                                     } }" class="form-control">
@@ -284,6 +337,11 @@
                                             <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
                                             <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
                                             <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                            <td class='text-center'> 
+                                                <a href='javascript:;' data-bind="click: $root.removeInActive" title='Delete Item'>
+                                                    <i class='fa fa-lg fa-trash' aria-hidden='true'></i>
+                                                </a> 
+                                            </td>
                                         </tr>
                                         <!-- /ko -->
 
@@ -342,7 +400,7 @@
                             11. Gelatin Batch: <span class="gelatin_batch"></span>
                         </div>
                         <div>
-                            12. Batch size: <span class="batch_size" data-bind="text: model.batchSize"></span>
+                            12. Batch size: <span class="batch_size" data-bind="text: numeral(model.batchSize).format('0,0.00')"></span>
                         </div>
                         <div >
                             13. 
@@ -462,7 +520,6 @@
                                             <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
                                         </tr>
                                         <!-- /ko -->
-
                                         <tr>
                                             <td colspan="6"></td>
                                             <td>Fill Wt</td>
@@ -475,7 +532,6 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -489,7 +545,8 @@
         var formCustomRequest = $("#formcustomrequest");
         var formDataView = $("#dataview");
         var formDataPrint = $("#dataprint");
-        var dataListIngredients = [];
+        var dataListIngredients =  {!! json_encode($data['ingredients']->toArray()) !!}; 
+
         self.arraySalesOrderIngredientsColor = ko.observableArray([]);
         self.arraySalesOrderIngredientsShell = ko.observableArray([]);
         self.arraySalesOrderIngredientsActive = ko.observableArray([]);
@@ -561,6 +618,18 @@
                 value.per_unit(value.per_serving() / self.model.servingSize());
             });
         }
+        self.removeColor = function() {
+            self.arraySalesOrderIngredientsColor.remove(this);
+        }
+        self.removeShell = function() {
+            self.arraySalesOrderIngredientsShell.remove(this);
+        }
+        self.removeInActive = function() {
+            self.arraySalesOrderIngredientsInActive.remove(this);
+        }
+        self.removeActive = function() {
+            self.arraySalesOrderIngredientsActive.remove(this);
+        }
         $(document).ready(function() {
 
             $("#print").click(function(){
@@ -584,6 +653,96 @@
                     });
                 } else 
                     formDataView.addClass("d-none");
+            });
+
+            $("#add-ingredient").click(function(){
+                var ingredient = formDataView.find("select[name=ingredient_formula]").val();
+
+                if (ingredient == "") {
+                    toastr.error('{{ __('The ingredient not empty.') }}');
+                    return false;
+                }
+                
+                var type = 0;
+
+                $.each(dataListIngredients , function(index, item) { 
+
+                    if (item.id == Number(ingredient)) {
+                        type = item.inactive;
+                        return false;
+                    }
+                });
+                var arr = [];
+
+                switch (Number(type)) {
+                    case 0:
+                        arr = self.arraySalesOrderIngredientsActive();
+                        break;
+                    case 1:
+                        arr = self.arraySalesOrderIngredientsInActive();
+                        break;
+                    case 2:
+                        arr = self.arraySalesOrderIngredientsColor();
+                        break;
+                    case 3:
+                        arr = self.arraySalesOrderIngredientsShell();
+                }
+                
+                if (checkItemExistArrayIngredients(arr, ingredient)) {
+                    toastr.error('{{ __('The ingredient exist.') }}');
+                    return false;
+                }
+                var obj = {
+                    id: randomId(arr),
+                    per_serving: ko.observable(0),
+                    per_unit: ko.observable(0),
+                    purity: ko.observable(0),
+                    overage: ko.observable(0),
+                    per_tab: ko.observable(0),
+                    per_batch: ko.observable(0),
+                    tab100: ko.observable(0),
+                    id_ingredient: Number(ingredient),
+                };
+
+                $.each(dataListIngredients , function(index, item) { 
+                    
+                    if (item.id == ingredient) {
+                        obj.code = item.code;
+                        obj.name_ingredient = item.name;
+                        obj.inactive = item.inactive;
+
+                        switch (Number(item.inactive)) {
+                            /* Active */
+                            case 0: 
+                                self.arraySalesOrderIngredientsActive.push(obj);
+                                break;
+                            /* InActive */
+                            case 1:
+                                self.arraySalesOrderIngredientsInActive.push(obj);
+                                break;
+                            /* Color */
+                            case 2:
+                                self.arraySalesOrderIngredientsColor.push(obj);;
+                                break;
+                            /* Shell */
+                            case 3:
+                                self.arraySalesOrderIngredientsShell.push(obj);
+                                break;
+                        }
+                    }
+                });
+                formDataView.find("select[name=ingredient_formula]").val("");
+            });
+
+            $(document).on('click', "a.delingredient", function() {
+                var idR = $(this).data('id');
+                var arrayTemp = dataTableIng;
+                for (var i = 0 ; i < arrayTemp.length; i++) {
+                    if (arrayTemp[i].id == Number(idR)) {
+                        dataTableIng.splice(i, 1);
+                    }
+                }
+                addRowTableIngredients(dataTableIng);
             });
         });
         var showDataCustomRequest = function(data) {
@@ -626,7 +785,6 @@
         
             if (data.salesOrderIngredients) {
                 var dataSalesOrderIngredients = data.salesOrderIngredients;
-                dataListIngredients = data.salesOrderIngredients;
                 var arrayIngredientsColor = [];
                 var arrayIngredientsShell = [];
                 var arrayIngredientsActive = [];
@@ -685,123 +843,43 @@
 
         
         }
-        
-        var showDataTableIngredients = function(data) {
-            formDataView.find(".table-ingredients").html("");
-            var str = "";
-            var strPrint = "";
-            
-            for (var i = 0; i < data.length; i++) {
-                str += "<tr data-id='" + data[i].id + "'><td>" + (i + 1)  + 
-                    "</td><td>" + data[i].code + 
-                    "</td><td>" + data[i].name_ingredient + 
-                    "</td><td class='per_serving'>" +numeral(data[i].per_serving).format("0,0.00") + 
-                    "</td><td class='req_wt'>" + data[i].req_wt + 
-                    "</td><td><input type='number'  class='form-control purity' value='"+ data[i].purity  +"'></td>" + 
-                    "<td><input type='number' class='form-control overage' value='"+ data[i].overage  +"'></td>" + 
-                    "<td class='input_wtmg'>" + numeral(data[i].input_wtmg).format("0,0.00") + 
-                    "</td><td class='input_wt_per_batch'>" + numeral(data[i].input_wt_per_batch).format("0,0.0000") + 
-                    "</td><td class='percent_softgel'>" + numeral(data[i].percent_softgel).format("0,0.00") + 
-                    "</td><td><input type='number' class='form-control density' value='"+ data[i].density  +"'></td>" + 
-                    "<td class='volum'>" + numeral(data[i].volum).format("0,0.00") + 
-                    "</td></tr>";
 
-                strPrint += "<tr><td>" + (i + 1)  + 
-                    "</td><td>" + data[i].code + 
-                    "</td><td>" + data[i].name_ingredient + 
-                    "</td><td>" + numeral(data[i].per_serving).format("0,0.00") + 
-                    "</td><td>" + data[i].req_wt + 
-                    "</td><td> " + data[i].purity + "</td>" + 
-                    "<td>"+ data[i].overage +"</td>" + 
-                    "<td>" + numeral(data[i].input_wtmg).format("0,0.00") + 
-                    "</td><td>" + numeral(data[i].input_wt_per_batch).format("0,0.0000") + 
-                    "</td><td>" + numeral(data[i].percent_softgel).format("0,0.00") + 
-                    "</td><td>"+ data[i].density  +"</td>" + 
-                    "<td>" + numeral(data[i].volum).format("0,0.00") + 
-                    "</td></tr>";
-            }
-            formDataView.find(".table-ingredients").html(str);
-            formDataPrint.find(".table-ingredients").html(strPrint);
-            // calculationFillWt();
-        }
-
-        var checkThreeInputOver = function() {
-            var serving_size = formDataView.find("input[name=serving_size]").val();
-            var gelatin_batch = formDataView.find("input[name=gelatin_batch]").val();            
-            var batch_size = formDataView.find("input[name=batch_size]").val();
-            var res = 1;
-
-            if (serving_size == "" || serving_size == undefined) res = 0 ;
-            if (gelatin_batch == "" || gelatin_batch == undefined) res = 0 ;
-            if (batch_size == "" || batch_size == undefined) res = 0 ;
-
+        var checkItemExistArrayIngredients = function(array, id) {
+            var res = false;
+            $.each(array , function(index, item) { 
+                if (item.ingredient) {
+                    if (item.ingredient.id == Number(id)) {
+                        res = true;
+                        return false;
+                    }
+                } else {
+                    if (item.id_ingredient == Number(id)) {
+                        res = true;
+                        return false;
+                    }
+                }
+            });
             return res;
         }
 
-        var calculationInputWtmg = function(req_wt, purity, overage) {
-            if (req_wt == "" || req_wt == undefined) req_wt = 0;
-            if (purity == "" || purity == undefined) purity = 0;
-            if (overage == "" || overage == undefined) overage = 0;
-
-            var tuSo = Number(req_wt);
-            var mauSo = (Number(purity)/100) * (1 + (Number(overage)/100) );
-
-            return mauSo == 0 ? 0 : ( tuSo / mauSo );
-        }
-        
-        var calculationInputWtPerBatch = function(input_wtmg, batch_size) {
-            if (input_wtmg == "" || input_wtmg == undefined) input_wtmg = 0;
-            if (batch_size == "" || batch_size == undefined) batch_size = 0;
-
-            return Number(input_wtmg) * Number(batch_size) / 1000000;
-        }
-
-        var calculationPercentSoftgel = function(input_wtmg, fill_wt) {
-            if (input_wtmg == "" || input_wtmg == undefined) input_wtmg = 0;
-            if (fill_wt == "" || fill_wt == undefined) fill_wt = 0;
-
-            return fill_wt != 0 ? Number(input_wtmg) / Number(fill_wt) * 100 : 0;
-        }
-
-        var calculationVolum = function(input_wtmg, density) {
-            if (input_wtmg == "" || input_wtmg == undefined) input_wtmg = 0;
-            if (density == "" || density == undefined) density = 0;
-
-            return density != 0 ? Number(input_wtmg) / Number(density) : 0 ;
-        }
-
-        var calculationFillWt2 = function() {
-            alert("0000");
-            var fillWt = 0, sum_input_wt_per_batch = 0, sum_percent_softgel = 0, total = 0;
-            var arr = self.arraySalesOrderIngredientsColor();
-
-            $.each(arr, function( index, value ) {
-                console.log(value);
+        var checkIdIngredients = function(array, id) {
+            var res = true;
+            $.each(array , function(index, item) { 
+                if (item.id == id) {
+                    return false;
+                }
             });
-
-            // for (var i = 0; i < dataListIngredients.length; i++) {
-            //     fillWt += Number(dataListIngredients[i].input_wtmg);
-                // sum_input_wt_per_batch += Number(dataListIngredients[i].input_wt_per_batch);
-                // sum_percent_softgel += Number(dataListIngredients[i].percent_softgel);
-                // total += Number(dataListIngredients[i].volum);
-            // }
-            // formDataView.find(".filling-wt").html(numeral(fillWt).format("0,0.00"));
-            // formDataView.find(".fill_wt").html(numeral(fillWt).format("0,0.00"));
-            // formDataView.find(".sum_input_wt_per_batch").html(numeral(sum_input_wt_per_batch).format("0,0.00"));
-            // formDataView.find(".sum_percent_softgel").html(numeral(sum_percent_softgel).format("0,0.00"));
-            // formDataView.find(".total").html(numeral(total).format("0,0.00"));
-
-            // formDataPrint.find(".filling-wt").html(numeral(fillWt).format("0,0.00"));
-            // formDataPrint.find(".fill_wt").html(numeral(fillWt).format("0,0.00"));
-            // formDataPrint.find(".sum_input_wt_per_batch").html(numeral(sum_input_wt_per_batch).format("0,0.00"));
-            // formDataPrint.find(".sum_percent_softgel").html(numeral(sum_percent_softgel).format("0,0.00"));
-            // formDataPrint.find(".total").html(numeral(total).format("0,0.00"));
+            return res;
         }
 
-        
-        
+        var randomId = function(array) {
+            var id = parseInt((Math.random() * 1000000), 10);
 
-       
+            if (!checkIdIngredients(array, id)) {
+                randomId(array);
+            } 
+            return id;
+        }
     }
      // Activates knockout.js
      ko.applyBindings(new AppViewModel());
