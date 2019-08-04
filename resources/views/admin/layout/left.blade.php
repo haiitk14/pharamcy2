@@ -35,7 +35,7 @@
                     echo ' style="display: block"'; @endphp>
                         <li><a href="{{ route('admin.report.salesorder') }}">{{ __('Sales Order') }}</a></li>
                         <li><a href="{{ route('admin.report.formula') }}">{{ __('Formula') }}</a></li>
-                        <li><a href="javascript:;">{{ __('Mfg Spec') }}</a></li>
+                        <li><a href="{{ route('admin.report.mfgspec') }}">{{ __('Mfg Spec') }}</a></li>
                         <li><a href="javascript:;">{{ __('Cost') }}</a></li>
                         <li><a href="javascript:;">{{ __('Mixing') }}</a></li>
                         <li><a href="javascript:;">{{ __('Inventory') }}</a></li>

@@ -107,6 +107,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="{{ asset('assets/plugins/datetimepicker/js/daterangepicker.js') }}"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"></script>
+    <script src="{{ asset('assets/js/knockout.mapping.js') }}"></script>
 
     @section('script')
     @show

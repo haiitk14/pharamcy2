@@ -12,10 +12,6 @@
                             <i class="fa fa-print" aria-hidden="true"></i>
                             {{ __('Print') }}
                         </button>
-                        <button data-bind="click: save" class="btn btn-outline-primary" title="Save Form" type="button">
-                            <i class="fa fa-save" aria-hidden="true"></i>
-                            {{ __('Save') }}
-                        </button>
                     </div>
                     <form id="formcustomrequest">
                         <div class="row form-group">
@@ -634,25 +630,10 @@
         self.removeActive = function() {
             self.arraySalesOrderIngredientsActive.remove(this);
         }
-        self.save = function() {
-            var idCustomRequest = formCustomRequest.find("select[name=custom_request]").val();
-            var po = formDataView.find("input[name=po]").val();
-            var servingSize = formDataView.find("input[name=serving_size]").val();
-            var gelatinBatch = formDataView.find("input[name=gelatin_batch]").val();
-
-            var arrActive = self.arraySalesOrderIngredientsActive();
-            var arrInActive = self.arraySalesOrderIngredientsInActive();
-            var arrColor = ko.mapping.toJS(self.arraySalesOrderIngredientsColor());
-            var arrShell = self.arraySalesOrderIngredientsShell();
-
-
-            console.log(arrColor);
-        
-        }
         $(document).ready(function() {
 
             $("#print").click(function(){
-                // showDataCustomRequest();
+                showDataCustomRequest();
                 var po = formDataView.find("input[name=po]").val();
                 var serving_size = formDataView.find("input[name=serving_size]").val();
                 var gelatin_batch = formDataView.find("input[name=gelatin_batch]").val();
@@ -720,7 +701,7 @@
                     per_tab: ko.observable(0),
                     per_batch: ko.observable(0),
                     tab100: ko.observable(0),
-                    ingredient_id: Number(ingredient),
+                    id_ingredient: Number(ingredient),
                 };
 
                 $.each(dataListIngredients , function(index, item) { 
@@ -751,6 +732,17 @@
                     }
                 });
                 formDataView.find("select[name=ingredient_formula]").val("");
+            });
+
+            $(document).on('click', "a.delingredient", function() {
+                var idR = $(this).data('id');
+                var arrayTemp = dataTableIng;
+                for (var i = 0 ; i < arrayTemp.length; i++) {
+                    if (arrayTemp[i].id == Number(idR)) {
+                        dataTableIng.splice(i, 1);
+                    }
+                }
+                addRowTableIngredients(dataTableIng);
             });
         });
         var showDataCustomRequest = function(data) {
@@ -793,46 +785,83 @@
         
             if (data.salesOrderIngredients) {
                 var dataSalesOrderIngredients = data.salesOrderIngredients;
+                var arrayIngredientsColor = [];
+                var arrayIngredientsShell = [];
+                var arrayIngredientsActive = [];
+                var arrayIngredientsInActive = [];
 
                 for (var i = 0; i < dataSalesOrderIngredients.length; i++) {
                     var item = dataSalesOrderIngredients[i];
-                    item.per_serving = ko.observable(item.per_serving);
-                    item.per_unit = ko.observable(0);
-                    item.purity = ko.observable(0);
-                    item.overage = ko.observable(0);
-                    item.per_tab = ko.observable(0);
-                    item.per_batch = ko.observable(0);
-                    item.tab100 = ko.observable(0);
 
-                    switch(item.ingredient.inactive) {
-                        case 0:
-                            self.arraySalesOrderIngredientsActive.push(item);
-                            break;
-                        case 1:
-                            self.arraySalesOrderIngredientsInActive.push(item);
-                            break;
-                        case 2:
-                            item.per_serving = ko.observable(0);
-                            self.arraySalesOrderIngredientsColor.push(item);
-                            break;
-                        case 3: 
-                            item.per_serving = ko.observable(0);
-                            self.arraySalesOrderIngredientsShell.push(item);
-                            break;
+                    
+                    if (item.ingredient.inactive == 0) {
+                        item.per_serving = ko.observable(item.per_serving);
+                        item.per_unit = ko.observable(0);
+                        item.purity = ko.observable(0);
+                        item.overage = ko.observable(0);
+                        item.per_tab = ko.observable(0);
+                        item.per_batch = ko.observable(0);
+                        item.tab100 = ko.observable(0);
+                        arrayIngredientsActive.push(item);
+                    }
+                    if (item.ingredient.inactive == 1) {
+                        item.per_serving = ko.observable(item.per_serving);
+                        item.per_unit = ko.observable(0);
+                        item.purity = ko.observable(0);
+                        item.overage = ko.observable(0);
+                        item.per_tab = ko.observable(0);
+                        item.per_batch = ko.observable(0);
+                        item.tab100 = ko.observable(0);
+                        arrayIngredientsInActive.push(item);
+                    }
+                    if (item.ingredient.inactive == 2) {
+                        item.per_serving = ko.observable(0);
+                        item.per_unit = ko.observable(0);
+                        item.purity = ko.observable(0);
+                        item.overage = ko.observable(0);
+                        item.per_tab = ko.observable(0);
+                        item.per_batch = ko.observable(0);
+                        item.tab100 = ko.observable(0);
+                        arrayIngredientsColor.push(item);
+                    }
+                    if (item.ingredient.inactive == 3) {
+                        item.per_serving = ko.observable(0);
+                        item.per_unit = ko.observable(0);
+                        item.purity = ko.observable(0);
+                        item.overage = ko.observable(0);
+                        item.per_tab = ko.observable(0);
+                        item.per_batch = ko.observable(0);
+                        item.tab100 = ko.observable(0);
+                        arrayIngredientsShell.push(item);
                     }
                 }
+                self.arraySalesOrderIngredientsColor(arrayIngredientsColor);
+                self.arraySalesOrderIngredientsShell(arrayIngredientsShell);
+                self.arraySalesOrderIngredientsActive(arrayIngredientsActive)
+                self.arraySalesOrderIngredientsInActive(arrayIngredientsInActive)
             }
+
+        
         }
+
         var checkItemExistArrayIngredients = function(array, id) {
             var res = false;
             $.each(array , function(index, item) { 
-                if (item.ingredient_id == Number(id)) {
-                    res = true;
-                    return false;
+                if (item.ingredient) {
+                    if (item.ingredient.id == Number(id)) {
+                        res = true;
+                        return false;
+                    }
+                } else {
+                    if (item.id_ingredient == Number(id)) {
+                        res = true;
+                        return false;
+                    }
                 }
             });
             return res;
         }
+
         var checkIdIngredients = function(array, id) {
             var res = true;
             $.each(array , function(index, item) { 
@@ -842,6 +871,7 @@
             });
             return res;
         }
+
         var randomId = function(array) {
             var id = parseInt((Math.random() * 1000000), 10);
 

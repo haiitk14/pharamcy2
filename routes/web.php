@@ -61,7 +61,10 @@ Route::group(['middleware' => 'admin'], function(){
             Route::get('/salesorder', 'Admin\SalesOrderController@index')->name('admin.report.salesorder');
             Route::post('/saveform', 'Admin\SalesOrderController@saveForm')->name('admin.report.saveform');
             Route::get('/formula', 'Admin\ReportFormulaController@index')->name('admin.report.formula');
+            Route::post('/saveform-formula', 'Admin\ReportFormulaController@saveForm')->name('admin.report.saveformformula');
             Route::get('/getcustomrequest', 'Admin\ReportFormulaController@getCustomRequest')->name('admin.report.getcustomrequest');
+            Route::get('/mfg-spec', 'Admin\ReportMfgSpecController@index')->name('admin.report.mfgspec');
+
         });
     });
 }); 
