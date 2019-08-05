@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware' => 'admin'], function(){
+//Route::group(['middleware' => 'admin'], function(){
     Route::group(['prefix' => 'admin'], function () {
         //404
         Route::get('/404', 'Admin\NotFoundController@index404');
@@ -67,7 +67,7 @@ Route::group(['middleware' => 'admin'], function(){
 
         });
     });
-}); 
+//}); 
 
 
 Route::get('/', function () {

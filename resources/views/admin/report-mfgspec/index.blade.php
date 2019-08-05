@@ -13,9 +13,9 @@
                             {{ __('Print') }}
                         </button>
                     </div>
-                    <form id="formcustomrequest">
+                    {{-- <form id="formcustomrequest">
                         <div class="row form-group">
-                            <label for="address" class="col-sm-2 col-form-label">Select Custom Request</label>
+                            <label for="address" class="col-sm-2 col-form-label">Select Formula</label>
                             <div class="col-sm-6">
                                 <select class="form-control" title="Select Custom Request" name="custom_request" title="{{ __('Select Custom Request') }}">
                                     <option value="">{{ __('None') }}</option>
@@ -25,43 +25,47 @@
                                 </select>
                             </div>
                         </div>
-                    </form>
-                    <form id="dataview"  class="d-none">
+                    </form> --}}
+                    <form id="dataview">
                         <div class="row form-group">
                             <div class="col-sm-6">
-                                <b class="manufature-name"></b><br>
-                                <span class="manufature-address"></span>
-                                <br> <span class="manufature-phone"></span>
+                                <b class="manufature-name">Pharmaxx, Inc.</b><br>
+                                <span class="manufature-address">331 N Vineland Ave., City of industry, CA 91746</span>
+                                <br> <span class="manufature-phone">Tel. (949) 863-1919, Fax. (949) 863-3008</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12 text-center">
+                            <h4>Manufacturing Specification</h4>
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">1. Product:</label>
-                            <div class="col-sm-8 col-form-label product-name"></div>
+                            <div class="col-sm-8 col-form-label product-name">RG III 8%Royal Ginseng</div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">2. Customer:</label>
-                            <div class="col-sm-8 col-form-label customer-full-name">
+                            <div class="col-sm-8 col-form-label customer-full-name">ExxelUSA
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="formula" class="col-sm-2 col-form-label">3. P.O: </label>
-                            <div class="col-sm-4">
-                                <input type="text" title="Enter P.O" placeholder="Enter P.O" class="form-control" name="po">
+                            <div class="col-sm-8 col-form-label customer-full-name">0
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">4. Formula:</label>
-                            <div class="col-sm-8 col-form-label formula-number">
+                            <div class="col-sm-8 col-form-label formula-number">RG01
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">5. Revision:</label>
-                            <div class="col-sm-8 col-form-label revision">
+                            <div class="col-sm-8 col-form-label revision">1.00
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">6. Date:</label>
-                            <div class="col-sm-8 col-form-label show-date">
+                            <div class="col-sm-8 col-form-label show-date">5/14/2018
                             </div>
                         </div>
                         <div class="row form-group">
@@ -71,77 +75,46 @@
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">7. Size/Type:</label>
-                            <div class="col-sm-8 col-form-label size-type">
+                            <div class="col-sm-8 col-form-label size-type">18 Ob
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">8. Color/Logo:</label>
-                            <div class="col-sm-8 col-form-label color-logo">
+                            <div class="col-sm-8 col-form-label color-logo">Red
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">9. Filling Wt:</label>
-                            <div class="col-sm-8 col-form-label" data-bind="text: numeral($root.model.fillWtInActive()).format('0,0.00')">
+                            <div class="col-sm-8 col-form-label">
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label for="order" class="col-sm-2 col-form-label">10. Serving Size: </label>
-                            <div class="col-sm-4">
-                                <input type="number" data-bind="value: model.servingSize, event: { change: function() {
-                                    $root.calculationArray();
-                                    } }" name="serving_size" value="0"  class="form-control" title="Enter Serving Size" placeholder="Enter Serving Size" >
+                            <label for="order" class="col-sm-2 col-form-label">10. Batch No.: </label>
+                            <div class="col-sm-8 col-form-label">
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label for="order" class="col-sm-2 col-form-label">11. Gelatin Batch: </label>
-                            <div class="col-sm-4">
-                                <input type="number" name="gelatin_batch" value="0" class="form-control" title="Enter Gelatin Batch" placeholder="Enter Gelatin Batch" >
+                            <label for="order" class="col-sm-2 col-form-label">11. Batch size: </label>
+                            <div class="col-sm-8 col-form-label" > 1,200,000  softgels
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label for="order" class="col-sm-2 col-form-label">12. Batch size: </label>
-                            <div class="col-sm-8 col-form-label" data-bind="text: numeral(model.batchSize()).format('0,0')">
+                            <label for="order" class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-8 col-form-label" >  20,000.00  Box
                             </div>
-                           
                         </div>
                         <div class="row form-group">
-                            <label for="order" class="col-sm-2 col-form-label">13. </label>
-                            <div class="col-sm-6">
-                                <select class="form-control" name="ingredient_formula"  title="Choose Ingredient">
-                                    <option value="">None</option>
-                                    <optgroup label="Color">
-                                        @foreach ($data['ingredients'] as $ingredient)
-                                            @if ($ingredient->inactive == 2)
-                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </optgroup>
-                                    <optgroup label="Shell">
-                                        @foreach ($data['ingredients'] as $ingredient)
-                                            @if ($ingredient->inactive == 3)
-                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </optgroup>
-                                    <optgroup label="Active">
-                                        @foreach ($data['ingredients'] as $ingredient)
-                                            @if ($ingredient->inactive == 0)
-                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </optgroup>
-                                    <optgroup label="InActive">
-                                        @foreach ($data['ingredients'] as $ingredient)
-                                            @if ($ingredient->inactive == 1)
-                                                <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </optgroup>
-                                </select>
+                            <label for="order" class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-8 col-form-label" >  60  softgels/box
                             </div>
-                            <div class="col-sm-2">
-                                <a href="javascript:;" id="add-ingredient" title="Add Ingredient" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Add</a>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12 ">
+                            <h4>Formulary Specification</h4>
                             </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="order" class="col-sm-2 col-form-label">12. </label>
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 table-responsive">
@@ -150,386 +123,411 @@
                                         <tr>
                                             <th>No</th>
                                             <th>RW No.</th>
-                                            <th width="14%">Ingredients *</th>
-                                            <th>Wt (mg) <br>per Serving</th>
-                                            <th  width="12%">Wt (mg) <br>per Unit</th>
-                                            <th width="10%">Purity %</th>
-                                            <th width="10%">Overage %</th>
-                                            <th>Input <br>Wt/mg per tab</th>
-                                            <th>Input <br>Wt/kg per batch</th>
-                                            <th>%Tab</th>
-                                            <th></th>
+                                            <th>Ingredients</th>
+                                            <th>per serving mg</th>
+                                            <th>% SG</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-color">
-                                        <tr colspan="13">
-                                                <td colspan="12"><b>Color</b></td>
-                                        </tr>
-                                        <!-- ko foreach: arraySalesOrderIngredientsColor -->
-                                        <tr data-bind="attr: { 'data-id': id }">
-                                            <td data-bind="text: ($index() + 1)"></td>
-                                            <td data-bind="text: code"></td>
-                                            <td data-bind="text: name_ingredient"></td>
-                                            <td data-bind="text: per_serving"></td>
-                                            <td>
-                                                <input type="number" data-bind="value: per_unit, event: { change: function() {
-                                                    per_serving(per_unit() * $root.model.servingSize());
-                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
-                                                 } }" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input type="number" data-bind="value: purity, event: { change: function() {
-                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
-                                                    $root.calculationFillWt();
-                                                    tab100(per_tab() / $root.model.fillWtInActive());
-                                                 } }" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input type="number" data-bind="value: overage, event: { change: function() {
-                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
-                                                    $root.calculationFillWt();
-                                                    tab100(per_tab() / $root.model.fillWtInActive());
-                                                 } }" class="form-control">
-                                            </td>
-                                            
-                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0 "></td>
-                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
-                                            <td class='text-center'> 
-                                                <a href='javascript:;' data-bind="click: $root.removeColor" title='Delete Item'>
-                                                    <i class='fa fa-lg fa-trash' aria-hidden='true'></i>
-                                                </a> 
-                                            </td>
-                                        </tr>
-                                        <!-- /ko -->
-                                        <tr>
-                                            <td colspan="7"></td>
-                                            <td data-bind="text: numeral($root.model.fillWtColor()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumPerBatch()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumTab()).format('0,0.00')"></td>
-                                        </tr>
-                                    </tbody>
-                                    <tbody class="table-shell">
-                                        <tr >
-                                            <td colspan="13"><b>Shell</b></td>
-                                        </tr>
-                                            <!-- ko foreach: arraySalesOrderIngredientsShell -->
-                                        <tr data-bind="attr: { 'data-id': id }">
-                                            <td data-bind="text: ($index() + 1)"></td>
-                                            <td data-bind="text: code"></td>
-                                            <td data-bind="text: name_ingredient"></td>
-                                            <td data-bind="text: per_serving"></td>
-                                            <td>
-                                                <input type="number" data-bind="value: per_unit, event: { change: function() {
-                                                    per_serving(per_unit() * $root.model.servingSize());
-                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
-                                                    } }" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input type="number" data-bind="value: purity, event: { change: function() {
-                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
-                                                    $root.calculationFillWtShell();
-                                                    tab100(per_tab() / $root.model.fillWtShell());
-                                                    } }" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input type="number" data-bind="value: overage, event: { change: function() {
-                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
-                                                    $root.calculationFillWtShell();
-                                                    tab100(per_tab() / $root.model.fillWtShell());
-                                                    } }" class="form-control">
-                                            </td>
-                                            
-                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
-                                            <td class='text-center'> 
-                                                <a href='javascript:;' data-bind="click: $root.removeShell" title='Delete Item'>
-                                                    <i class='fa fa-lg fa-trash' aria-hidden='true'></i>
-                                                </a> 
-                                            </td>
-                                        </tr>
-                                        <!-- /ko -->
-                                        <tr>
-                                            <td colspan="7"></td>
-                                            <td data-bind="text: numeral($root.model.fillWtShell()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumPerBatchShell()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumTabShell()).format('0,0.00')"></td>
-                                        </tr>
-                                    </tbody>
                                     <tbody class="table-inactive">
-                                        <tr >
-                                            <td colspan="13"><b>Active Ingredients</b></td>
-                                        </tr>
-                                        <!-- ko foreach: arraySalesOrderIngredientsActive -->
-                                        <tr data-bind="attr: { 'data-id': id }">
-                                            <td data-bind="text: ($index() + 1)"></td>
-                                            <td data-bind="text: code"></td>
-                                            <td data-bind="text: name_ingredient"></td>
-                                            <td>
-                                                <input type="number" data-bind="value: per_serving, event: { change: function() {
-                                                    per_unit(per_serving() / $root.model.servingSize());
-                                                    } }" class="form-control">
-                                            </td>
-                                            <td data-bind="text: numeral(per_unit()).format('0,0.00') "></td>
-                                            <td>
-                                                <input type="number" data-bind="value: purity, event: { change: function() {
-                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
-                                                    $root.calculationFillWtInActive();
-                                                    tab100(per_tab() / $root.model.fillWtInActive());
-                                                    } }" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input type="number" data-bind="value: overage, event: { change: function() {
-                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
-                                                    $root.calculationFillWtInActive();
-                                                    tab100(per_tab() / $root.model.fillWtInActive());
-                                                    } }" class="form-control">
-                                            </td>
-                                            
-                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
-                                            <td class='text-center'> 
-                                                <a href='javascript:;' data-bind="click: $root.removeActive" title='Delete Item'>
-                                                    <i class='fa fa-lg fa-trash' aria-hidden='true'></i>
-                                                </a> 
-                                            </td>
-                                        </tr>
-                                        <!-- /ko -->
-                                        <tr >
-                                            <td colspan="12"><b>Inactive Ingredients</b></td>
-                                        </tr>
-                                        <!-- ko foreach: arraySalesOrderIngredientsInActive -->
-                                        <tr data-bind="attr: { 'data-id': id }">
-                                            <td data-bind="text: ($index() + 1)"></td>
-                                            <td data-bind="text: code"></td>
-                                            <td data-bind="text: name_ingredient"></td>
-                                            <td>
-                                                <input type="number" data-bind="value: per_serving, event: { change: function() {
-                                                    per_unit(per_serving() / $root.model.servingSize());
-                                                    } }" class="form-control">
-                                            </td>
-                                            <td data-bind="text: numeral(per_unit()).format('0,0.00') "></td>
-                                            <td>
-                                                <input type="number" data-bind="value: purity, event: { change: function() {
-                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
-                                                    $root.calculationFillWtInActive();
-                                                    tab100(per_tab() / $root.model.fillWtInActive());
-                                                    } }" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input type="number" data-bind="value: overage, event: { change: function() {
-                                                    per_tab((per_unit() / (purity() / 100) * (1 + (overage() / 100)) ));
-                                                    per_batch(per_tab() * $root.model.batchSize() / 1000000 );
-                                                    $root.calculationFillWtInActive();
-                                                    tab100(per_tab() / $root.model.fillWtInActive());
-                                                    } }" class="form-control">
-                                            </td>
-                                            
-                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
-                                            <td class='text-center'> 
-                                                <a href='javascript:;' data-bind="click: $root.removeInActive" title='Delete Item'>
-                                                    <i class='fa fa-lg fa-trash' aria-hidden='true'></i>
-                                                </a> 
-                                            </td>
-                                        </tr>
-                                        <!-- /ko -->
-
                                         <tr>
-                                            <td colspan="6"></td>
-                                            <td>Fill Wt</td>
-                                            <td data-bind="text: numeral($root.model.fillWtInActive()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumPerBatchInActive()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumTabInActive()).format('0,0.00')"></td>
+                                            <td>1</td>
+                                            <td>RG01-01J
+                                            </td>
+                                            <td>Red Ginseng Extract
+                                            </td>
+                                            <td>
+                                                50.00
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2
+                                            </td>
+                                            <td>PG01-01J
+                                            </td>
+                                            <td>Panax Ginseng 80% Extract
+                                            </td>
+                                            <td>
+                                                25.00
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>FO01-AR01
+                                            </td>
+                                            <td>Marine Oil (30% omega 3 DHA/EPA)
+                                            </td>
+                                            <td>
+                                                250.00
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4
+                                            </td>
+                                            <td>RS01-JH01
+                                            </td>
+                                            <td>Resveratrol 98% Extract
+                                            </td>
+                                            <td>
+                                                6.50
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>VK01-IG01
+                                            </td>
+                                            <td>Vitamin K (MK7)
+                                            </td>
+                                            <td>
+                                                0.03
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>6
+                                            </td>
+                                            <td>LC01-WC01
+                                            </td>
+                                            <td>Lecithin
+                                            </td>
+                                            <td>
+                                                10.00
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>7
+                                            </td>
+                                            <td>BW01-CS01
+                                            </td>
+                                            <td>Beewax
+                                            </td>
+                                            <td>
+                                                30.00
+                                            </td>
+                                            <td></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table table-bordered table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Comments or Additional Instructions</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>All raw materials provided by Pharmaxx
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2
+                                            </td>
+                                            <td>Softgel Encapsulation by Pharmaxx
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Lead time: 6-8 weeks. After AW approved (FOS..)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4
+                                            </td>
+                                            <td>Packaging:  Box of 60 softgels
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>FOB Murrieta , CA
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>6
+                                            </td>
+                                            <td>Price quote good for 14 days.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <h4>ExxelUSA</h4>
+                            <table style="width: 100%; border: 0px solid #CCC; border-collapse: collapse; ">
+                                <tr style="border-bottom: 3px solid;">
+                                    <td colspan="2" style="border: none;"></td>
+                                    <td style="border: none;  border-left: 3px solid; border-right: 3px solid;">     Sales Manager
+                                    </td>
+                                    <td style="border: none;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none;">Approved by</td>
+                                    <td style="border: none;">Name</td>
+                                    <td style="border: none;">Title</td>
+                                    <td style="border: none;">Date</td>
+                                </tr>
+                            </table>
+                            <h4 style="margin-top: 100px;">Pharmaxx, Inc.
+                            </h4>
+                            <table style="width: 100%; border: 0px solid #CCC; border-collapse: collapse; ">
+                                <tr  style="border-bottom: 3px solid;">
+                                    <td colspan="2" style="border: none;"></td>
+                                    <td style="border: none; border-left: 3px solid; border-right: 3px solid;">     Sales Manager
+                                    </td>
+                                    <td style="border: none;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none;">Approved by</td>
+                                    <td style="border: none;">Name</td>
+                                    <td style="border: none;">Title</td>
+                                    <td style="border: none;">Date</td>
+                                </tr>
+                            </table>
+                        </div>
                     </form>
                     <form id="dataprint"  class="d-none">
                         <div>
-                            <div><b class="manufature-name"></b></div>
-                            <div class="manufature-address"></div>
-                            <div class="manufature-phone"></div><br>
+                            <div><b>Pharmaxx, Inc.</b></div>
+                            <div>331 N Vineland Ave., City of industry, CA 91746</div>
+                            <div>Tel. (949) 863-1919, Fax. (949) 863-3008</div>
+                            
+                        </div>
+                        <div style="text-align: center">
+                            <h4>Manufacturing Specification</h4>
                         </div>
                         <div>
-                            1. Product: <span class="product-name"></span>
-                        </div>
-                        <div>
-                            2. Customer: <span class="customer-full-name"></span>
-                        </div>
-                        <div>
-                            3. P.O: <span class="po"></span>
-                        </div>
-                        <div>
-                            4. Formula: <span class="formula-number"></span>
+                            1. Product: <span>RG III 8%Royal Ginseng</span>
                         </div>
                         <div >
-                            5. Revision: <span class="revision"></span>
+                            2. Customer:  <span>ExxelUSA</span>
+                        </div>
+                        <div >
+                            3. P.O: <span>0</span>
                         </div>
                         <div>
-                            6. Date: <span class="show-date"></span>
+                           4. Formula: <span>RG01</span>
+                        </div>
+                        <div>
+                            5. Revision: <span>1.00</span>
+                        </div>
+                        <div >
+                           6. Date: <span>5/14/2018</span>
                         </div>
                         <div>
                             <h4>Softgel Specification</h4>
                         </div>
                         <div>
-                            7. Size/Type: <span class="size-type"></span>
+                            7. Size/Type: <span>18 Ob</span>
                         </div>
                         <div>
-                            8. Color/Logo: <span class="color-logo"></span>
+                           8. Color/Logo: <span>Red</span>
                         </div>
                         <div >
-                            9. Filling Wt: <span data-bind="text: numeral($root.model.fillWtInActive()).format('0,0.00')"></span>
-                        </div>
-                        <div >
-                            10. Serving Size: <span class="serving_size"></span>
+                           9. Filling Wt: <span>Red</span>
                         </div>
                         <div>
-                            11. Gelatin Batch: <span class="gelatin_batch"></span>
+                            10. Batch No.: 
                         </div>
                         <div>
-                            12. Batch size: <span class="batch_size" data-bind="text: numeral(model.batchSize).format('0,0.00')"></span>
+                            11. Batch size: <span>1,200,000  softgels</span>
+                        </div>
+                        <div>
+                             20,000.00  Box
+                        </div>
+                        <div>
+                             60  softgels/box
                         </div>
                         <div >
-                            13. 
+                            <h4>Formulary Specification</h4>
                         </div>
-                        <div >
+                        <div>
+                            12. 
+                        </div>
+                        <div>
                             <div >
-                                <table style="width: 100%">
+                                <table  style="width: 100%">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>RW No.</th>
-                                            <th>Ingredients *</th>
-                                            <th>Wt (mg) <br>per Serving</th>
-                                            <th  width="15%">Wt (mg) <br>per Unit</th>
-                                            <th width="10%">Purity %</th>
-                                            <th width="10%">Overage %</th>
-                                            <th>Input <br>Wt/mg per tab</th>
-                                            <th>Input <br>Wt/kg per batch</th>
-                                            <th>%Tab</th>
+                                            <th>Ingredients</th>
+                                            <th>per serving mg</th>
+                                            <th>% SG</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-color">
-                                        <tr colspan="12">
-                                                <td colspan="12"><b>Color</b></td>
-                                        </tr>
-                                        <!-- ko foreach: arraySalesOrderIngredientsColor -->
-                                        <tr data-bind="attr: { 'data-id': id }">
-                                            <td data-bind="text: ($index() + 1)"></td>
-                                            <td data-bind="text: code"></td>
-                                            <td data-bind="text: name_ingredient"></td>
-                                            <td data-bind="text: per_serving"></td>
-                                            <td data-bind="text: per_unit">
-                                            </td>
-                                            <td data-bind="text: purity">
-                                            </td>
-                                            <td data-bind="text: overage">
-                                            </td>
-                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
-                                        </tr>
-                                        <!-- /ko -->
+                                    <tbody >
                                         <tr>
-                                            <td colspan="7"></td>
-                                            <td data-bind="text: numeral($root.model.fillWtColor()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumPerBatch()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumTab()).format('0,0.00')"></td>
-                                        </tr>
-                                    </tbody>
-                                    <tbody class="table-shell">
-                                        <tr >
-                                            <td colspan="12"><b>Shell</b></td>
-                                        </tr>
-                                            <!-- ko foreach: arraySalesOrderIngredientsShell -->
-                                        <tr data-bind="attr: { 'data-id': id }">
-                                            <td data-bind="text: ($index() + 1)"></td>
-                                            <td data-bind="text: code"></td>
-                                            <td data-bind="text: name_ingredient"></td>
-                                            <td data-bind="text: per_serving"></td>
-                                            <td data-bind="text: per_unit">
+                                            <td>1</td>
+                                            <td>RG01-01J
                                             </td>
-                                            <td data-bind="text: purity">
+                                            <td>Red Ginseng Extract
                                             </td>
-                                            <td data-bind="text: overage">
+                                            <td>
+                                                50.00
                                             </td>
-                                            
-                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                            <td></td>
                                         </tr>
-                                        <!-- /ko -->
                                         <tr>
-                                            <td colspan="7"></td>
-                                            <td data-bind="text: numeral($root.model.fillWtShell()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumPerBatchShell()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumTabShell()).format('0,0.00')"></td>
+                                            <td>2
+                                            </td>
+                                            <td>PG01-01J
+                                            </td>
+                                            <td>Panax Ginseng 80% Extract
+                                            </td>
+                                            <td>
+                                                25.00
+                                            </td>
+                                            <td></td>
                                         </tr>
-                                    </tbody>
-                                    <tbody class="table-inactive">
-                                        <tr >
-                                            <td colspan="12"><b>Active Ingredients</b></td>
-                                        </tr>
-                                        <!-- ko foreach: arraySalesOrderIngredientsActive -->
-                                        <tr data-bind="attr: { 'data-id': id }">
-                                            <td data-bind="text: ($index() + 1)"></td>
-                                            <td data-bind="text: code"></td>
-                                            <td data-bind="text: name_ingredient"></td>
-                                            <td data-bind="text: per_serving"></td>
-                                            <td data-bind="text: per_unit">
-                                            </td>
-                                            <td data-bind="text: purity">
-                                            </td>
-                                            <td data-bind="text: overage">
-                                            </td>
-                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
-                                        </tr>
-                                        <!-- /ko -->
-                                        <tr >
-                                            <td colspan="12"><b>Inactive Ingredients</b></td>
-                                        </tr>
-                                        <!-- ko foreach: arraySalesOrderIngredientsInActive -->
-                                        <tr data-bind="attr: { 'data-id': id }">
-                                            <td data-bind="text: ($index() + 1)"></td>
-                                            <td data-bind="text: code"></td>
-                                            <td data-bind="text: name_ingredient"></td>
-                                            <td data-bind="text: per_serving"></td>
-                                            <td data-bind="text: per_unit">
-                                            </td>
-                                            <td data-bind="text: purity">
-                                            </td>
-                                            <td data-bind="text: overage">
-                                            </td>
-                                            <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
-                                            <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
-                                        </tr>
-                                        <!-- /ko -->
                                         <tr>
-                                            <td colspan="6"></td>
-                                            <td>Fill Wt</td>
-                                            <td data-bind="text: numeral($root.model.fillWtInActive()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumPerBatchInActive()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral($root.model.sumTabInActive()).format('0,0.00')"></td>
+                                            <td>3</td>
+                                            <td>FO01-AR01
+                                            </td>
+                                            <td>Marine Oil (30% omega 3 DHA/EPA)
+                                            </td>
+                                            <td>
+                                                250.00
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>4
+                                            </td>
+                                            <td>RS01-JH01
+                                            </td>
+                                            <td>Resveratrol 98% Extract
+                                            </td>
+                                            <td>
+                                                6.50
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>VK01-IG01
+                                            </td>
+                                            <td>Vitamin K (MK7)
+                                            </td>
+                                            <td>
+                                                0.03
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>6
+                                            </td>
+                                            <td>LC01-WC01
+                                            </td>
+                                            <td>Lecithin
+                                            </td>
+                                            <td>
+                                                10.00
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>7
+                                            </td>
+                                            <td>BW01-CS01
+                                            </td>
+                                            <td>Beewax
+                                            </td>
+                                            <td>
+                                                30.00
+                                            </td>
+                                            <td></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div>
+                            <div >
+                                <table  style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Comments or Additional Instructions</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>All raw materials provided by Pharmaxx
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2
+                                            </td>
+                                            <td>Softgel Encapsulation by Pharmaxx
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Lead time: 6-8 weeks. After AW approved (FOS..)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4
+                                            </td>
+                                            <td>Packaging:  Box of 60 softgels
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>FOB Murrieta , CA
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>6
+                                            </td>
+                                            <td>Price quote good for 14 days.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <h4>ExxelUSA</h4>
+                            <table style="width: 100%; border: 0px solid #CCC; border-collapse: collapse; ">
+                                <tr style="border-bottom: 3px solid;">
+                                    <td colspan="2" style="border: none;"></td>
+                                    <td style="border: none;  border-left: 3px solid; border-right: 3px solid;">Sales Manager</td>
+                                    <td style="border: none;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none;">Approved by</td>
+                                    <td style="border: none;">Name</td>
+                                    <td style="border: none;">Title</td>
+                                    <td style="border: none;">Date</td>
+                                </tr>
+                            </table>
+                            <h4 style="margin-top: 500px;">Pharmaxx, Inc.
+                                </h4>
+                            <table style="width: 100%; border: 0px solid #CCC; border-collapse: collapse; ">
+                                <tr  style="border-bottom: 3px solid;">
+                                    <td colspan="2" style="border: none;"></td>
+                                    <td style="border: none; border-left: 3px solid; border-right: 3px solid;">Sales Manager</td>
+                                    <td style="border: none;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none;">Approved by</td>
+                                    <td style="border: none;">Name</td>
+                                    <td style="border: none;">Title</td>
+                                    <td style="border: none;">Date</td>
+                                </tr>
+                            </table>
                         </div>
                     </form>
                 </div>
@@ -545,341 +543,13 @@
         var formCustomRequest = $("#formcustomrequest");
         var formDataView = $("#dataview");
         var formDataPrint = $("#dataprint");
-        var dataListIngredients =  {!! json_encode($data['ingredients']->toArray()) !!}; 
-
-        self.arraySalesOrderIngredientsColor = ko.observableArray([]);
-        self.arraySalesOrderIngredientsShell = ko.observableArray([]);
-        self.arraySalesOrderIngredientsActive = ko.observableArray([]);
-        self.arraySalesOrderIngredientsInActive = ko.observableArray([]);
-        self.model = {
-            servingSize: ko.observable(0),
-            gelatinBatch: ko.observable(0),
-            batchSize: ko.observable(0),
-            fillWt: ko.observable(0),
-            fillWtColor: ko.observable(0),
-            sumPerBatch: ko.observable(0),
-            sumTab: ko.observable(0),
-
-            fillWtShell: ko.observable(0),
-            sumPerBatchShell: ko.observable(0),
-            sumTabShell: ko.observable(0),
-
-            fillWtInActive: ko.observable(0),
-            sumPerBatchInActive: ko.observable(0),
-            sumTabInActive: ko.observable(0),
-        }
-        self.calculationFillWt = function() {
-            var fillWt = 0,  sumPerBatch = 0,  sumTab= 0;
-            var arr = self.arraySalesOrderIngredientsColor();
-
-            $.each(arr, function( index, value ) {
-                fillWt += value.per_tab();
-                sumPerBatch += value.per_batch();
-                sumTab += value.tab100();
-            });
-            self.model.fillWtColor(fillWt);
-            self.model.sumPerBatch(sumPerBatch);
-            self.model.sumTab(sumTab);
-        }
-        self.calculationFillWtShell = function() {
-            var fillWt = 0,  sumPerBatch = 0,  sumTab= 0;
-            var arr = self.arraySalesOrderIngredientsShell();
-
-            $.each(arr, function( index, value ) {
-                fillWt += value.per_tab();
-                sumPerBatch += value.per_batch();
-                sumTab += value.tab100();
-            });
-            self.model.fillWtShell(fillWt);
-            self.model.sumPerBatchShell(sumPerBatch);
-            self.model.sumTabShell(sumTab);
-        }
-        self.calculationFillWtInActive = function() {
-            var fillWt = 0,  sumPerBatch = 0,  sumTab= 0;
-            var arr = self.arraySalesOrderIngredientsActive().concat(self.arraySalesOrderIngredientsInActive());
-
-            $.each(arr, function( index, value ) {
-                fillWt += value.per_tab();
-                sumPerBatch += value.per_batch();
-                sumTab += value.tab100();
-            });
-            self.model.fillWtInActive(fillWt);
-            self.model.sumPerBatchInActive(sumPerBatch);
-            self.model.sumTabInActive(sumTab);
-        }
-        self.calculationArray = function() {
-            var arr = self.arraySalesOrderIngredientsActive();
-            var arr2 = self.arraySalesOrderIngredientsInActive();
-
-            $.each(arr, function( index, value ) {
-                value.per_unit(value.per_serving() / self.model.servingSize());
-            });
-            $.each(arr2, function( index, value ) {
-                value.per_unit(value.per_serving() / self.model.servingSize());
-            });
-        }
-        self.removeColor = function() {
-            self.arraySalesOrderIngredientsColor.remove(this);
-        }
-        self.removeShell = function() {
-            self.arraySalesOrderIngredientsShell.remove(this);
-        }
-        self.removeInActive = function() {
-            self.arraySalesOrderIngredientsInActive.remove(this);
-        }
-        self.removeActive = function() {
-            self.arraySalesOrderIngredientsActive.remove(this);
-        }
+       
         $(document).ready(function() {
 
             $("#print").click(function(){
-                showDataCustomRequest();
-                var po = formDataView.find("input[name=po]").val();
-                var serving_size = formDataView.find("input[name=serving_size]").val();
-                var gelatin_batch = formDataView.find("input[name=gelatin_batch]").val();
-                var batch_size = formDataView.find("input[name=batch_size]").val();
-                formDataPrint.find(".po").html(po);
-                formDataPrint.find(".serving_size").html(serving_size);
-                formDataPrint.find(".gelatin_batch").html(gelatin_batch);
-                formDataPrint.find(".batch_size").html(batch_size);
                 print("dataprint");
             });
-
-            formCustomRequest.find("select[name=custom_request]").change(function() {
-                var id = $(this).val();
-                if (id) {
-                    sendData("GET", '{{ route('admin.report.getcustomrequest') }}', { id: id }, function(res) {
-                        showDataCustomRequest(res);
-                    });
-                } else 
-                    formDataView.addClass("d-none");
-            });
-
-            $("#add-ingredient").click(function(){
-                var ingredient = formDataView.find("select[name=ingredient_formula]").val();
-
-                if (ingredient == "") {
-                    toastr.error('{{ __('The ingredient not empty.') }}');
-                    return false;
-                }
-                
-                var type = 0;
-
-                $.each(dataListIngredients , function(index, item) { 
-
-                    if (item.id == Number(ingredient)) {
-                        type = item.inactive;
-                        return false;
-                    }
-                });
-                var arr = [];
-
-                switch (Number(type)) {
-                    case 0:
-                        arr = self.arraySalesOrderIngredientsActive();
-                        break;
-                    case 1:
-                        arr = self.arraySalesOrderIngredientsInActive();
-                        break;
-                    case 2:
-                        arr = self.arraySalesOrderIngredientsColor();
-                        break;
-                    case 3:
-                        arr = self.arraySalesOrderIngredientsShell();
-                }
-                
-                if (checkItemExistArrayIngredients(arr, ingredient)) {
-                    toastr.error('{{ __('The ingredient exist.') }}');
-                    return false;
-                }
-                var obj = {
-                    id: randomId(arr),
-                    per_serving: ko.observable(0),
-                    per_unit: ko.observable(0),
-                    purity: ko.observable(0),
-                    overage: ko.observable(0),
-                    per_tab: ko.observable(0),
-                    per_batch: ko.observable(0),
-                    tab100: ko.observable(0),
-                    id_ingredient: Number(ingredient),
-                };
-
-                $.each(dataListIngredients , function(index, item) { 
-                    
-                    if (item.id == ingredient) {
-                        obj.code = item.code;
-                        obj.name_ingredient = item.name;
-                        obj.inactive = item.inactive;
-
-                        switch (Number(item.inactive)) {
-                            /* Active */
-                            case 0: 
-                                self.arraySalesOrderIngredientsActive.push(obj);
-                                break;
-                            /* InActive */
-                            case 1:
-                                self.arraySalesOrderIngredientsInActive.push(obj);
-                                break;
-                            /* Color */
-                            case 2:
-                                self.arraySalesOrderIngredientsColor.push(obj);;
-                                break;
-                            /* Shell */
-                            case 3:
-                                self.arraySalesOrderIngredientsShell.push(obj);
-                                break;
-                        }
-                    }
-                });
-                formDataView.find("select[name=ingredient_formula]").val("");
-            });
-
-            $(document).on('click', "a.delingredient", function() {
-                var idR = $(this).data('id');
-                var arrayTemp = dataTableIng;
-                for (var i = 0 ; i < arrayTemp.length; i++) {
-                    if (arrayTemp[i].id == Number(idR)) {
-                        dataTableIng.splice(i, 1);
-                    }
-                }
-                addRowTableIngredients(dataTableIng);
-            });
         });
-        var showDataCustomRequest = function(data) {
-
-            if (!data) return false;
-            
-            formDataView.removeClass("d-none");
-
-            if (data.customRequest) {
-                var customRequest = data.customRequest;
-                self.model.batchSize(customRequest.order);
-                formDataView.find(".product-name").html(customRequest.product);
-                formDataView.find(".customer-full-name").html(customRequest.customer);
-                formDataView.find(".formula-number").html(customRequest.formula_number);
-                formDataView.find(".revision").html(customRequest.revision);
-                formDataView.find(".show-date").html(moment(customRequest.date).format('MM/DD/YYYY'));
-                formDataView.find(".size-type").html(customRequest.size_type);
-                formDataView.find(".color-logo").html(customRequest.color_logo);
-
-                formDataPrint.find(".product-name").html(customRequest.product);
-                formDataPrint.find(".customer-full-name").html(customRequest.customer);
-                formDataPrint.find(".formula-number").html(customRequest.formula_number);
-                formDataPrint.find(".revision").html(customRequest.revision);
-                formDataPrint.find(".show-date").html(moment(customRequest.date).format('MM/DD/YYYY'));
-                formDataPrint.find(".size-type").html(customRequest.size_type);
-                formDataPrint.find(".color-logo").html(customRequest.color_logo);
-                formDataPrint.find(".batch_size").html(customRequest.order);
-            }
-            if (data.manufature) {
-                var manufature = data.manufature;
-                formDataView.find(".manufature-name").html(manufature.name);
-                formDataView.find(".manufature-address").html(manufature.address);
-                formDataView.find(".manufature-phone").html(manufature.phone);
-
-                formDataPrint.find(".manufature-name").html(manufature.name);
-                formDataPrint.find(".manufature-address").html(manufature.address);
-                formDataPrint.find(".manufature-phone").html(manufature.phone);
-            }
-            
-        
-            if (data.salesOrderIngredients) {
-                var dataSalesOrderIngredients = data.salesOrderIngredients;
-                var arrayIngredientsColor = [];
-                var arrayIngredientsShell = [];
-                var arrayIngredientsActive = [];
-                var arrayIngredientsInActive = [];
-
-                for (var i = 0; i < dataSalesOrderIngredients.length; i++) {
-                    var item = dataSalesOrderIngredients[i];
-
-                    
-                    if (item.ingredient.inactive == 0) {
-                        item.per_serving = ko.observable(item.per_serving);
-                        item.per_unit = ko.observable(0);
-                        item.purity = ko.observable(0);
-                        item.overage = ko.observable(0);
-                        item.per_tab = ko.observable(0);
-                        item.per_batch = ko.observable(0);
-                        item.tab100 = ko.observable(0);
-                        arrayIngredientsActive.push(item);
-                    }
-                    if (item.ingredient.inactive == 1) {
-                        item.per_serving = ko.observable(item.per_serving);
-                        item.per_unit = ko.observable(0);
-                        item.purity = ko.observable(0);
-                        item.overage = ko.observable(0);
-                        item.per_tab = ko.observable(0);
-                        item.per_batch = ko.observable(0);
-                        item.tab100 = ko.observable(0);
-                        arrayIngredientsInActive.push(item);
-                    }
-                    if (item.ingredient.inactive == 2) {
-                        item.per_serving = ko.observable(0);
-                        item.per_unit = ko.observable(0);
-                        item.purity = ko.observable(0);
-                        item.overage = ko.observable(0);
-                        item.per_tab = ko.observable(0);
-                        item.per_batch = ko.observable(0);
-                        item.tab100 = ko.observable(0);
-                        arrayIngredientsColor.push(item);
-                    }
-                    if (item.ingredient.inactive == 3) {
-                        item.per_serving = ko.observable(0);
-                        item.per_unit = ko.observable(0);
-                        item.purity = ko.observable(0);
-                        item.overage = ko.observable(0);
-                        item.per_tab = ko.observable(0);
-                        item.per_batch = ko.observable(0);
-                        item.tab100 = ko.observable(0);
-                        arrayIngredientsShell.push(item);
-                    }
-                }
-                self.arraySalesOrderIngredientsColor(arrayIngredientsColor);
-                self.arraySalesOrderIngredientsShell(arrayIngredientsShell);
-                self.arraySalesOrderIngredientsActive(arrayIngredientsActive)
-                self.arraySalesOrderIngredientsInActive(arrayIngredientsInActive)
-            }
-
-        
-        }
-
-        var checkItemExistArrayIngredients = function(array, id) {
-            var res = false;
-            $.each(array , function(index, item) { 
-                if (item.ingredient) {
-                    if (item.ingredient.id == Number(id)) {
-                        res = true;
-                        return false;
-                    }
-                } else {
-                    if (item.id_ingredient == Number(id)) {
-                        res = true;
-                        return false;
-                    }
-                }
-            });
-            return res;
-        }
-
-        var checkIdIngredients = function(array, id) {
-            var res = true;
-            $.each(array , function(index, item) { 
-                if (item.id == id) {
-                    return false;
-                }
-            });
-            return res;
-        }
-
-        var randomId = function(array) {
-            var id = parseInt((Math.random() * 1000000), 10);
-
-            if (!checkIdIngredients(array, id)) {
-                randomId(array);
-            } 
-            return id;
-        }
     }
      // Activates knockout.js
      ko.applyBindings(new AppViewModel());

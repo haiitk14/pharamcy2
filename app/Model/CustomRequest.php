@@ -82,4 +82,9 @@ class CustomRequest extends Model
     {
         return $this->hasMany('App\Model\SalesOrderIngredients', 'customrequest_id');
     }
+
+    public function reportformula() 
+    {
+        return $this->hasMany('App\Model\ReportFormula', 'customrequest_id');
+    }
 }

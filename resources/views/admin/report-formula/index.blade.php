@@ -435,12 +435,12 @@
                                             <td data-bind="text: ($index() + 1)"></td>
                                             <td data-bind="text: code"></td>
                                             <td data-bind="text: name_ingredient"></td>
-                                            <td data-bind="text: per_serving"></td>
-                                            <td data-bind="text: per_unit">
+                                            <td data-bind="text: per_serving() ? numeral(per_serving()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_unit() ? numeral(per_unit()).format('0,0.00') : 0">
                                             </td>
-                                            <td data-bind="text: purity">
+                                            <td data-bind="text: purity() ? numeral(purity()).format('0,0.00') : 0">
                                             </td>
-                                            <td data-bind="text: overage">
+                                            <td data-bind="text: overage() ? numeral(overage()).format('0,0.00') : 0">
                                             </td>
                                             <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
                                             <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
@@ -463,12 +463,12 @@
                                             <td data-bind="text: ($index() + 1)"></td>
                                             <td data-bind="text: code"></td>
                                             <td data-bind="text: name_ingredient"></td>
-                                            <td data-bind="text: per_serving"></td>
-                                            <td data-bind="text: per_unit">
+                                            <td data-bind="text: per_serving() ? numeral(per_serving()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_unit() ? numeral(per_unit()).format('0,0.00') : 0">
                                             </td>
-                                            <td data-bind="text: purity">
+                                            <td data-bind="text: purity() ? numeral(purity()).format('0,0.00') : 0">
                                             </td>
-                                            <td data-bind="text: overage">
+                                            <td data-bind="text: overage() ? numeral(overage()).format('0,0.00') : 0">
                                             </td>
                                             
                                             <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
@@ -492,12 +492,12 @@
                                             <td data-bind="text: ($index() + 1)"></td>
                                             <td data-bind="text: code"></td>
                                             <td data-bind="text: name_ingredient"></td>
-                                            <td data-bind="text: per_serving"></td>
-                                            <td data-bind="text: per_unit">
+                                            <td data-bind="text: per_serving() ? numeral(per_serving()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_unit() ? numeral(per_unit()).format('0,0.00') : 0">
                                             </td>
-                                            <td data-bind="text: purity">
+                                            <td data-bind="text: purity() ? numeral(purity()).format('0,0.00') : 0">
                                             </td>
-                                            <td data-bind="text: overage">
+                                            <td data-bind="text: overage() ? numeral(overage()).format('0,0.00') : 0">
                                             </td>
                                             <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
                                             <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
@@ -512,12 +512,12 @@
                                             <td data-bind="text: ($index() + 1)"></td>
                                             <td data-bind="text: code"></td>
                                             <td data-bind="text: name_ingredient"></td>
-                                            <td data-bind="text: per_serving"></td>
-                                            <td data-bind="text: per_unit">
+                                            <td data-bind="text: per_serving() ? numeral(per_serving()).format('0,0.00') : 0"></td>
+                                            <td data-bind="text: per_unit() ? numeral(per_unit()).format('0,0.00') : 0">
                                             </td>
-                                            <td data-bind="text: purity">
+                                            <td data-bind="text: purity() ? numeral(purity()).format('0,0.00') : 0">
                                             </td>
-                                            <td data-bind="text: overage">
+                                            <td data-bind="text: overage() ? numeral(overage()).format('0,0.00') : 0">
                                             </td>
                                             <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
                                             <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.00') : 0"></td>
@@ -639,15 +639,22 @@
             var po = formDataView.find("input[name=po]").val();
             var servingSize = formDataView.find("input[name=serving_size]").val();
             var gelatinBatch = formDataView.find("input[name=gelatin_batch]").val();
+            var arrActiveInActive =self.arraySalesOrderIngredientsActive().concat(self.arraySalesOrderIngredientsInActive());
+            var arrColorShell = self.arraySalesOrderIngredientsColor().concat(self.arraySalesOrderIngredientsShell());
+            var arrIngredients = ko.mapping.toJS(arrActiveInActive.concat(arrColorShell));
 
-            var arrActive = self.arraySalesOrderIngredientsActive();
-            var arrInActive = self.arraySalesOrderIngredientsInActive();
-            var arrColor = ko.mapping.toJS(self.arraySalesOrderIngredientsColor());
-            var arrShell = self.arraySalesOrderIngredientsShell();
-
-
-            console.log(arrColor);
-        
+            var data = {
+                idCustomRequest: idCustomRequest,
+                po: po,
+                servingSize: servingSize,
+                gelatinBatch: gelatinBatch,
+                arrIngredients: JSON.stringify(arrIngredients),
+            }
+            sendData('POST', '{{ route('admin.report.saveformformula') }}', data, function(message){
+                $.each(message, function (index, value) {
+                    toastr.success(value);
+                });
+            });
         }
         $(document).ready(function() {
 

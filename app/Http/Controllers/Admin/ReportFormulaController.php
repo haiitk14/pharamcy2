@@ -8,6 +8,8 @@ use App\Model\CustomRequest;
 use Validator;
 use App\Model\SalesOrderIngredients;
 use Auth;
+use App\Model\ReportFormula;
+use App\Model\FormulaIngredients;
 
 class ReportFormulaController
 {
@@ -53,24 +55,47 @@ class ReportFormulaController
             $input = $request->all();
             
             $validator = Validator::make($input, [
-                'product_id' => 'required',
-                'customer_id' => 'required',
-                'date' => 'required',
-                'order' => 'required'
+                'idCustomRequest' => 'required',
+                'servingSize' => 'required',
             ]);
 
             if ($validator->fails()) {
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
-           
+            $reportFormula = new ReportFormula();
+            $reportFormula->customrequest_id = $request->get('idCustomRequest');
+            $reportFormula->po = $request->get('po');
+            $reportFormula->serving_size = $request->get('servingSize');
+            $reportFormula->gelatin_batch = $request->get('gelatinBatch');
+
+            $response = $reportFormula->save();
+            $arrIngredients = json_decode($request->get('arrIngredients'));
+
+            foreach ($arrIngredients as $value) {
+                $formulaIngredients = new FormulaIngredients();
+                $formulaIngredients->reportformula_id = intval($reportFormula->id);
+                $formulaIngredients->ingredient_id = intval($value->ingredient_id);
+                $formulaIngredients->code = $value->code;
+                $formulaIngredients->name_ingredient = $value->name_ingredient;
+                $formulaIngredients->inactive = intval($value->inactive);
+                $formulaIngredients->per_serving = doubleval($value->per_serving);
+                $formulaIngredients->per_unit = doubleval($value->per_unit);
+                $formulaIngredients->purity = doubleval($value->purity);
+                $formulaIngredients->overage = doubleval($value->overage);
+                $formulaIngredients->per_tab = doubleval($value->per_tab);
+                $formulaIngredients->per_batch = doubleval($value->per_batch);
+                $formulaIngredients->tab100 = doubleval($value->tab100);
+                $formulaIngredients->save();
+            }
             $result = [];
-            // if ($response) {
-            //     $message = "Success";
-            //     $result = [
-            //         'message' => $message
-            //     ];
-            // }
+
+            if ($response) {
+                $message = "Success";
+                $result = [
+                    'message' => $message
+                ];
+            }
 
             return response()->json($result);
 
