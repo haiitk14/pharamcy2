@@ -14,6 +14,7 @@ class ReportFormula extends Model
     protected $fillable = [
         'customrequest_id',
         'po',
+        'filling_wt',
         'serving_size', 
         'gelatin_batch', 
         'create_by', 

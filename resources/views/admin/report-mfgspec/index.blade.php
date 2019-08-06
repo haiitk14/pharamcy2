@@ -13,7 +13,7 @@
                             {{ __('Print') }}
                         </button>
                     </div>
-                    {{-- <form id="formcustomrequest">
+                    <form id="formcustomrequest">
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">Select Formula</label>
                             <div class="col-sm-6">
@@ -25,13 +25,13 @@
                                 </select>
                             </div>
                         </div>
-                    </form> --}}
-                    <form id="dataview">
+                    </form>
+                    <form id="dataview" class="d-none">
                         <div class="row form-group">
                             <div class="col-sm-6">
-                                <b class="manufature-name">Pharmaxx, Inc.</b><br>
-                                <span class="manufature-address">331 N Vineland Ave., City of industry, CA 91746</span>
-                                <br> <span class="manufature-phone">Tel. (949) 863-1919, Fax. (949) 863-3008</span>
+                                <b data-bind="text: manufature.name"></b><br>
+                                <span data-bind="text: manufature.address"></span>
+                                <br> <span data-bind="text: manufature.phone"></span>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -41,31 +41,31 @@
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">1. Product:</label>
-                            <div class="col-sm-8 col-form-label product-name">RG III 8%Royal Ginseng</div>
+                            <div class="col-sm-8 col-form-label" data-bind="text: customRequest.product" ></div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">2. Customer:</label>
-                            <div class="col-sm-8 col-form-label customer-full-name">ExxelUSA
+                            <div class="col-sm-8 col-form-label" data-bind="text: customRequest.customer">
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="formula" class="col-sm-2 col-form-label">3. P.O: </label>
-                            <div class="col-sm-8 col-form-label customer-full-name">0
+                            <div class="col-sm-8 col-form-label" data-bind="text: reportFormula.po">
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">4. Formula:</label>
-                            <div class="col-sm-8 col-form-label formula-number">RG01
+                            <div class="col-sm-8 col-form-label" data-bind="text: customRequest.formula_number">
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">5. Revision:</label>
-                            <div class="col-sm-8 col-form-label revision">1.00
+                            <div class="col-sm-8 col-form-label" data-bind="text: customRequest.revision">
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">6. Date:</label>
-                            <div class="col-sm-8 col-form-label show-date">5/14/2018
+                            <div class="col-sm-8 col-form-label" data-bind="text: moment(customRequest.date()).format('MM/DD/YYYY')">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -75,12 +75,12 @@
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">7. Size/Type:</label>
-                            <div class="col-sm-8 col-form-label size-type">18 Ob
+                            <div class="col-sm-8 col-form-label" data-bind="text: customRequest.size_type">
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">8. Color/Logo:</label>
-                            <div class="col-sm-8 col-form-label color-logo">Red
+                            <div class="col-sm-8 col-form-label" data-bind="text: customRequest.color_logo">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -95,12 +95,14 @@
                         </div>
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label">11. Batch size: </label>
-                            <div class="col-sm-8 col-form-label" > 1,200,000  softgels
+                            <div class="col-sm-8 col-form-label" > 
+                                <span data-bind="text: numeral(customRequest.order()).format('0,0')"></span>  softgels
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-8 col-form-label" >  20,000.00  Box
+                            <div class="col-sm-8 col-form-label" > 
+                                 <span data-bind="text: numeral((customRequest.order() / 60)).format('0,0.00')"></span>  Box
                             </div>
                         </div>
                         <div class="row form-group">
@@ -128,85 +130,14 @@
                                             <th>% SG</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-inactive">
+                                    <tbody data-bind="foreach: model.dataIngredients">
                                         <tr>
-                                            <td>1</td>
-                                            <td>RG01-01J
+                                            <td data-bind="text: $index() + 1"></td>
+                                            <td data-bind="text: code">
                                             </td>
-                                            <td>Red Ginseng Extract
+                                            <td data-bind="text: name_ingredient">
                                             </td>
-                                            <td>
-                                                50.00
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2
-                                            </td>
-                                            <td>PG01-01J
-                                            </td>
-                                            <td>Panax Ginseng 80% Extract
-                                            </td>
-                                            <td>
-                                                25.00
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>FO01-AR01
-                                            </td>
-                                            <td>Marine Oil (30% omega 3 DHA/EPA)
-                                            </td>
-                                            <td>
-                                                250.00
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4
-                                            </td>
-                                            <td>RS01-JH01
-                                            </td>
-                                            <td>Resveratrol 98% Extract
-                                            </td>
-                                            <td>
-                                                6.50
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>VK01-IG01
-                                            </td>
-                                            <td>Vitamin K (MK7)
-                                            </td>
-                                            <td>
-                                                0.03
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>6
-                                            </td>
-                                            <td>LC01-WC01
-                                            </td>
-                                            <td>Lecithin
-                                            </td>
-                                            <td>
-                                                10.00
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>7
-                                            </td>
-                                            <td>BW01-CS01
-                                            </td>
-                                            <td>Beewax
-                                            </td>
-                                            <td>
-                                                30.00
+                                            <td data-bind="text: per_serving"> 
                                             </td>
                                             <td></td>
                                         </tr>
@@ -215,46 +146,28 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-sm-12 table-responsive">
+                            <div class="col-sm-12 ">
+                            <h4>Comments or Additional Instructions</h4>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" title="Enter Comment" name="comment">
+                            </div>
+                            <div class="col-sm-2">
+                                <a href="javascript:;" data-bind="click: addComment" title="Add Comment" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Add</a>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-10 table-responsive">
                                 <table class="table table-bordered table-sm">
-                                    <thead>
+                                    <tbody data-bind="foreach: model.comments">
                                         <tr>
-                                            <th colspan="2">Comments or Additional Instructions</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>All raw materials provided by Pharmaxx
+                                            <td  data-bind="text: ($index() + 1)"></td>
+                                            <td data-bind="text: comment">
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2
-                                            </td>
-                                            <td>Softgel Encapsulation by Pharmaxx
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Lead time: 6-8 weeks. After AW approved (FOS..)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4
-                                            </td>
-                                            <td>Packaging:  Box of 60 softgels
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>FOB Murrieta , CA
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>6
-                                            </td>
-                                            <td>Price quote good for 14 days.
+                                            <td class="text-center">
+                                                <a href='javascript:;' data-bind="click: $root.deleteComment" title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -297,52 +210,51 @@
                     </form>
                     <form id="dataprint"  class="d-none">
                         <div>
-                            <div><b>Pharmaxx, Inc.</b></div>
-                            <div>331 N Vineland Ave., City of industry, CA 91746</div>
-                            <div>Tel. (949) 863-1919, Fax. (949) 863-3008</div>
-                            
+                            <div><b data-bind="text: manufature.name"></b></div>
+                            <div data-bind="text: manufature.address"></div>
+                            <div data-bind="text: manufature.phone"></div>
                         </div>
                         <div style="text-align: center">
                             <h4>Manufacturing Specification</h4>
                         </div>
                         <div>
-                            1. Product: <span>RG III 8%Royal Ginseng</span>
+                            1. Product: <span data-bind="text: customRequest.product"></span>
                         </div>
                         <div >
-                            2. Customer:  <span>ExxelUSA</span>
+                            2. Customer:  <span data-bind="text: customRequest.customer"></span>
                         </div>
                         <div >
-                            3. P.O: <span>0</span>
+                            3. P.O: <span data-bind="text: reportFormula.po"></span>
                         </div>
                         <div>
-                           4. Formula: <span>RG01</span>
+                           4. Formula: <span data-bind="text: customRequest.formula_number"></span>
                         </div>
                         <div>
-                            5. Revision: <span>1.00</span>
+                            5. Revision: <span data-bind="text: customRequest.revision"></span>
                         </div>
                         <div >
-                           6. Date: <span>5/14/2018</span>
+                           6. Date: <span data-bind="text: moment(customRequest.date()).format('MM/DD/YYYY')"></span>
                         </div>
                         <div>
                             <h4>Softgel Specification</h4>
                         </div>
                         <div>
-                            7. Size/Type: <span>18 Ob</span>
+                            7. Size/Type: <span data-bind="text: customRequest.size_type"></span>
                         </div>
                         <div>
-                           8. Color/Logo: <span>Red</span>
+                           8. Color/Logo: <span data-bind="text: customRequest.color_logo"></span>
                         </div>
                         <div >
-                           9. Filling Wt: <span>Red</span>
+                           9. Filling Wt: <span></span>
                         </div>
                         <div>
                             10. Batch No.: 
                         </div>
                         <div>
-                            11. Batch size: <span>1,200,000  softgels</span>
+                            11. Batch size: <span data-bind="text: numeral(customRequest.order()).format('0,0')"></span>  softgels
                         </div>
                         <div>
-                             20,000.00  Box
+                                <span data-bind="text: numeral((customRequest.order() / 60)).format('0,0.00')"></span>  Box
                         </div>
                         <div>
                              60  softgels/box
@@ -365,85 +277,14 @@
                                             <th>% SG</th>
                                         </tr>
                                     </thead>
-                                    <tbody >
+                                    <tbody data-bind="foreach: model.dataIngredients">
                                         <tr>
-                                            <td>1</td>
-                                            <td>RG01-01J
+                                            <td data-bind="text: $index() + 1"></td>
+                                            <td data-bind="text: code">
                                             </td>
-                                            <td>Red Ginseng Extract
+                                            <td data-bind="text: name_ingredient">
                                             </td>
-                                            <td>
-                                                50.00
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2
-                                            </td>
-                                            <td>PG01-01J
-                                            </td>
-                                            <td>Panax Ginseng 80% Extract
-                                            </td>
-                                            <td>
-                                                25.00
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>FO01-AR01
-                                            </td>
-                                            <td>Marine Oil (30% omega 3 DHA/EPA)
-                                            </td>
-                                            <td>
-                                                250.00
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>4
-                                            </td>
-                                            <td>RS01-JH01
-                                            </td>
-                                            <td>Resveratrol 98% Extract
-                                            </td>
-                                            <td>
-                                                6.50
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>VK01-IG01
-                                            </td>
-                                            <td>Vitamin K (MK7)
-                                            </td>
-                                            <td>
-                                                0.03
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>6
-                                            </td>
-                                            <td>LC01-WC01
-                                            </td>
-                                            <td>Lecithin
-                                            </td>
-                                            <td>
-                                                10.00
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>7
-                                            </td>
-                                            <td>BW01-CS01
-                                            </td>
-                                            <td>Beewax
-                                            </td>
-                                            <td>
-                                                30.00
+                                            <td data-bind="text: per_serving"> 
                                             </td>
                                             <td></td>
                                         </tr>
@@ -451,47 +292,18 @@
                                 </table>
                             </div>
                         </div>
+                        <div >
+                            <div>
+                            <h4>Comments or Additional Instructions</h4>
+                            </div>
+                        </div>
                         <div>
                             <div >
                                 <table  style="width: 100%">
-                                    <thead>
+                                    <tbody data-bind="foreach: model.comments">
                                         <tr>
-                                            <th colspan="2">Comments or Additional Instructions</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>All raw materials provided by Pharmaxx
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2
-                                            </td>
-                                            <td>Softgel Encapsulation by Pharmaxx
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Lead time: 6-8 weeks. After AW approved (FOS..)
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4
-                                            </td>
-                                            <td>Packaging:  Box of 60 softgels
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>FOB Murrieta , CA
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>6
-                                            </td>
-                                            <td>Price quote good for 14 days.
+                                            <td  data-bind="text: ($index() + 1)"></td>
+                                            <td data-bind="text: comment">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -543,14 +355,111 @@
         var formCustomRequest = $("#formcustomrequest");
         var formDataView = $("#dataview");
         var formDataPrint = $("#dataprint");
+        self.model = {
+            comments: ko.observableArray(),
+            dataIngredients: ko.observableArray([]),
+        }
+        self.reportFormula = {
+            po: ko.observable(),
+        }
+        self.manufature = {
+            name: ko.observable(),
+            address: ko.observable(),
+            phone: ko.observable()
+        };
+        self.customRequest = {
+            product: ko.observable(),
+            customer: ko.observable(),
+            formula_number: ko.observable(),
+            revision: ko.observable(),
+            date: ko.observable(),
+            size_type: ko.observable(),
+            color_logo: ko.observable(),
+            order: ko.observable(),
+        };
+        self.addComment = function() {
+            var value = formDataView.find("input[name=comment]");
+
+            if (value.val() == undefined || value.val() == "" || !value.val()) {
+                return false;
+            }
+            if (checkItemExistArrayComments(ko.mapping.toJS(self.model.comments()), value.val())) {
+                toastr.error('{{ __('The comment exist.') }}');
+                return false;
+            }
+            var obj = {
+                comment: value.val(),
+            }
+            self.model.comments.push(obj);
+            value.val('');
+        }
+        self.deleteComment = function() {
+            self.model.comments.remove(this);
+        }
        
         $(document).ready(function() {
-
             $("#print").click(function(){
                 print("dataprint");
             });
         });
+        formCustomRequest.find("select[name=custom_request]").change(function() {
+            var id = $(this).val();
+
+            if (id) {
+                sendData("GET", '{{ route('admin.report.getreportformula') }}', { id: id }, function(res) {
+                    console.log(res);
+                    formDataView.removeClass("d-none");
+
+                    if (res.manufature) {
+                        self.manufature.name(res.manufature.name);
+                        self.manufature.address(res.manufature.address);
+                        self.manufature.phone(res.manufature.phone);
+                    }
+                    if (res.customRequest) {
+                        self.customRequest.product(res.customRequest.product);
+                        self.customRequest.customer(res.customRequest.customer);
+                        self.customRequest.formula_number(res.customRequest.formula_number);
+                        self.customRequest.revision(res.customRequest.revision);
+                        self.customRequest.date(res.customRequest.date);
+                        self.customRequest.size_type(res.customRequest.size_type);
+                        self.customRequest.color_logo(res.customRequest.color_logo);
+                        self.customRequest.order(res.customRequest.order);
+                    }
+                    var arr = res.ingredientsActive.concat(res.ingredientsInActive);
+                    $.each(arr, function( index, value ) {
+                        var obj = ko.mapping.fromJS(value);
+                        self.model.dataIngredients.push(obj);
+                    });
+                    
+                    if (res.reportFormula) {
+                        self.reportFormula.po(res.reportFormula.po);
+                    }
+
+                    if (res.comments) {
+                        $.each(res.comments, function( index, value ) {
+                            var obj = {
+                                comment: value.comment
+                            };
+                            self.model.comments.push(ko.mapping.fromJS(obj));
+                        });
+                    }
+                });
+            } else {
+                formDataView.addClass("d-none");
+            }
+        });
+        var checkItemExistArrayComments = function(array, comment) {
+            var res = false;
+            $.each(array , function(index, item) { 
+                if (item.comment == comment) {
+                    res = true;
+                    return false;
+                }
+            });
+            return res;
+        }
     }
+    
      // Activates knockout.js
      ko.applyBindings(new AppViewModel());
     

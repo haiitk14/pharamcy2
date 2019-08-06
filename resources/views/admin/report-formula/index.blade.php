@@ -646,6 +646,7 @@
             var data = {
                 idCustomRequest: idCustomRequest,
                 po: po,
+                filling_wt: self.model.fillWtInActive(),
                 servingSize: servingSize,
                 gelatinBatch: gelatinBatch,
                 arrIngredients: JSON.stringify(arrIngredients),

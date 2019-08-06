@@ -66,6 +66,7 @@ class ReportFormulaController
             $reportFormula = new ReportFormula();
             $reportFormula->customrequest_id = $request->get('idCustomRequest');
             $reportFormula->po = $request->get('po');
+            $reportFormula->filling_wt = $request->get('filling_wt');
             $reportFormula->serving_size = $request->get('servingSize');
             $reportFormula->gelatin_batch = $request->get('gelatinBatch');
 
