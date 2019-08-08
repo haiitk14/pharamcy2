@@ -80,6 +80,7 @@ class SalesOrderController
             $customRequest->customer = $request->get('customer');
             $customRequest->address = $request->get('address');
             $customRequest->manufature_id = $request->get('manufature_id');
+            $customRequest->po = $request->get('po');
             $customRequest->formula_number = $request->get('formula_number');
             $customRequest->revision = $request->get('revision');
             $customRequest->date = $request->get('date');
@@ -88,8 +89,11 @@ class SalesOrderController
             $customRequest->is_hardcapsule = $request->get('is_hardcapsule');
             $customRequest->size_type = $request->get('size_type');
             $customRequest->color_logo = $request->get('color_logo');
+            $customRequest->serving_size = $request->get('serving_size');
             $customRequest->filling_wt = $request->get('filling_wt');
             $customRequest->order = $request->get('order');
+            $customRequest->box = $request->get('box');
+            $customRequest->carton = $request->get('carton');
             //$customRequest->create_by = Auth::user()->id;
             $response = $customRequest->save();
 

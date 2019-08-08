@@ -64,11 +64,16 @@
                                 </select>
                             </div>
                         </div>
-                        
                         <div class="row form-group">
-                            <label for="formula" class="col-sm-2 col-form-label">Formula number</label>
+                            <label for="address" class="col-sm-2 col-form-label">Quotation Request Number</label>
+                            <div class="col-sm-8">
+                                <input name="po" title="Enter PO" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="formula" class="col-sm-2 col-form-label">Formula</label>
                             <div class="col-sm-4">
-                                <input type="text" title="Enter Formula number" class="form-control" name="formula">
+                                <input type="text" title="Enter Formula" class="form-control" name="formula">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -121,15 +126,33 @@
                             </div>
                         </div>
                         <div class="row form-group">
+                            <label for="serving_size" class="col-sm-2 col-form-label">Serving size</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="serving_size">
+                            </div>
+                        </div>
+                        <!--<div class="row form-group">
                             <label for="filling" class="col-sm-2 col-form-label">Filling Wt</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="filling">
                             </div>
-                        </div>
+                        </div>-->
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label">Order quantity (unit) * </label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="order">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="box" class="col-sm-2 col-form-label">Box: </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="box">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label for="carton" class="col-sm-2 col-form-label">Carton: </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="carton">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -277,6 +300,9 @@
                         <div>
                             <div>Manufature by: <span class="manufaturebyprint"></span> </div> 
                         </div>
+                        <div>
+                            <div>Quotation Request Number: <span class="poprint"></span> </div>
+                        </div>
                         <div >
                             <div>Formula number: <span class="formulaprint"></span> </div> 
                         </div>
@@ -310,10 +336,19 @@
                             <div>Color/Logo: <span class="colorprint"></span> </div>
                         </div>
                         <div>
-                            <div>Filling Wt: <span class="fillingprint"></span></div> 
+                            <div>Serving size: <span class="servingsizeprint"></span></div> 
                         </div>
+                        <!--<div>
+                            <div>Filling Wt: <span class="fillingprint"></span></div> 
+                        </div>-->
                         <div>
                             <div >Order quantity (unit): <span class="orderprint"></span> </div>
+                        </div>
+                        <div>
+                            <div >Box: <span class="boxprint"></span> </div>
+                        </div>
+                        <div>
+                            <div >Carton: <span class="cartonprint"></span> </div>
                         </div>
                         <div>
                             <div >
@@ -563,6 +598,7 @@
             var customer = formDataView.find("input[name=customer]").val();
             var address = formDataView.find("textarea[name=address]").val();
             var manufature_id = formDataView.find("select[name=manufatureby]").val();
+            var po = formDataView.find("input[name=po]").val();
             var formula_number = formDataView.find("input[name=formula]").val();
             var revision = formDataView.find("input[name=revision]").val();
             var date = formDataView.find("input[name=date]").val();
@@ -571,8 +607,11 @@
             var is_hardcapsule = $('input[name=hardcapsule]').is(":checked") ? 1 : 0;
             var size_type = formDataView.find("input[name=size]").val();
             var color_logo = formDataView.find("input[name=color]").val();
+            var serving_size = formDataView.find("input[name=serving_size]").val();
             var filling_wt = formDataView.find("input[name=filling]").val();
             var order = formDataView.find("input[name=order]").val();
+            var box = formDataView.find("input[name=box]").val();
+            var carton = formDataView.find("input[name=carton]").val();
 
             var data = {
                 ipd: ipd,
@@ -580,6 +619,7 @@
                 customer: customer,
                 address: address,
                 manufature_id: manufature_id,
+                po: po,
                 formula_number: formula_number,
                 revision: revision,
                 date: moment(new Date(date)).format("YYYY-MM-DD"),
@@ -589,7 +629,10 @@
                 size_type: size_type,
                 color_logo: color_logo,
                 filling_wt: filling_wt,
+                serving_size: serving_size,
                 order: numeral(order).value(),
+                box: box,
+                carton: carton,
                 listIngredients:  JSON.stringify(dataTableIng), 
                 listComments:  JSON.stringify(dataTableComments), 
             };
@@ -618,6 +661,7 @@
 		var product = formDataView.find("input[name=product]").val();
 		var customer = formDataView.find("input[name=customer]").val();
 		var manufatureby = formDataView.find("select[name=manufatureby]").val();
+        var po = formDataView.find("input[name=po]").val();
 		var address = formDataView.find("textarea[name=address]").val();
 		var formula = formDataView.find("input[name=formula]").val();
 		var revision = formDataView.find("input[name=revision]").val();
@@ -634,21 +678,28 @@
         }
 		var size = formDataView.find("input[name=size]").val();
 		var color = formDataView.find("input[name=color]").val();
+        var serving_size = formDataView.find("input[name=serving_size]").val();
 		var filling = formDataView.find("input[name=filling]").val();
 		var order = formDataView.find("input[name=order]").val();
+        var box = formDataView.find("input[name=box]").val();
+        var carton = formDataView.find("input[name=carton]").val();
 
 		formDataPrint.find(".ipdprint").html(ipd);
 		formDataPrint.find(".productprint").html(product);
 		formDataPrint.find(".customerprint").html(customer);
 		formDataPrint.find(".manufaturebyprint").html(manufatureby);
 		formDataPrint.find(".addressprint").html(address);
+        formDataPrint.find(".poprint").html(po);
 		formDataPrint.find(".formulaprint").html(formula);
 		formDataPrint.find(".revisionprint").html(revision);
 		formDataPrint.find(".dateprint").html(date);
 		formDataPrint.find(".sizeprint").html(size);
 		formDataPrint.find(".colorprint").html(color);
+        formDataPrint.find(".servingsizeprint").html(serving_size);
 		formDataPrint.find(".fillingprint").html(filling);
 		formDataPrint.find(".orderprint").html(order);
+        formDataPrint.find(".boxprint").html(box);
+        formDataPrint.find(".cartonprint").html(carton);
 
         print("dataprint");
     }
