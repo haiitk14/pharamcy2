@@ -766,6 +766,10 @@
             if (!data) return false;
             
             formDataView.removeClass("d-none");
+            self.arraySalesOrderIngredientsActive([]);
+            self.arraySalesOrderIngredientsInActive([]);
+            self.arraySalesOrderIngredientsColor([]);
+            self.arraySalesOrderIngredientsShell([]);
 
             if (data.customRequest) {
                 var customRequest = data.customRequest;
@@ -812,7 +816,7 @@
                     item.per_batch = ko.observable(0);
                     item.tab100 = ko.observable(0);
 
-                    switch(item.ingredient.inactive) {
+                    switch(Number(item.ingredient.inactive)) {
                         case 0:
                             self.arraySalesOrderIngredientsActive.push(item);
                             break;

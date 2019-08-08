@@ -49,8 +49,9 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label for="formula" class="col-sm-2 col-form-label">3. P.O: </label>
-                            <div class="col-sm-8 col-form-label" data-bind="text: reportFormula.po">
+                            <label for="po" class="col-sm-2 col-form-label">3. P.O: </label>
+                            <div class="col-sm-4">
+                                <input type="text" data-bind="value: reportFormula.po" title="Enter P.O" placeholder="Enter P.O" class="form-control">
                             </div>
                         </div>
                         <div class="row form-group">
@@ -85,12 +86,14 @@
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">9. Filling Wt:</label>
-                            <div class="col-sm-8 col-form-label">
+                            <div class="col-sm-4">
+                                <input type="text" title="Enter Filling Wt" placeholder="Enter Filling Wt" class="form-control">
                             </div>
                         </div>
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label">10. Batch No.: </label>
-                            <div class="col-sm-8 col-form-label">
+                            <div class="col-sm-4">
+                                <input type="text"  title="Enter Batch No" placeholder="Enter Batch No" class="form-control">
                             </div>
                         </div>
                         <div class="row form-group">
