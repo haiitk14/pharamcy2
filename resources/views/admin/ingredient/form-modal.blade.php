@@ -12,7 +12,7 @@
 				<input type="hidden" name="id">
 			    <div class="modal-body">
 					<div class="form-group">
-						<label>{{ __('Code') }} (<span class="text-danger">*</span>)</label>
+						<label>{{ __('Code') }}</label>
 						<input type="text" title="Enter Code" name="code" class="form-control code1">
 					</div>
 					<div class="form-group">

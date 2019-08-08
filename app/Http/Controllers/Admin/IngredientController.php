@@ -46,7 +46,6 @@ class IngredientController
         if ($request->ajax()) {
             $input = $request->all();
             $validator = Validator::make($input, [
-                'code' => 'required',
                 'name' => 'required',
             ]);
 
@@ -54,10 +53,10 @@ class IngredientController
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
-            $checkExist = Ingredient::where('code', $request->get('code'))->count();
+            $checkExist = Ingredient::where('name', $request->get('name'))->count();
             
             if ($checkExist > 0) {
-                $errors = ["Code exists"];
+                $errors = ["Name exists"];
                 return response()->json(compact(['errors']), 422);
             }
             $ingredient = new Ingredient();
@@ -89,7 +88,6 @@ class IngredientController
             $input = $request->all();
             $validator = Validator::make($input, [
                 'id' => 'required',
-                'code' => 'required',
                 'name' => 'required',
                 'inactive' => 'required',
             ]);
@@ -98,13 +96,12 @@ class IngredientController
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
-            $checkExist = Ingredient::where('code', $request->get('code'))->where('id', '<>', $request->get('id'))->count();
+            $checkExist = Ingredient::where('name', $request->get('name'))->where('id', '<>', $request->get('id'))->count();
             
             if ($checkExist > 0) {
-                $errors = ["Code exists"];
+                $errors = ["Name exists"];
                 return response()->json(compact(['errors']), 422);
             }
-            
             $id = $request->get('id');
             $item = Ingredient::find($id);
             if ($item) {
@@ -124,7 +121,6 @@ class IngredientController
 
                 return response()->json($result);
             }
-
             $status = 'error';
 
             return response()->json(compact(['status']), 500);

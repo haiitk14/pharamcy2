@@ -139,12 +139,6 @@
             var code = form.find('input[name=code]');
             var name = form.find('input[name=name]');
 
-            if (code.val() == '') {
-                toastr.error('{{ __('The code field is required.') }}');
-                code.focus();
-                return false;
-            }
-
             if (name.val().trim() == '') {
                 toastr.error('{{ __('The name field is required.') }}');
                 name.focus();
