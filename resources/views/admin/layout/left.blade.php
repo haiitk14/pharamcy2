@@ -27,7 +27,7 @@
                     </ul>
                 </li>
                 <li class="submenu">
-                    <a href="#" @php if ($controller == 'SalesOrderController') 
+                    <a href="#" @php if ($controller == 'SalesOrderController' || $controller == 'ReportFormulaController' || $controller == 'ReportMfgSpecController') 
                     echo ' class="subdrop"'; @endphp>
                         <i class="fa fa-bar-chart" aria-hidden="true"></i> <span> {{ __('Report') }} </span> <span class="menu-arrow"></span>
                     </a>

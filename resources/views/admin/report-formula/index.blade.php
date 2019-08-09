@@ -24,7 +24,7 @@
                                 <select class="form-control" title="Select Custom Request" name="custom_request" title="{{ __('Select Custom Request') }}">
                                     <option value="">{{ __('None') }}</option>
                                     @foreach ($data['customRequests'] as $customRequest)
-                                    <option value="{{ $customRequest->id }}">{{ $customRequest->ipd }} - {{ $customRequest->manufature->name }}</option>
+                                    <option value="{{ $customRequest->id }}">{{ Auth::user()->username }} - {{ $customRequest->ipd }} </option>
                                     @endforeach
                                 </select>
                             </div>
