@@ -83,4 +83,8 @@ Route::get('login', ['uses' => 'Admin\AuthController@login', 'as' => 'adminLogin
 Route::post('login', ['uses' => 'Admin\AuthController@postLogin', 'as' => 'postlogin']);
 // Route::post('profile', ['uses' => 'Backend\AuthController@profile', 'as' => 'admin.auth.profile']);
 Route::get('logout', ['uses' => 'Admin\AuthController@logout', 'as' => 'adminLogout']);
+Route::get('register', ['uses' => 'Admin\AuthController@register', 'as' => 'adminRegister']);
+Route::post('register', ['uses' => 'Admin\AuthController@postRegister', 'as' => 'postRegister']);
+
+
 

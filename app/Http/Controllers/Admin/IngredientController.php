@@ -53,7 +53,7 @@ class IngredientController
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
-            $checkExist = Ingredient::where('name', $request->get('name'))->count();
+            $checkExist = Ingredient::where('name', $request->get('name'))->where('inactive', $request->get('inactive'))->count();
             
             if ($checkExist > 0) {
                 $errors = ["Name exists"];

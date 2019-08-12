@@ -9,6 +9,7 @@ use Validator;
 use Lang;
 use Hash;
 use Auth;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -72,6 +73,55 @@ class AuthController extends Controller
         }
 
     } 
+
+    public function register()
+    {   
+        return view('admin.auth.register');
+    }
+
+    public function postRegister(Request $request)
+    {
+        $rules = [
+            'name' => 'required',
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+
+        $messages = [
+            'name.required' => __('Please enter your Name.'),
+            'username.required' => __('Please enter your Username.'),
+            'password.required' => __('Please enter your Password.'),
+            'password.min'      => __('Password must least 6 characters.'),
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages())->withInput();
+        }
+        $checkExist = User::where('username', $request->get('username'))->count();
+            
+        if ($checkExist > 0) {
+            $errors = ["Username exists"];
+            return response()->json(compact(['errors']), 422);
+        }
+        $user = new User();
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = bcrypt($request->get('password'));
+        $user->roles_code = 'user'; 
+        $user->username = $request->get('username');
+        $user->is_user = 1;
+        $user->save();
+
+        return redirect('/login');
+
+        $status = 'error';
+
+        return response()->json(compact(['status']), 500);
+
+    } 
+
 
     /**
      * Logout admin

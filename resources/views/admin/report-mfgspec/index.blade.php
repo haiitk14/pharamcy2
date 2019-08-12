@@ -20,7 +20,7 @@
                                 <select class="form-control" title="Select Custom Request" name="custom_request" title="{{ __('Select Custom Request') }}">
                                     <option value="">{{ __('None') }}</option>
                                     @foreach ($data['customRequests'] as $customRequest)
-                                    <option value="{{ $customRequest->id }}">{{ Auth::user()->username }} - {{ $customRequest->ipd }}</option>
+                                    <option value="{{ $customRequest->id }}">{{ Auth::user()->username }}{{ $customRequest->formula_number }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -129,21 +129,44 @@
                                             <th>No</th>
                                             <th>RW No.</th>
                                             <th>Ingredients</th>
-                                            <th>per serving mg</th>
-                                            <th>% SG</th>
+                                            <th>Wt (mg) per Unit</th>
+                                            <th>Input Wt/kg per batch</th>
+                                            <th>%SG</th>
                                         </tr>
                                     </thead>
-                                    <tbody data-bind="foreach: model.dataIngredients">
+                                    <tbody>
+                                        <tr >
+                                            <td colspan="6"><b>Active Ingredients</b></td>
+                                        </tr>
+                                        <!-- ko foreach: model.dataIngredientsActive -->
                                         <tr>
                                             <td data-bind="text: $index() + 1"></td>
                                             <td data-bind="text: code">
                                             </td>
                                             <td data-bind="text: name_ingredient">
                                             </td>
-                                            <td data-bind="text: per_serving"> 
+                                            <td data-bind="text: per_unit"> 
                                             </td>
-                                            <td></td>
+                                            <td data-bind="text: per_batch"></td>
+                                            <td data-bind="text: tab100"></td>
                                         </tr>
+                                        <!-- /ko -->
+                                        <tr >
+                                            <td colspan="6"><b>Inactive Ingredients</b></td>
+                                        </tr>
+                                        <!-- ko foreach: model.dataIngredientsInActive -->
+                                        <tr>
+                                            <td data-bind="text: $index() + 1"></td>
+                                            <td data-bind="text: code">
+                                            </td>
+                                            <td data-bind="text: name_ingredient">
+                                            </td>
+                                            <td data-bind="text: per_unit"> 
+                                            </td>
+                                            <td data-bind="text: per_batch"></td>
+                                            <td data-bind="text: tab100"></td>
+                                        </tr>
+                                        <!-- /ko -->
                                     </tbody>
                                 </table>
                             </div>
@@ -271,27 +294,50 @@
                         <div>
                             <div >
                                 <table  style="width: 100%">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>RW No.</th>
-                                            <th>Ingredients</th>
-                                            <th>per serving mg</th>
-                                            <th>% SG</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody data-bind="foreach: model.dataIngredients">
-                                        <tr>
-                                            <td data-bind="text: $index() + 1"></td>
-                                            <td data-bind="text: code">
-                                            </td>
-                                            <td data-bind="text: name_ingredient">
-                                            </td>
-                                            <td data-bind="text: per_serving"> 
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
+                                        <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>RW No.</th>
+                                                    <th>Ingredients</th>
+                                                    <th>Wt (mg) per Unit</th>
+                                                    <th>Input Wt/kg per batch</th>
+                                                    <th>%SG</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr >
+                                                    <td colspan="6"><b>Active Ingredients</b></td>
+                                                </tr>
+                                                <!-- ko foreach: model.dataIngredientsActive -->
+                                                <tr>
+                                                    <td data-bind="text: $index() + 1"></td>
+                                                    <td data-bind="text: code">
+                                                    </td>
+                                                    <td data-bind="text: name_ingredient">
+                                                    </td>
+                                                    <td data-bind="text: per_unit"> 
+                                                    </td>
+                                                    <td data-bind="text: per_batch"></td>
+                                                    <td data-bind="text: tab100"></td>
+                                                </tr>
+                                                <!-- /ko -->
+                                                <tr >
+                                                    <td colspan="6"><b>Inactive Ingredients</b></td>
+                                                </tr>
+                                                <!-- ko foreach: model.dataIngredientsInActive -->
+                                                <tr>
+                                                    <td data-bind="text: $index() + 1"></td>
+                                                    <td data-bind="text: code">
+                                                    </td>
+                                                    <td data-bind="text: name_ingredient">
+                                                    </td>
+                                                    <td data-bind="text: per_unit"> 
+                                                    </td>
+                                                    <td data-bind="text: per_batch"></td>
+                                                    <td data-bind="text: tab100"></td>
+                                                </tr>
+                                                <!-- /ko -->
+                                            </tbody>
                                 </table>
                             </div>
                         </div>
@@ -360,7 +406,8 @@
         var formDataPrint = $("#dataprint");
         self.model = {
             comments: ko.observableArray(),
-            dataIngredients: ko.observableArray([]),
+            dataIngredientsActive: ko.observableArray([]),
+            dataIngredientsInActive: ko.observableArray([]),
         }
         self.reportFormula = {
             po: ko.observable(),
@@ -428,10 +475,13 @@
                         self.customRequest.color_logo(res.customRequest.color_logo);
                         self.customRequest.order(res.customRequest.order);
                     }
-                    var arr = res.ingredientsActive.concat(res.ingredientsInActive);
-                    $.each(arr, function( index, value ) {
+                    $.each(res.ingredientsActive, function( index, value ) {
                         var obj = ko.mapping.fromJS(value);
-                        self.model.dataIngredients.push(obj);
+                        self.model.dataIngredientsActive.push(obj);
+                    });
+                    $.each(res.ingredientsInActive, function( index, value ) {
+                        var obj = ko.mapping.fromJS(value);
+                        self.model.dataIngredientsInActive.push(obj);
                     });
                     
                     if (res.reportFormula) {
