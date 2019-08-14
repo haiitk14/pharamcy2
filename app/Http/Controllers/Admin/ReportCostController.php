@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Model\CostHardcapsule;
 use App\Model\CostIngredients;
+use App\Model\CostLabor;
+use App\Model\CostLaborBottles;
+use App\Model\CostTypeBottles;
 use Illuminate\Http\Request;
 use App\Model\Ingredient;
 use App\Model\CustomRequest;
@@ -103,6 +106,44 @@ class ReportCostController
                 $costHardcapsule->size_type = $value->size_type;
                 $costHardcapsule->save();
             }
+            $arrCostLabor = json_decode($request->get('listLabor'));
+
+            foreach ($arrCostLabor as $value) {
+                $item = new CostLabor();
+                $item->reportcost_id = intval($reportCost->id);
+                $item->amount = $value->amount;
+                $item->cost = $value->cost;
+                $item->hour = $value->hour;
+                $item->person = $value->person;
+                $item->process = $value->process;
+                $item->save();
+            }
+            $arrCostLaborBottles = json_decode($request->get('listLaborBottles'));
+
+            foreach ($arrCostLaborBottles as $value) {
+                $item = new CostLaborBottles();
+                $item->reportcost_id = intval($reportCost->id);
+                $item->total = $value->total;
+                $item->cost = $value->cost;
+                $item->hour = $value->hour;
+                $item->person = $value->person;
+                $item->process = $value->process;
+                $item->save();
+            }
+            $arrCostTypeBottles = json_decode($request->get('listTypeBottles'));
+
+            foreach ($arrCostTypeBottles as $value) {
+                $item = new CostTypeBottles();
+                $item->reportcost_id = intval($reportCost->id);
+                $item->name1 = $value->name1;
+                $item->name2 = $value->name2;
+                $item->name3 = $value->name3;
+                $item->num1 = $value->num1;
+                $item->num2 = $value->num2;
+                $item->num3 = $value->num3;
+                $item->save();
+            }
+
             $result = [];
 
             if ($response) {
@@ -139,6 +180,9 @@ class ReportCostController
             $reportFormula = ReportFormula::where('customrequest_id', $id)->orderBy('created_at', 'desc')->first();
             $isEmpty = false;
             $costHardcapsule = null;
+            $listLabor = null;
+            $listLaborBottles = null;
+            $listTypeBottles = null;
 
             if ($cost) {
                 $formulaIngredientsActive = CostIngredients::where('reportcost_id', $cost['id'])->where('inactive', 0)->get();
@@ -146,6 +190,9 @@ class ReportCostController
                 $formulaIngredientsColor = CostIngredients::where('reportcost_id', $cost['id'])->where('inactive', 2)->get();
                 $formulaIngredientsShell = CostIngredients::where('reportcost_id', $cost['id'])->where('inactive', 3)->get();
                 $costHardcapsule = CostHardcapsule::where('reportcost_id', $cost['id'])->get();
+                $listLabor = CostLabor::where('reportcost_id', $cost['id'])->get();
+                $listLaborBottles = CostLaborBottles::where('reportcost_id', $cost['id'])->get();
+                $listTypeBottles = CostTypeBottles::where('reportcost_id', $cost['id'])->get();
             } else {
                 $formulaIngredientsActive = FormulaIngredients::where('reportformula_id', $reportFormula['id'])->where('inactive', 0)->get();
                 $formulaIngredientsInActive = FormulaIngredients::where('reportformula_id', $reportFormula['id'])->where('inactive', 1)->get();
@@ -164,6 +211,9 @@ class ReportCostController
                 'ingredientsShell' => $formulaIngredientsShell,
                 'reportCost' => $cost,
                 'costHardcapsule' => $costHardcapsule,
+                'listLabor' => $listLabor,
+                'listLaborBottles' => $listLaborBottles,
+                'listTypeBottles' => $listTypeBottles,
             ]; 
            
 

@@ -1242,30 +1242,30 @@
                 {
                     num1: ko.observable(num1),
                     num2: ko.observable(num2),
-                    c25: ko.observable((num2 * self.cost.c25) + num2),
-                    c30: ko.observable((num2 * self.cost.c30) + num2),
-                    c35: ko.observable((num2 * self.cost.c35) + num2),
-                    c40: ko.observable((num2 * self.cost.c40) + num2),
-                    c50: ko.observable((num2 * self.cost.c50) + num2),
-                    c60: ko.observable((num2 * self.cost.c60) + num2),
-                    c70: ko.observable((num2 * self.cost.c70) + num2),
-                    c80: ko.observable((num2 * self.cost.c80) + num2),
-                    c90: ko.observable((num2 * self.cost.c90) + num2),
-                    c100: ko.observable((num2 * self.cost.c100) + num2),
+                    c25: ko.observable((num2 * self.cost.c25 / 100) + num2),
+                    c30: ko.observable((num2 * self.cost.c30 / 100) + num2),
+                    c35: ko.observable((num2 * self.cost.c35 / 100) + num2),
+                    c40: ko.observable((num2 * self.cost.c40 / 100) + num2),
+                    c50: ko.observable((num2 * self.cost.c50 / 100) + num2),
+                    c60: ko.observable((num2 * self.cost.c60 / 100) + num2),
+                    c70: ko.observable((num2 * self.cost.c70 / 100) + num2),
+                    c80: ko.observable((num2 * self.cost.c80 / 100) + num2),
+                    c90: ko.observable((num2 * self.cost.c90 / 100) + num2),
+                    c100: ko.observable((num2 * self.cost.c100 / 100) + num2),
                 },
                 {
                     num1: ko.observable(num21),
                     num2: ko.observable(num22),
-                    c25: ko.observable((num22 * self.cost.c25) + num22),
-                    c30: ko.observable((num22 * self.cost.c30) + num22),
-                    c35: ko.observable((num22 * self.cost.c35) + num22),
-                    c40: ko.observable((num22 * self.cost.c40) + num22),
-                    c50: ko.observable((num22 * self.cost.c50) + num22),
-                    c60: ko.observable((num22 * self.cost.c60) + num22),
-                    c70: ko.observable((num22 * self.cost.c70) + num22),
-                    c80: ko.observable((num22 * self.cost.c80) + num22),
-                    c90: ko.observable((num22 * self.cost.c90) + num22),
-                    c100: ko.observable((num22 * self.cost.c100) + num22),
+                    c25: ko.observable((num22 * self.cost.c25 / 100) + num22),
+                    c30: ko.observable((num22 * self.cost.c30 / 100) + num22),
+                    c35: ko.observable((num22 * self.cost.c35 / 100) + num22),
+                    c40: ko.observable((num22 * self.cost.c40 / 100) + num22),
+                    c50: ko.observable((num22 * self.cost.c50 / 100) + num22),
+                    c60: ko.observable((num22 * self.cost.c60 / 100) + num22),
+                    c70: ko.observable((num22 * self.cost.c70 / 100) + num22),
+                    c80: ko.observable((num22 * self.cost.c80 / 100) + num22),
+                    c90: ko.observable((num22 * self.cost.c90 / 100) + num22),
+                    c100: ko.observable((num22 * self.cost.c100 / 100) + num22),
                 }
             ];
             self.model.dataCost(arr);
@@ -1337,45 +1337,45 @@
             var arr = [
                 {
                     costPerBottle: ko.observable(costPerBottle0),
-                    c25: ko.observable((costPerBottle0 * self.cost.c25) + costPerBottle0),
-                    c30: ko.observable((costPerBottle0 * self.cost.c30) + costPerBottle0),
-                    c35: ko.observable((costPerBottle0 * self.cost.c35) + costPerBottle0),
-                    c40: ko.observable((costPerBottle0 * self.cost.c40) + costPerBottle0),
-                    c45: ko.observable((costPerBottle0 * self.cost.c45) + costPerBottle0),
-                    c50: ko.observable((costPerBottle0 * self.cost.c50) + costPerBottle0),
-                    c60: ko.observable((costPerBottle0 * self.cost.c60) + costPerBottle0),
-                    c70: ko.observable((costPerBottle0 * self.cost.c70) + costPerBottle0),
-                    c80: ko.observable((costPerBottle0 * self.cost.c80) + costPerBottle0),
-                    c90: ko.observable((costPerBottle0 * self.cost.c90) + costPerBottle0),
-                    c160: ko.observable((costPerBottle0 * self.cost.c160) + costPerBottle0),
+                    c25: ko.observable((costPerBottle0 * self.cost.c25 / 100) + costPerBottle0),
+                    c30: ko.observable((costPerBottle0 * self.cost.c30 / 100) + costPerBottle0),
+                    c35: ko.observable((costPerBottle0 * self.cost.c35 / 100) + costPerBottle0),
+                    c40: ko.observable((costPerBottle0 * self.cost.c40 / 100) + costPerBottle0),
+                    c45: ko.observable((costPerBottle0 * self.cost.c45 / 100) + costPerBottle0),
+                    c50: ko.observable((costPerBottle0 * self.cost.c50 / 100) + costPerBottle0),
+                    c60: ko.observable((costPerBottle0 * self.cost.c60 / 100) + costPerBottle0),
+                    c70: ko.observable((costPerBottle0 * self.cost.c70 / 100) + costPerBottle0),
+                    c80: ko.observable((costPerBottle0 * self.cost.c80 / 100) + costPerBottle0),
+                    c90: ko.observable((costPerBottle0 * self.cost.c90 / 100) + costPerBottle0),
+                    c160: ko.observable((costPerBottle0 * self.cost.c160 / 100) + costPerBottle0),
                 },
                 {
                     costPerBottle: ko.observable(costPerBottle1),
-                    c25: ko.observable((costPerBottle1 * self.cost.c25) + costPerBottle1),
-                    c30: ko.observable((costPerBottle1 * self.cost.c30) + costPerBottle1),
-                    c35: ko.observable((costPerBottle1 * self.cost.c35) + costPerBottle1),
-                    c40: ko.observable((costPerBottle1 * self.cost.c40) + costPerBottle1),
-                    c45: ko.observable((costPerBottle1 * self.cost.c45) + costPerBottle1),
-                    c50: ko.observable((costPerBottle1 * self.cost.c50) + costPerBottle1),
-                    c60: ko.observable((costPerBottle1 * self.cost.c60) + costPerBottle1),
-                    c70: ko.observable((costPerBottle1 * self.cost.c70) + costPerBottle1),
-                    c80: ko.observable((costPerBottle1 * self.cost.c80) + costPerBottle1),
-                    c90: ko.observable((costPerBottle1 * self.cost.c90) + costPerBottle1),
-                    c160: ko.observable((costPerBottle1 * self.cost.c160) + costPerBottle1),
+                    c25: ko.observable((costPerBottle1 * self.cost.c25 / 100) + costPerBottle1),
+                    c30: ko.observable((costPerBottle1 * self.cost.c30 / 100) + costPerBottle1),
+                    c35: ko.observable((costPerBottle1 * self.cost.c35 / 100) + costPerBottle1),
+                    c40: ko.observable((costPerBottle1 * self.cost.c40 / 100) + costPerBottle1),
+                    c45: ko.observable((costPerBottle1 * self.cost.c45 / 100) + costPerBottle1),
+                    c50: ko.observable((costPerBottle1 * self.cost.c50 / 100 ) + costPerBottle1),
+                    c60: ko.observable((costPerBottle1 * self.cost.c60 / 100) + costPerBottle1),
+                    c70: ko.observable((costPerBottle1 * self.cost.c70 / 100) + costPerBottle1),
+                    c80: ko.observable((costPerBottle1 * self.cost.c80 / 100) + costPerBottle1),
+                    c90: ko.observable((costPerBottle1 * self.cost.c90 / 100) + costPerBottle1),
+                    c160: ko.observable((costPerBottle1 * self.cost.c160 / 100) + costPerBottle1),
                 },
                 {
                     costPerBottle: ko.observable(costPerBottle2),
-                    c25: ko.observable((costPerBottle2 * self.cost.c25) + costPerBottle2),
-                    c30: ko.observable((costPerBottle2 * self.cost.c30) + costPerBottle2),
-                    c35: ko.observable((costPerBottle2 * self.cost.c35) + costPerBottle2),
-                    c40: ko.observable((costPerBottle2 * self.cost.c40) + costPerBottle2),
-                    c45: ko.observable((costPerBottle2 * self.cost.c45) + costPerBottle2),
-                    c50: ko.observable((costPerBottle2 * self.cost.c50) + costPerBottle2),
-                    c60: ko.observable((costPerBottle2 * self.cost.c60) + costPerBottle2),
-                    c70: ko.observable((costPerBottle2 * self.cost.c70) + costPerBottle2),
-                    c80: ko.observable((costPerBottle2 * self.cost.c80) + costPerBottle2),
-                    c90: ko.observable((costPerBottle2 * self.cost.c90) + costPerBottle2),
-                    c160: ko.observable((costPerBottle2 * self.cost.c160) + costPerBottle2),
+                    c25: ko.observable((costPerBottle2 * self.cost.c25 / 100) + costPerBottle2),
+                    c30: ko.observable((costPerBottle2 * self.cost.c30 / 100) + costPerBottle2),
+                    c35: ko.observable((costPerBottle2 * self.cost.c35 / 100) + costPerBottle2),
+                    c40: ko.observable((costPerBottle2 * self.cost.c40 / 100) + costPerBottle2),
+                    c45: ko.observable((costPerBottle2 * self.cost.c45 / 100) + costPerBottle2),
+                    c50: ko.observable((costPerBottle2 * self.cost.c50 / 100) + costPerBottle2),
+                    c60: ko.observable((costPerBottle2 * self.cost.c60 / 100) + costPerBottle2),
+                    c70: ko.observable((costPerBottle2 * self.cost.c70 / 100) + costPerBottle2),
+                    c80: ko.observable((costPerBottle2 * self.cost.c80 / 100) + costPerBottle2),
+                    c90: ko.observable((costPerBottle2 * self.cost.c90 / 100) + costPerBottle2),
+                    c160: ko.observable((costPerBottle2 * self.cost.c160 / 100) + costPerBottle2),
                 }
             ];
             self.model.dataCostEstimate(arr);
@@ -1592,6 +1592,37 @@
                                 num3: value.num3,
                             };
                             self.model.dataHardcapsule.push(ko.mapping.fromJS(obj));
+                        });
+                        $.each(res.listLabor, function( index, value ) {
+                            var obj = {
+                                amount: value.amount,
+                                cost: value.cost,
+                                hour: value.hour,
+                                person: value.person,
+                                process: value.process,
+                            };
+                            self.model.dataLabor.push(ko.mapping.fromJS(obj));
+                        });
+                        $.each(res.listLaborBottles, function( index, value ) {
+                            var obj = {
+                                total: value.total,
+                                cost: value.cost,
+                                hour: value.hour,
+                                person: value.person,
+                                process: value.process,
+                            };
+                            self.model.dataLaborBottles.push(ko.mapping.fromJS(obj));
+                        });
+                        $.each(res.listTypeBottles, function( index, value ) {
+                            var obj = {
+                                name1: value.name1,
+                                name2: value.name2,
+                                name3: value.name3,
+                                num1: value.num1,
+                                num2: value.num2,
+                                num3: value.num3,
+                            };
+                            self.model.dataTypeBottles.push(ko.mapping.fromJS(obj));
                         });
                         self.reportFormula.po(res.reportCost.po);
                         self.model.batchNo(res.reportCost.po);

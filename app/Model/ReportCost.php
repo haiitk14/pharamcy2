@@ -46,4 +46,19 @@ class ReportCost extends Model
     {
         return $this->hasMany('App\Model\CostHardcapsule', 'reportcost_id');
     }
+
+    public function cost_labor() 
+    {
+        return $this->hasMany('App\Model\CostLabor', 'reportcost_id');
+    }
+
+    public function cost_laborbottles() 
+    {
+        return $this->hasMany('App\Model\CostLaborBottles', 'reportcost_id');
+    }
+
+    public function cost_typebottles() 
+    {
+        return $this->hasMany('App\Model\CostTypeBottles', 'reportcost_id');
+    }
 }
