@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2019 at 08:15 PM
+-- Generation Time: Aug 14, 2019 at 02:20 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.0.33
 
@@ -89,10 +89,11 @@ INSERT INTO `customer` (`id`, `code`, `full_name`, `phone`, `address`, `is_delet
 CREATE TABLE `customrequest` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `ipd` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `product` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `manufature_id` int(11) DEFAULT NULL,
+  `po` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `formula_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `revision` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` datetime NOT NULL,
@@ -101,8 +102,11 @@ CREATE TABLE `customrequest` (
   `is_hardcapsule` tinyint(1) NOT NULL DEFAULT '0',
   `size_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `color_logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `serving_size` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `filling_wt` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `order` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `box` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `carton` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `create_by` int(11) DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -113,8 +117,8 @@ CREATE TABLE `customrequest` (
 -- Dumping data for table `customrequest`
 --
 
-INSERT INTO `customrequest` (`id`, `ipd`, `product_id`, `customer_id`, `address`, `manufature_id`, `formula_number`, `revision`, `date`, `is_softgel`, `is_tablet`, `is_hardcapsule`, `size_type`, `color_logo`, `filling_wt`, `order`, `create_by`, `update_by`, `created_at`, `updated_at`) VALUES
-(7, '123', 1, 16, '213 USA', 1, '123', '123', '2019-07-22 00:00:00', 1, 1, 0, '123', '312', '123', '312', 2, NULL, '2019-07-21 21:55:27', '2019-07-21 21:55:27');
+INSERT INTO `customrequest` (`id`, `ipd`, `product`, `customer`, `address`, `manufature_id`, `po`, `formula_number`, `revision`, `date`, `is_softgel`, `is_tablet`, `is_hardcapsule`, `size_type`, `color_logo`, `serving_size`, `filling_wt`, `order`, `box`, `carton`, `create_by`, `update_by`, `created_at`, `updated_at`) VALUES
+(18, 'aaa', 'AAAA', 'BBBB', 'aaaa', 1, '123', '333', '1', '2019-08-13 00:00:00', 1, 1, 0, '1', 'Red', '2', NULL, '4', '5', '6', NULL, NULL, '2019-08-13 16:29:09', '2019-08-13 16:29:09');
 
 -- --------------------------------------------------------
 
@@ -144,6 +148,49 @@ INSERT INTO `formula` (`id`, `name`, `content`, `is_delete`, `is_using`, `create
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `formula_ingredients`
+--
+
+CREATE TABLE `formula_ingredients` (
+  `id` bigint(20) NOT NULL,
+  `reportformula_id` bigint(20) NOT NULL,
+  `ingredient_id` bigint(20) NOT NULL,
+  `code` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_ingredient` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `inactive` tinyint(4) DEFAULT NULL,
+  `per_serving` decimal(10,2) DEFAULT '0.00',
+  `per_unit` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `purity` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `overage` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `per_tab` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `per_batch` decimal(10,4) NOT NULL DEFAULT '0.0000',
+  `tab100` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `formula_ingredients`
+--
+
+INSERT INTO `formula_ingredients` (`id`, `reportformula_id`, `ingredient_id`, `code`, `name_ingredient`, `inactive`, `per_serving`, `per_unit`, `purity`, `overage`, `per_tab`, `per_batch`, `tab100`, `created_at`, `updated_at`) VALUES
+(11, 5, 1, 'RG01-01J', 'Red Ginseng Extract', 0, '10.00', '10.00', '20.00', '100.00', '100.00', '66.7000', '0.82', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(12, 5, 3, 'FO01-AR01', 'Marine Oil (30% omega 3 DHA/EPA)', 0, '20.00', '20.00', '30.00', '1.00', '67.33', '12.5000', '0.55', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(13, 5, 2, 'PG01-01J', 'Panax Ginseng 80% Extract', 0, '30.00', '30.00', '22.00', '22.00', '166.36', '33.0000', '1.37', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(14, 5, 4, 'LC01-WC01', 'Lecithin', 1, '212.00', '212.00', '22.00', '22.00', '1175.64', '0.0047', '9.67', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(15, 5, 5, 'BW01-CS01', 'Beewax', 1, '213.00', '213.00', '2.00', '22.00', '12993.00', '0.0520', '106.86', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(16, 5, 11, NULL, 'Titanium DiOxide (TiO2) FCC', 2, '4.00', '4.00', '100.00', '3.00', '4.12', '12.4000', '0.03', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(17, 5, 12, NULL, 'Glycerin USP/FCC', 2, '3.00', '3.00', '100.00', '3.00', '3.09', '12.5000', '0.02', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(18, 5, 13, NULL, 'FD&C Color Blue', 2, '3.00', '3.00', '100.00', '3.00', '3.09', '32.3000', '0.02', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(19, 5, 15, NULL, 'FD&C Color Yellow', 2, '3.00', '3.00', '100.00', '3.00', '3.09', '12.5000', '0.02', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(20, 5, 20, NULL, 'Purified   Water', 2, '444.00', '444.00', '100.00', '0.00', '444.00', '0.0018', '3.06', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(21, 5, 16, NULL, 'Purified  Water', 3, '0.00', '0.00', '0.00', '0.00', '0.00', '45.6600', '0.00', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(22, 5, 18, NULL, 'Glycerine 99.5% USP', 3, '0.00', '0.00', '0.00', '0.00', '0.00', '10.0000', '0.00', '2019-08-13 16:30:55', '2019-08-13 16:30:55'),
+(23, 5, 19, NULL, 'Sorbitol 99.5% USP', 3, '0.00', '0.00', '0.00', '0.00', '0.00', '23.7700', '0.00', '2019-08-13 16:30:55', '2019-08-13 16:30:55');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ingredient`
 --
 
@@ -165,11 +212,24 @@ CREATE TABLE `ingredient` (
 --
 
 INSERT INTO `ingredient` (`id`, `code`, `name`, `inactive`, `is_delete`, `is_using`, `create_by`, `update_by`, `created_at`, `updated_at`) VALUES
-(1, 'RG01-01J', 'Red Ginseng Extract', 1, 0, 1, 2, NULL, '2019-07-12 17:46:41', '2019-07-23 15:21:05'),
-(2, 'PG01-01J', 'Panax Ginseng 80% Extract', 0, 0, 1, 2, NULL, '2019-07-12 17:47:03', '2019-07-23 15:21:18'),
-(3, 'FO01-AR01', 'Marine Oil (30% omega 3 DHA/EPA)', 0, 0, 1, 2, NULL, '2019-07-12 17:49:01', '2019-07-23 15:21:27'),
-(4, 'LC01-WC01', 'Lecithin', 1, 0, 1, 2, NULL, '2019-07-12 17:49:21', '2019-07-23 15:21:46'),
-(5, 'BW01-CS01', 'Beewax', 1, 0, 1, 2, NULL, '2019-07-12 17:49:34', '2019-07-23 15:21:54');
+(1, 'RG01-01J', 'Red Ginseng Extract', 0, 0, 1, NULL, NULL, '2019-07-12 17:46:41', '2019-08-10 11:15:06'),
+(2, 'PG01-01J', 'Panax Ginseng 80% Extract', 0, 0, 1, NULL, NULL, '2019-07-12 17:47:03', '2019-08-10 11:15:12'),
+(3, 'FO01-AR01', 'Marine Oil (30% omega 3 DHA/EPA)', 0, 0, 1, NULL, NULL, '2019-07-12 17:49:01', '2019-07-23 15:21:27'),
+(4, 'LC01-WC01', 'Lecithin', 1, 0, 1, NULL, NULL, '2019-07-12 17:49:21', '2019-08-10 11:16:43'),
+(5, 'BW01-CS01', 'Beewax', 1, 0, 1, NULL, NULL, '2019-07-12 17:49:34', '2019-07-23 15:21:54'),
+(6, '10', 'Ginkgo', 0, 0, 1, NULL, NULL, '2019-08-02 06:03:44', '2019-08-02 06:03:44'),
+(9, NULL, 'Resveratrol 98% Extract', 0, 0, 1, NULL, NULL, '2019-08-10 11:15:35', '2019-08-10 11:15:35'),
+(10, NULL, 'Vitamin K (MK7)', 0, 0, 1, NULL, NULL, '2019-08-10 11:16:04', '2019-08-10 11:16:04'),
+(11, NULL, 'Titanium DiOxide (TiO2) FCC', 2, 0, 1, NULL, NULL, '2019-08-10 11:25:33', '2019-08-10 11:25:33'),
+(12, NULL, 'Glycerin USP/FCC', 2, 0, 1, NULL, NULL, '2019-08-10 11:25:46', '2019-08-10 11:25:46'),
+(13, NULL, 'FD&C Color Blue', 2, 0, 1, NULL, NULL, '2019-08-10 11:26:03', '2019-08-10 11:26:03'),
+(14, NULL, 'FD&C Color Red', 2, 0, 1, NULL, NULL, '2019-08-10 11:26:14', '2019-08-10 11:26:14'),
+(15, NULL, 'FD&C Color Yellow', 2, 0, 1, NULL, NULL, '2019-08-10 11:26:24', '2019-08-10 11:26:24'),
+(16, NULL, 'Purified  Water', 3, 0, 1, NULL, NULL, '2019-08-10 11:26:38', '2019-08-10 11:29:18'),
+(17, NULL, 'Gelatine 200B T-B 400MSH (Food Grade)', 3, 0, 1, NULL, NULL, '2019-08-10 11:27:09', '2019-08-10 11:27:09'),
+(18, NULL, 'Glycerine 99.5% USP', 3, 0, 1, NULL, NULL, '2019-08-10 11:27:22', '2019-08-10 11:27:22'),
+(19, NULL, 'Sorbitol 99.5% USP', 3, 0, 1, NULL, NULL, '2019-08-10 11:27:32', '2019-08-10 11:27:32'),
+(20, NULL, 'Purified   Water', 2, 0, 1, NULL, NULL, '2019-08-10 11:33:07', '2019-08-10 11:33:07');
 
 -- --------------------------------------------------------
 
@@ -264,6 +324,32 @@ INSERT INTO `product` (`id`, `name`, `code`, `is_delete`, `is_using`, `create_by
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reportformula`
+--
+
+CREATE TABLE `reportformula` (
+  `id` bigint(20) NOT NULL,
+  `customrequest_id` bigint(20) NOT NULL,
+  `po` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `filling_wt` decimal(10,2) DEFAULT '0.00',
+  `serving_size` double DEFAULT NULL,
+  `gelatin_batch` double DEFAULT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `reportformula`
+--
+
+INSERT INTO `reportformula` (`id`, `customrequest_id`, `po`, `filling_wt`, `serving_size`, `gelatin_batch`, `create_by`, `update_by`, `created_at`, `updated_at`) VALUES
+(5, 18, NULL, '14502.33', 1, 2, NULL, NULL, '2019-08-13 16:30:55', '2019-08-13 16:30:55');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `roles`
 --
 
@@ -293,7 +379,7 @@ INSERT INTO `roles` (`id`, `code`, `name`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `salesorder_comments` (
   `id` bigint(20) NOT NULL,
   `customrequest_id` int(11) NOT NULL,
-  `comment_id` int(11) NOT NULL,
+  `comment` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -302,9 +388,10 @@ CREATE TABLE `salesorder_comments` (
 -- Dumping data for table `salesorder_comments`
 --
 
-INSERT INTO `salesorder_comments` (`id`, `customrequest_id`, `comment_id`, `created_at`, `updated_at`) VALUES
-(4, 7, 3, '2019-07-21 21:55:27', '2019-07-21 21:55:27'),
-(5, 7, 1, '2019-07-21 21:55:27', '2019-07-21 21:55:27');
+INSERT INTO `salesorder_comments` (`id`, `customrequest_id`, `comment`, `created_at`, `updated_at`) VALUES
+(29, 18, 'aaa', '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(30, 18, 'bbb', '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(31, 18, 'ccc', '2019-08-13 16:29:09', '2019-08-13 16:29:09');
 
 -- --------------------------------------------------------
 
@@ -326,8 +413,19 @@ CREATE TABLE `salesorder_ingredients` (
 --
 
 INSERT INTO `salesorder_ingredients` (`id`, `customrequest_id`, `ingredient_id`, `per_serving`, `created_at`, `updated_at`) VALUES
-(4, 7, 2, 4.1, '2019-07-21 21:55:27', '2019-07-21 21:55:27'),
-(5, 7, 1, 5.1, '2019-07-21 21:55:27', '2019-07-21 21:55:27');
+(40, 18, 11, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(41, 18, 12, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(42, 18, 13, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(43, 18, 15, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(44, 18, 20, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(45, 18, 16, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(46, 18, 18, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(47, 18, 19, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(48, 18, 1, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(49, 18, 3, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(50, 18, 2, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(51, 18, 4, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09'),
+(52, 18, 5, 0, '2019-08-13 16:29:09', '2019-08-13 16:29:09');
 
 -- --------------------------------------------------------
 
@@ -358,8 +456,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `roles_code`, `name`, `username`, `email`, `password`, `is_active`, `is_delete`, `is_admin`, `is_superadmin`, `is_user`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'super-admin', 'Super Administrator', 'superadmin', '', '$2y$10$28.VNVdzTnUG9zEaXIvbKODjlwCtD1Dpo7l7JkqNmsKssIEneZQda', 1, 0, 0, 1, 0, 'kiYVDdwCknBNmjA5xGHXlQgFOLRByRwPH8LqYdUaT0UCOlO14qIcpUab5KuQ', '2019-07-24 12:43:54', '2019-07-24 12:43:54'),
-(2, 'admin', 'Administrator', 'admin', '', '$2y$10$MIHVJlIWk..BOS2ydunxUe551ThekH1pe0Ohr6.PFldLpFp1YqSce', 1, 0, 1, 0, 0, 'DnsEakZzQWk9QlBJsQgeBg5L7tuDThTvsoyw2eIRcb52T0dcdn81AnfilydF', '2019-07-24 12:43:54', '2019-07-24 12:43:54'),
-(3, 'user', 'Do Truong Hai', 'haidt', '', '$2y$10$IeXouVhzd3oziu3TLJLMMO.po.dwWLp2Fc7afOIS5j8rsjlYvjFqu', 1, 0, 0, 0, 0, 'TMSCyZ4H8rB2kbChApNQgqsJLMOhUP6GFWnCd7HRBUSDAb8JqYgTfaysvawx', '2019-07-24 12:43:54', '2019-07-24 12:43:54');
+(2, 'admin', 'Administrator', 'admin', '', '$2y$12$SbpnZF8MxMxlwSMylkE6PejwlsorPeHf.rETd1QdrYi40ZIRC2yQK', 1, 0, 1, 0, 0, 'uxH5ebDrYU38uN6BCI8lNIcVt33LQmvGZEpPeHgvty4WAyH5q5000SCfcrKp', '2019-07-24 12:43:54', '2019-07-24 12:43:54'),
+(3, 'user', 'Do Truong Hai', 'haidt', '', '$2y$10$IeXouVhzd3oziu3TLJLMMO.po.dwWLp2Fc7afOIS5j8rsjlYvjFqu', 1, 0, 0, 0, 0, '2nMnLNTI6FvXcS3kyOXfppmxopKzw0lxwoWp9krRgBh8ZAIqBPSfCxOzBLlf', '2019-07-24 12:43:54', '2019-07-24 12:43:54'),
+(4, 'user', 'Thang', 'thangtp', NULL, '$2y$10$f4.IrmRwEgsH3D.xNV5bBexZeeziLIjP8K0wJNkmO3V9.MCS34yLC', 1, 0, 0, 0, 1, NULL, '2019-08-09 17:37:05', '2019-08-09 17:37:05');
 
 --
 -- Indexes for dumped tables
@@ -390,6 +489,12 @@ ALTER TABLE `formula`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `formula_ingredients`
+--
+ALTER TABLE `formula_ingredients`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ingredient`
 --
 ALTER TABLE `ingredient`
@@ -417,6 +522,12 @@ ALTER TABLE `password_resets`
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `reportformula`
+--
+ALTER TABLE `reportformula`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -457,31 +568,37 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `customrequest`
 --
 ALTER TABLE `customrequest`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `formula`
 --
 ALTER TABLE `formula`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `formula_ingredients`
+--
+ALTER TABLE `formula_ingredients`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `ingredient`
 --
 ALTER TABLE `ingredient`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `manufature`
 --
 ALTER TABLE `manufature`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -493,31 +610,37 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `reportformula`
+--
+ALTER TABLE `reportformula`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `salesorder_comments`
 --
 ALTER TABLE `salesorder_comments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `salesorder_ingredients`
 --
 ALTER TABLE `salesorder_ingredients`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
