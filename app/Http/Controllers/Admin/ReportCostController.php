@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Model\CostHardcapsule;
+use App\Model\CostIngredients;
 use Illuminate\Http\Request;
 use App\Model\Ingredient;
 use App\Model\CustomRequest;
@@ -10,6 +12,7 @@ use Auth;
 use App\Model\ReportFormula;
 use App\Model\SalesOrderComments;
 use App\Model\FormulaIngredients;
+use App\Model\ReportCost;
 
 class ReportCostController
 {
@@ -48,47 +51,66 @@ class ReportCostController
             
             $validator = Validator::make($input, [
                 'idCustomRequest' => 'required',
-                'servingSize' => 'required',
             ]);
 
             if ($validator->fails()) {
                 $errors = $validator->errors()->all();
                 return response()->json(compact(['errors']), 422);
             }
-            // $reportFormula = new ReportFormula();
-            // $reportFormula->customrequest_id = $request->get('idCustomRequest');
-            // $reportFormula->po = $request->get('po');
-            // $reportFormula->filling_wt = $request->get('filling_wt');
-            // $reportFormula->serving_size = $request->get('servingSize');
-            // $reportFormula->gelatin_batch = $request->get('gelatinBatch');
+            $reportCost = new ReportCost();
+            $reportCost->customrequest_id = $request->get('idCustomRequest');
+            $reportCost->po = $request->get('po');
+            $reportCost->batch_no = $request->get('batch_no');
+            $reportCost->sum_price_per_batch_color = $request->get('sumPricePerBatchColor');
+            $reportCost->sum_price_per_batch_shell = $request->get('sumPricePerBatchShell');
+            $reportCost->sum_price_per_batch_inactive = $request->get('sumPricePerBatchInActive');
+            $reportCost->sum_num3_hardcapsule = $request->get('sumNum3Hardcapsule');
+            $reportCost->sum_amount_labor = $request->get('sumAmountLabor');
 
-            // $response = $reportFormula->save();
-            // $arrIngredients = json_decode($request->get('arrIngredients'));
+            $reportCost->sum_cost1000 = $request->get('sumCost1000');
+            $reportCost->sum_amount_cost = $request->get('sumAmountCost');
+            $reportCost->sum_amount_labor_bottles = $request->get('sumAmountLaborBottles');
+            $reportCost->sum_num1_type_bottles = $request->get('sumNum1TypeBottles');
+            $reportCost->sum_num2_type_bottles = $request->get('sumNum2TypeBottles');
+            $reportCost->sum_num3_type_bottles = $request->get('sumNum3TypeBottles');
 
-            // foreach ($arrIngredients as $value) {
-            //     $formulaIngredients = new FormulaIngredients();
-            //     $formulaIngredients->reportformula_id = intval($reportFormula->id);
-            //     $formulaIngredients->ingredient_id = intval($value->ingredient_id);
-            //     $formulaIngredients->code = $value->code;
-            //     $formulaIngredients->name_ingredient = $value->name_ingredient;
-            //     $formulaIngredients->inactive = intval($value->inactive);
-            //     $formulaIngredients->per_serving = doubleval($value->per_serving);
-            //     $formulaIngredients->per_unit = doubleval($value->per_unit);
-            //     $formulaIngredients->purity = doubleval($value->purity);
-            //     $formulaIngredients->overage = doubleval($value->overage);
-            //     $formulaIngredients->per_tab = doubleval($value->per_tab);
-            //     $formulaIngredients->per_batch = doubleval($value->per_batch);
-            //     $formulaIngredients->tab100 = doubleval($value->tab100);
-            //     $formulaIngredients->save();
-            // }
+            $response = $reportCost->save();
+            $arrIngredients = json_decode($request->get('listIngredient'));
+
+            foreach ($arrIngredients as $value) {
+                $costIngredients = new CostIngredients();
+                $costIngredients->reportcost_id = intval($reportCost->id);
+                $costIngredients->ingredient_id = intval($value->ingredient_id);
+                $costIngredients->code = $value->code;
+                $costIngredients->name_ingredient = $value->name_ingredient;
+                $costIngredients->inactive = intval($value->inactive);
+                $costIngredients->per_unit = $value->per_unit;
+                $costIngredients->per_batch = $value->per_batch;
+                $costIngredients->price_per_kg = $value->price_per_kg;
+                $costIngredients->price_per_batch = $value->price_per_batch;
+                $costIngredients->reportformula_id = $value->reportformula_id;
+                $costIngredients->save();
+            }
+            $arrHardcapsule = json_decode($request->get('listHardcapsule'));
+
+            foreach ($arrHardcapsule as $value) {
+                $costHardcapsule = new CostHardcapsule();
+                $costHardcapsule->reportcost_id = intval($reportCost->id);
+                $costHardcapsule->name = $value->name;
+                $costHardcapsule->num1 = $value->num1;
+                $costHardcapsule->num2 = $value->num2;
+                $costHardcapsule->num3 = $value->num3;
+                $costHardcapsule->size_type = $value->size_type;
+                $costHardcapsule->save();
+            }
             $result = [];
 
-            // if ($response) {
-            //     $message = "Success";
-            //     $result = [
-            //         'message' => $message
-            //     ];
-            // }
+            if ($response) {
+                $message = "Success";
+                $result = [
+                    'message' => $message
+                ];
+            }
 
             return response()->json($result);
 
@@ -113,13 +135,26 @@ class ReportCostController
                 return response()->json(compact(['errors']), 422);
             }
             $customRequest = CustomRequest::where('id', $id)->first();
+            $cost = ReportCost::where('customrequest_id',  $id)->orderBy('created_at', 'desc')->first();
             $reportFormula = ReportFormula::where('customrequest_id', $id)->orderBy('created_at', 'desc')->first();
-            $formulaIngredientsActive = FormulaIngredients::where('reportformula_id', $reportFormula['id'])->where('inactive', 0)->get();
-            $formulaIngredientsInActive = FormulaIngredients::where('reportformula_id', $reportFormula['id'])->where('inactive', 1)->get();
-            $formulaIngredientsColor = FormulaIngredients::where('reportformula_id', $reportFormula['id'])->where('inactive', 2)->get();
-            $formulaIngredientsShell = FormulaIngredients::where('reportformula_id', $reportFormula['id'])->where('inactive', 3)->get();
-            
+            $isEmpty = false;
+            $costHardcapsule = null;
+
+            if ($cost) {
+                $formulaIngredientsActive = CostIngredients::where('reportcost_id', $cost['id'])->where('inactive', 0)->get();
+                $formulaIngredientsInActive = CostIngredients::where('reportcost_id', $cost['id'])->where('inactive', 1)->get();
+                $formulaIngredientsColor = CostIngredients::where('reportcost_id', $cost['id'])->where('inactive', 2)->get();
+                $formulaIngredientsShell = CostIngredients::where('reportcost_id', $cost['id'])->where('inactive', 3)->get();
+                $costHardcapsule = CostHardcapsule::where('reportcost_id', $cost['id'])->get();
+            } else {
+                $formulaIngredientsActive = FormulaIngredients::where('reportformula_id', $reportFormula['id'])->where('inactive', 0)->get();
+                $formulaIngredientsInActive = FormulaIngredients::where('reportformula_id', $reportFormula['id'])->where('inactive', 1)->get();
+                $formulaIngredientsColor = FormulaIngredients::where('reportformula_id', $reportFormula['id'])->where('inactive', 2)->get();
+                $formulaIngredientsShell = FormulaIngredients::where('reportformula_id', $reportFormula['id'])->where('inactive', 3)->get();
+                $isEmpty = true;
+            }
             $result = [
+                'isEmpty' => $isEmpty,
                 'customRequest' => $customRequest,
                 'manufature' => $customRequest->manufature,
                 'reportFormula' => $reportFormula,
@@ -127,7 +162,10 @@ class ReportCostController
                 'ingredientsInActive' => $formulaIngredientsInActive,
                 'ingredientsColor' => $formulaIngredientsColor,
                 'ingredientsShell' => $formulaIngredientsShell,
+                'reportCost' => $cost,
+                'costHardcapsule' => $costHardcapsule,
             ]; 
+           
 
             return response()->json($result);
 
