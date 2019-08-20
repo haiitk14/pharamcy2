@@ -62,15 +62,19 @@ Route::group(['middleware' => 'admin'], function(){
             Route::get('/formula', 'Admin\ReportFormulaController@index')->name('admin.report.formula');
             Route::get('/mfg-spec', 'Admin\ReportMfgSpecController@index')->name('admin.report.mfgspec');
             Route::get('/cost', 'Admin\ReportCostController@index')->name('admin.report.cost');
+            Route::get('/quotation', 'Admin\ReportQuotationController@index')->name('admin.report.quotation');
+
 
             Route::post('/saveform', 'Admin\SalesOrderController@saveForm')->name('admin.report.saveform');
             Route::post('/saveform-formula', 'Admin\ReportFormulaController@saveForm')->name('admin.report.saveformformula');
             Route::post('/saveform-mfgspec', 'Admin\ReportMfgSpecController@saveForm')->name('admin.report.savemfgspec');
             Route::post('/saveform-cost', 'Admin\ReportCostController@saveForm')->name('admin.report.savecost');
+            Route::post('/saveform-quotation', 'Admin\ReportQuotationController@saveForm')->name('admin.report.savequotation');
 
             Route::get('/getcustomrequest', 'Admin\ReportFormulaController@getCustomRequest')->name('admin.report.getcustomrequest');
             Route::get('/getreportformula', 'Admin\ReportMfgSpecController@getReportFormula')->name('admin.report.getreportformula');
             Route::get('/getreportcost', 'Admin\ReportCostController@getReportFormula')->name('admin.reportcost.getreportformula');
+            Route::get('/getreportquotation', 'Admin\ReportQuotationController@getReportFormula')->name('admin.reportquotation.getreportformula');
 
         });
     });

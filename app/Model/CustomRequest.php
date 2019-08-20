@@ -95,4 +95,8 @@ class CustomRequest extends Model
     {
         return $this->hasMany('App\Model\ReportCost', 'customrequest_id');
     }
+    public function reportquotation() 
+    {
+        return $this->hasMany('App\Model\ReportQuotation', 'customrequest_id');
+    }
 }
