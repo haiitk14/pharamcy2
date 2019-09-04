@@ -33,17 +33,18 @@
                         <i class="fa fa-bar-chart" aria-hidden="true"></i> <span> {{ __('Report') }} </span> <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled" @php if ($controller == 'SalesOrderController' || $controller == 'ReportFormulaController' 
-                    || $controller == 'ReportMfgSpecController' || $controller == 'ReportCostController' || $controller == 'ReportQuotationController') 
+                    || $controller == 'ReportMfgSpecController' || $controller == 'ReportCostController' || $controller == 'ReportQuotationController' 
+                    || $controller == 'ReportInspectionController') 
                     echo ' style="display: block"'; @endphp>
                         <li><a href="{{ route('admin.report.salesorder') }}">{{ __('Sales Order') }}</a></li>
                         <li><a href="{{ route('admin.report.formula') }}">{{ __('Formula') }}</a></li>
                         <li><a href="{{ route('admin.report.mfgspec') }}">{{ __('Mfg Spec') }}</a></li>
                         <li><a href="{{ route('admin.report.cost') }}">{{ __('Cost') }}</a></li>
                         <li><a href="{{ route('admin.report.quotation') }}">{{ __('Quotation') }}</a></li>
+                        <li><a href="{{ route('admin.report.inspection') }}">{{ __('Inspection') }}</a></li>
                         <li><a href="javascript:;">{{ __('Mixing') }}</a></li>
-                        <li><a href="javascript:;">{{ __('Inventory') }}</a></li>
                         <li><a href="javascript:;">{{ __('Encasulation') }}</a></li>
-                        <li><a href="javascript:;">{{ __('Inspection') }}</a></li>
+                        <li><a href="javascript:;">{{ __('Inventory') }}</a></li>
                         <li><a href="javascript:;">{{ __('Polish') }}</a></li>
                     </ul>
                 </li>
