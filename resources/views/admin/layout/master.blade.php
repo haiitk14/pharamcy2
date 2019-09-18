@@ -23,7 +23,7 @@
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
     <!-- BEGIN CSS for this page -->
     
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/js/datatable/DataTables-1.10.18/css/dataTables.bootstrap4.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.css') }}" />
     <!-- END CSS for this page -->
 
     <!-- Create at 2019/06/14 by haidt -->
@@ -33,6 +33,8 @@
         }
     </style>
     <!-- END -->
+    <link href="{{ asset('assets/plugins/datetimepicker/css/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body class="adminbody">
@@ -108,6 +110,7 @@
     <script src="{{ asset('assets/plugins/datetimepicker/js/daterangepicker.js') }}"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"></script>
     <script src="{{ asset('assets/js/knockout.mapping.js') }}"></script>
+    <!-- <script src="{{ asset('assets/plugins/timepicker/bootstrap-timepicker.min.js') }}"></script> -->
 
     @section('script')
     @show

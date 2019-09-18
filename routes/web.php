@@ -65,6 +65,7 @@ Route::group(['middleware' => 'admin'], function(){
             Route::get('/quotation', 'Admin\ReportQuotationController@index')->name('admin.report.quotation');
             Route::get('/inspection', 'Admin\ReportInspectionController@index')->name('admin.report.inspection');
             Route::get('/inventory', 'Admin\ReportInventoryController@index')->name('admin.report.inventory');
+            Route::get('/mixing', 'Admin\ReportMixingController@index')->name('admin.report.mixing');
 
 
             Route::post('/saveform', 'Admin\SalesOrderController@saveForm')->name('admin.report.saveform');
@@ -74,6 +75,7 @@ Route::group(['middleware' => 'admin'], function(){
             Route::post('/saveform-quotation', 'Admin\ReportQuotationController@saveForm')->name('admin.report.savequotation');
             Route::post('/saveform-inspection', 'Admin\ReportInspectionController@saveForm')->name('admin.report.saveinspection');
             Route::post('/saveform-inventory', 'Admin\ReportInventoryController@saveForm')->name('admin.report.saveinventory');
+            Route::post('/saveform-mixing', 'Admin\ReportMixingController@saveForm')->name('admin.report.savemixing');
 
 
             Route::get('/getcustomrequest', 'Admin\ReportFormulaController@getCustomRequest')->name('admin.report.getcustomrequest');
@@ -82,6 +84,7 @@ Route::group(['middleware' => 'admin'], function(){
             Route::get('/getreportquotation', 'Admin\ReportQuotationController@getReportFormula')->name('admin.reportquotation.getreportformula');
             Route::get('/getreportinspection', 'Admin\ReportInspectionController@getReportFormula')->name('admin.inspection.getreportformula');
             Route::get('/getinventory', 'Admin\ReportInventoryController@getReportFormula')->name('admin.inventory.getreportformula');
+            Route::get('/getmixing', 'Admin\ReportMixingController@getReportFormula')->name('admin.reportmixing.getreportformula');
 
 
         });

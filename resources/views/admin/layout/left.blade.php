@@ -42,8 +42,9 @@
                         <li><a href="{{ route('admin.report.cost') }}">{{ __('Cost') }}</a></li>
                         <li><a href="{{ route('admin.report.quotation') }}">{{ __('Quotation') }}</a></li>
                         <li><a href="{{ route('admin.report.inventory') }}">{{ __('Inventory') }}</a></li>
+                        <li><a href="{{ route('admin.report.mixing') }}">{{ __('Mixing') }}</a></li>
+
                         <li><a href="{{ route('admin.report.inspection') }}">{{ __('Inspection') }}</a></li>
-                        <li><a href="javascript:;">{{ __('Mixing') }}</a></li>
                         <li><a href="javascript:;">{{ __('Encasulation') }}</a></li>
                         <li><a href="javascript:;">{{ __('Polish') }}</a></li>
                     </ul>
