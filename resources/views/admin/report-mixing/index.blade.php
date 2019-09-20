@@ -157,10 +157,12 @@
                                             <a href="javascript:;" data-bind="text: labor_name, click: $root.clickString.bind($data, 'labor_name')"></a> 
                                             </td>
                                             <td>
-                                            <a href="javascript:;" data-bind="text: time_in, click: $root.clickNumber.bind($data, 'time_in')"></a> 
+                                                <input type="text" data-bind="value: time_in_cof, event: { change: $root.caculate}" class="form-control datetime" >
+                                                <!-- <a href="javascript:;" data-bind="text: time_in, click: $root.clickTime.bind($data, 'time_in')"></a> -->
                                             </td>
                                             <td>
-                                            <a href="javascript:;" data-bind="text: time_out, click: $root.clickNumber.bind($data, 'time_out')"></a> 
+                                                <input type="text" data-bind="value: time_out_cof, event: { change: $root.caculate}" class="form-control datetime" >
+                                            <!-- <a href="javascript:;" data-bind="text: time_out, click: $root.clickNumber.bind($data, 'time_out')"></a>  -->
                                             </td>
                                             <td>
                                             <a href="javascript:;" data-bind="text: record, click: $root.clickString.bind($data, 'record')"></a> 
@@ -541,27 +543,50 @@
         </div>
     </div>
     <div class="modal fade" id="modal-string">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Add String</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <form name="frmStringModal">
-                            <div class="row form-group">
-                                <input type="text" data-bind="value: model.stringUsing" class="form-control"  placeholder="Enter string" />
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" data-bind="click: addString" class="btn btn-primary">Add</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                    
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add String</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
+                <div class="modal-body">
+                    <form name="frmStringModal">
+                        <div class="row form-group">
+                            <input type="text" data-bind="value: model.stringUsing" class="form-control"  placeholder="Enter string" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bind="click: addString" class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                
             </div>
         </div>
+    </div>
+    <div class="modal fade" id="modal-time">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Time</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form name="frmTimeModal">
+                        <div class="row form-group">
+                            <input type="text" class="form-control datetime" >
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bind="click: addString" class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection
 @section('script')
@@ -588,6 +613,7 @@
             blendling_person: ko.observable(''),
             line_clear: ko.observable(''),
             ipc: ko.observable(''),
+            timeUsing: ko.observable(''),
         }
 
         self.reportFormula = {
@@ -609,7 +635,33 @@
             color_logo: ko.observable(),
             order: ko.observable(),
         };
-        
+        /* ----------- Click Number in table ----------- */
+        self.clickTime = function(value) {
+            var obj = this;
+            self.posTime = ko.observable(obj);
+            self.model.checkNumber(value);
+
+            switch (value) {
+                case "time_in":
+                    self.model.timeUsing(obj.time_in());
+                    break;
+            }
+            $("#modal-time").modal("show");
+        }
+        self.addTime = function() {
+            switch (self.model.checkNumber()) {
+                case "time_in":
+                    self.posTime().time_in(numeral(self.model.timeUsing())._value);
+                    break;
+            }
+            $("#modal-time").modal("hide");
+        }
+        self.timeCurr = function() {
+            var res = moment(new Date()).format("HH:mm")
+            return res;
+        }
+        /* end */
+
         /* ----------- Click Number in table ----------- */
         self.clickNumber = function(value) {
             var obj = this;
@@ -726,10 +778,19 @@
 
         self.caculate = function() {
             var arr = self.model.dataAss();
+
             for (var i = 0; i < arr.length; i++) {
-                var res = Number(arr[i].cost_per_hour()) * (Number(arr[i].time_out()) - Number(arr[i].time_in())) 
+                var timein = moment(arr[i].time_in());
+                var timeout = moment(arr[i].time_out());
+                var second = timeout.diff(timein, 'minutes');
+                console.log(timein._i);
+                var res = Number(arr[i].cost_per_hour()) * (second / 60) ;
                 arr[i].labor_cost(res);
             }
+        }
+
+        self.secondToHours = function(second) {
+            return second/60;
         }
 
         self.save = function() {
@@ -775,20 +836,41 @@
             $("#print").click(function(){
                 print("dataprint");
             });
-            
+           
         });
+
+        self.initTime = function() {
+            $('.datetime').daterangepicker({
+                singleDatePicker: true,
+                timePicker24Hour : true,
+                timePicker: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'HH:mm'
+                }
+            }, function (start, end, label) { 
+                self.caculate();
+                // start_time = start.format('HH:mm');
+                // end_time = end.format('HH:mm');
+            }).on('show.daterangepicker', function (ev, picker) {
+                picker.container.find(".calendar-table").hide(); //Hide calendar
+            });
+        }
 
         self.addAss = function() {
             var obj = {
                 name: ko.observable("Enter"),
                 labor_name: ko.observable("Enter"),
-                time_in: ko.observable("0"),
-                time_out: ko.observable("0"),
+                time_in: ko.observable(moment().format("YYYY-MM-DD HH:mm")),
+                time_out: ko.observable(),
                 record: ko.observable("Enter"),
                 cost_per_hour: ko.observable("0"),
-                labor_cost: ko.observable("0")
+                labor_cost: ko.observable("0"),
+                time_in_cof: ko.observable(self.timeCurr()),
+                time_out_cof: ko.observable("00:00"),
             }
             self.model.dataAss.push(obj);
+            self.initTime();
         }
 
         self.removeAss = function(data) {
@@ -835,10 +917,12 @@
                         self.model.line_clear(res.reportMixing.line_clear);
                         self.model.ipc(res.reportMixing.ipc);
                         self.model.batch_no(res.reportMixing.batch_no);
-
                     }
                     $.each(res.listAss, function( index, value ) {
+                        value.time_in_cof = moment(value.time_in).format('HH:mm');
+                        value.time_out_cof = moment(value.time_out).format('HH:mm');
                         self.model.dataAss.push(ko.mapping.fromJS(value));
+                        self.initTime();
                     });
                     var sum = 0;
 

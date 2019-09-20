@@ -117,6 +117,20 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            $('.datetime').daterangepicker({
+                singleDatePicker: true,
+                timePicker24Hour : true,
+                timePicker: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'HH:mm'
+                }
+            }, function (start, end, label) { //callback
+                // start_time = start.format('HH:mm');
+                // end_time = end.format('HH:mm');
+            }).on('show.daterangepicker', function (ev, picker) {
+                picker.container.find(".calendar-table").hide(); //Hide calendar
+            });
             // $("#sidebar-menu ul li a").removeClass("subdrop");
             // update profile action
             // $('#btn-save-profile').click(function() {
