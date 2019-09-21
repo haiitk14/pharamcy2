@@ -804,13 +804,11 @@
                     var time_in_cal = moment(time_in + " " + time_in_cof);
                     var time_out_cal = moment(time_out + " " + time_out_cof);
                     var second = time_out_cal.diff(time_in_cal, 'minutes');
+                    var res = 0;
 
-                    if (second < 0) {
-                        toastr.error("Time out is greater than time in");
-                        self.model.isError(true);
-                        return false;
-                    }
-                    var res = Number(arr[i].cost_per_hour()) * (second / 60);
+                    if (second > 0) {
+                        res = Number(arr[i].cost_per_hour()) * (second / 60);
+                    } 
                     arr[i].labor_cost(res);
                 }
             }
@@ -820,14 +818,34 @@
             return second/60;
         }
 
+        self.checkTime = function() {
+            var res = true;
+            var arr = self.model.dataAss();
+
+            for (var i = 0; i < arr.length; i++) {
+                var time_in_cof = arr[i].time_in_cof();
+                var time_out_cof = arr[i].time_out_cof();
+                var time_in = moment(arr[i].time_in()).format("YYYY-MM-DD");
+                var time_out = moment(arr[i].time_out()).format("YYYY-MM-DD");
+                var time_in_cal = moment(time_in + " " + time_in_cof);
+                var time_out_cal = moment(time_out + " " + time_out_cof);
+                var second = time_out_cal.diff(time_in_cal, 'minutes');
+                if (second < 0) {
+                    res = false;
+                    break;
+                }
+            }
+            return res;
+        }
+
         self.save = function() {
             var idCustomRequest = formCustomRequest.find("select[name=custom_request]").val();
 
             if (!idCustomRequest || idCustomRequest == undefined || idCustomRequest == "") {
                 return false;
             }
-            if (self.model.isError()) {
-                toastr.error("Time out error in Labor table");
+            if (!self.checkTime()) {
+                toastr.error("Time out is greater than time in, Labor table");
                 return false;
             }
             var personnel = self.model.personnel();
