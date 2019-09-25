@@ -157,11 +157,11 @@
                                             <a href="javascript:;" data-bind="text: labor_name, click: $root.clickString.bind($data, 'labor_name')"></a> 
                                             </td>
                                             <td>
-                                                <input type="text" data-bind="value: time_in_cof, event: { change: $root.caculate}" class="form-control datetime" >
+                                                <input type="text" data-bind="value: time_in_cof, event: { change: $root.caculateInput.bind($data, $data) }" class="form-control datetime" >
                                                 <!-- <a href="javascript:;" data-bind="text: time_in, click: $root.clickTime.bind($data, 'time_in')"></a> -->
                                             </td>
                                             <td>
-                                                <input type="text" data-bind="value: time_out_cof, event: { change: $root.caculate}" class="form-control datetime" >
+                                                <input type="text" data-bind="value: time_out_cof, event: { change: $root.caculateInput.bind($data, $data) }" class="form-control datetime" >
                                             <!-- <a href="javascript:;" data-bind="text: time_out, click: $root.clickNumber.bind($data, 'time_out')"></a>  -->
                                             </td>
                                             <td>
@@ -614,6 +614,8 @@
             line_clear: ko.observable(''),
             ipc: ko.observable(''),
             timeUsing: ko.observable(''),
+            isEdit: ko.observable(false),
+            isError: ko.observable(false)
         }
 
         self.reportFormula = {
@@ -776,16 +778,39 @@
         });
         /* end */
 
+        self.caculateInput = function(data) {
+            var dateCurr = moment().format("YYYY-MM-DD");
+
+            if (data.time_in_cof() == null || data.time_in_cof() == "") {
+                data.time_in(dateCurr);
+            } 
+            if (data.time_out_cof() != null && data.time_out_cof() != "") {
+                data.time_out(dateCurr);
+            }
+            self.caculate();
+        }
+
         self.caculate = function() {
             var arr = self.model.dataAss();
+            console.log(ko.mapping.toJS(arr));
 
             for (var i = 0; i < arr.length; i++) {
-                var timein = moment(arr[i].time_in());
-                var timeout = moment(arr[i].time_out());
-                var second = timeout.diff(timein, 'minutes');
-                console.log(timein._i);
-                var res = Number(arr[i].cost_per_hour()) * (second / 60) ;
-                arr[i].labor_cost(res);
+
+                if (arr[i].time_out_cof() != null && arr[i].time_out_cof() != "") {
+                    var time_in_cof = arr[i].time_in_cof();
+                    var time_out_cof = arr[i].time_out_cof();
+                    var time_in = moment(arr[i].time_in()).format("YYYY-MM-DD");
+                    var time_out = moment(arr[i].time_out()).format("YYYY-MM-DD");
+                    var time_in_cal = moment(time_in + " " + time_in_cof);
+                    var time_out_cal = moment(time_out + " " + time_out_cof);
+                    var second = time_out_cal.diff(time_in_cal, 'minutes');
+                    var res = 0;
+
+                    if (second > 0) {
+                        res = Number(arr[i].cost_per_hour()) * (second / 60);
+                    } 
+                    arr[i].labor_cost(res);
+                }
             }
         }
 
@@ -793,10 +818,34 @@
             return second/60;
         }
 
+        self.checkTime = function() {
+            var res = true;
+            var arr = self.model.dataAss();
+
+            for (var i = 0; i < arr.length; i++) {
+                var time_in_cof = arr[i].time_in_cof();
+                var time_out_cof = arr[i].time_out_cof();
+                var time_in = moment(arr[i].time_in()).format("YYYY-MM-DD");
+                var time_out = moment(arr[i].time_out()).format("YYYY-MM-DD");
+                var time_in_cal = moment(time_in + " " + time_in_cof);
+                var time_out_cal = moment(time_out + " " + time_out_cof);
+                var second = time_out_cal.diff(time_in_cal, 'minutes');
+                if (second < 0) {
+                    res = false;
+                    break;
+                }
+            }
+            return res;
+        }
+
         self.save = function() {
             var idCustomRequest = formCustomRequest.find("select[name=custom_request]").val();
 
             if (!idCustomRequest || idCustomRequest == undefined || idCustomRequest == "") {
+                return false;
+            }
+            if (!self.checkTime()) {
+                toastr.error("Time out is greater than time in, Labor table");
                 return false;
             }
             var personnel = self.model.personnel();
@@ -813,6 +862,7 @@
             var listAss = ko.mapping.toJS(self.model.dataAss());
 
             var data = {
+                isEdit: self.model.isEdit(),
                 idCustomRequest: idCustomRequest,
                 personnel: personnel,
                 ipc_person: ipc_person,
@@ -849,7 +899,7 @@
                     format: 'HH:mm'
                 }
             }, function (start, end, label) { 
-                self.caculate();
+                // self.caculate();
                 // start_time = start.format('HH:mm');
                 // end_time = end.format('HH:mm');
             }).on('show.daterangepicker', function (ev, picker) {
@@ -861,8 +911,8 @@
             var obj = {
                 name: ko.observable("Enter"),
                 labor_name: ko.observable("Enter"),
-                time_in: ko.observable(moment().format("YYYY-MM-DD HH:mm")),
-                time_out: ko.observable(),
+                time_in: ko.observable(moment().format("YYYY-MM-DD")),
+                time_out: ko.observable(""),
                 record: ko.observable("Enter"),
                 cost_per_hour: ko.observable("0"),
                 labor_cost: ko.observable("0"),
@@ -910,6 +960,7 @@
                         self.reportFormula.po(res.reportFormula.po);
                     }
                     if (res.reportMixing) {
+                        self.model.isEdit(true);
                         self.model.personnel(res.reportMixing.personnel);
                         self.model.ipc_person(res.reportMixing.ipc_person);
                         self.model.weighing_person(res.reportMixing.weighing_person);
@@ -919,9 +970,8 @@
                         self.model.batch_no(res.reportMixing.batch_no);
                     }
                     $.each(res.listAss, function( index, value ) {
-                        value.time_in_cof = moment(value.time_in).format('HH:mm');
-                        value.time_out_cof = moment(value.time_out).format('HH:mm');
-                        self.model.dataAss.push(ko.mapping.fromJS(value));
+                        var t = ko.mapping.fromJS(value);
+                        self.model.dataAss.push(t);
                         self.initTime();
                     });
                     var sum = 0;

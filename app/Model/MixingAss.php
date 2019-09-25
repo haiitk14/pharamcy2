@@ -17,6 +17,8 @@ class MixingAss extends Model
         'labor_name', 
         'time_in', 
         'time_out', 
+        'time_in_cof',
+        'time_out_cof',
         'record', 
         'cost_per_hour', 
         'labor_cost', 

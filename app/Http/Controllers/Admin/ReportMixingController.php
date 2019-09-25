@@ -97,6 +97,8 @@ class ReportMixingController
                 $costHardcapsule->labor_name = $value->labor_name;
                 $costHardcapsule->time_in = $value->time_in;
                 $costHardcapsule->time_out = $value->time_out;
+                $costHardcapsule->time_in_cof = $value->time_in_cof;
+                $costHardcapsule->time_out_cof = $value->time_out_cof;
                 $costHardcapsule->record = $value->record;
                 $costHardcapsule->cost_per_hour = $value->cost_per_hour;
                 $costHardcapsule->labor_cost = $value->labor_cost;
