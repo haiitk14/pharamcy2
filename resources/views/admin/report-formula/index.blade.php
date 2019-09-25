@@ -85,25 +85,27 @@
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">9. Filling Wt:</label>
-                            <div class="col-sm-8 col-form-label" data-bind="text: numeral($root.model.fillWtInActive()).format('0,0.00')">
-                            </div>
+                            <div  class="col-sm-4">
+                                <span data-bind="text: numeral($root.model.fillWtInActive()).format('0,0.00')"></span>&nbsp; mg +/-10%
+                            </div> 
                         </div>
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label">10. Serving Size: </label>
                             <div class="col-sm-4">
                                 <input type="number" data-bind="value: model.servingSize, event: { change : $root.eventChange }" name="serving_size" value="0"  class="form-control" title="Enter Serving Size" placeholder="Enter Serving Size" >
-                            </div>
+                            </div> Softgels
                         </div>
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label">11. Gelatin Batch: </label>
                             <div class="col-sm-4">
                                 <input type="number" name="gelatin_batch" value="0" class="form-control" title="Enter Gelatin Batch" placeholder="Enter Gelatin Batch" >
-                            </div>
+                            </div> Batch
                         </div>
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label">12. Batch size: </label>
-                            <div class="col-sm-8 col-form-label" data-bind="text: numeral(model.batchSize()).format('0,0')">
-                            </div>
+                            <div class="col-sm-4" >
+                                <span data-bind="text: numeral(model.batchSize()).format('0,0')"></span>&nbsp;Softgels
+                            </div>  
                            
                         </div>
                         <div class="row form-group">

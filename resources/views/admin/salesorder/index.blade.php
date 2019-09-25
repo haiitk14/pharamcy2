@@ -147,13 +147,13 @@
                             <label for="box" class="col-sm-2 col-form-label">Box: </label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="box">
-                            </div>
+                            </div>Softgels
                         </div>
                         <div class="row form-group">
                             <label for="carton" class="col-sm-2 col-form-label">Carton: </label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="carton">
-                            </div>
+                            </div>Boxes
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 ">
@@ -345,10 +345,10 @@
                             <div >Order quantity (unit): <span class="orderprint"></span> </div>
                         </div>
                         <div>
-                            <div >Box: <span class="boxprint"></span> </div>
+                            <div >Box: <span class="boxprint"></span> Softgels</div>
                         </div>
                         <div>
-                            <div >Carton: <span class="cartonprint"></span> </div>
+                            <div >Carton: <span class="cartonprint"></span> Boxes</div>
                         </div>
                         <div>
                             <div >
@@ -433,11 +433,11 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form name="frmPerServingModal">
+                    <div name="frmPerServingModal">
                         <div class="row form-group">
                             <input type="number" min="0.1" class="form-control" name="value_perserving" placeholder="Enter Per Serving" />
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="save-perserving">Save</button>

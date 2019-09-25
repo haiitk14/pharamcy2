@@ -15,6 +15,7 @@ class ReportCost extends Model
         'customrequest_id',
         'po',
         'batch_no',
+        'batch_no_box',
         'sum_price_per_batch_color', 
         'sum_price_per_batch_shell', 
         'sum_price_per_batch_inactive',

@@ -390,11 +390,11 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form name="frmNumberModal">
+                    <div name="frmNumberModal">
                         <div class="row form-group">
                             <input type="text" data-bind="value: model.numberUsing" class="form-control"  placeholder="Enter number" />
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bind="click: addNumber" class="btn btn-primary">Add</button>
@@ -412,11 +412,11 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form name="frmStringModal">
+                    <div name="frmStringModal">
                         <div class="row form-group">
                             <input type="text" data-bind="value: model.stringUsing" class="form-control"  placeholder="Enter string" />
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bind="click: addString" class="btn btn-primary">Add</button>

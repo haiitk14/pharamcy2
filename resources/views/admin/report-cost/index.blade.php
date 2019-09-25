@@ -114,8 +114,9 @@
                         </div>
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-8 col-form-label" >  60  softgels/box
-                            </div>
+                            <div class="col-sm-2 col-form-label" >  
+                                <input type="text" data-bind="value: model.batchNoBox"  title="Enter Batch No"  class="form-control">
+                            </div> softgels/box
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 ">
@@ -271,7 +272,8 @@
                                         <td>
                                             <a href="javascript:;" data-bind="text: name, click: $root.clickString.bind($data, 'hardcapsule_name')"></a>
                                         </td>
-                                        <td data-bind="text: size_type">
+                                        <td>
+                                            <a href="javascript:;" data-bind="text: size_type, click: $root.clickString.bind($data, 'hardcapsule_size_type')"></a>
                                         </td>
                                         <td> 
                                             <a href="javascript:;" data-bind="text: num1, click: $root.clickNumber.bind($data, 'hardcapsule_num1')"></a>
@@ -585,7 +587,7 @@
                                     <tbody>
                                         <tr data-bind="if: model.dataCostEstimate()[0]">
                                             <th>Bottle 30</th>
-                                            <th>100cc</th>
+                                            <th data-bind="text: numeral(model.dataCostEstimate()[0].costPerBottle()).format('0,0.00')"></th>
                                             <td data-bind="text: numeral(model.dataCostEstimate()[0].c25()).format('0,0.00')"></td>
                                             <td data-bind="text: numeral(model.dataCostEstimate()[0].c30()).format('0,0.00')"></td>
                                             <td data-bind="text: numeral(model.dataCostEstimate()[0].c35()).format('0,0.00')"></td>
@@ -600,7 +602,7 @@
                                         </tr>
                                         <tr data-bind="if: model.dataCostEstimate()[1]">
                                             <th>Bottle 60</th>
-                                            <th>200cc</th>
+                                            <th data-bind="text: numeral(model.dataCostEstimate()[1].costPerBottle()).format('0,0.00')"></th>
                                             <td data-bind="text: numeral(model.dataCostEstimate()[1].c25()).format('0,0.00')"></td>
                                             <td data-bind="text: numeral(model.dataCostEstimate()[1].c30()).format('0,0.00')"></td>
                                             <td data-bind="text: numeral(model.dataCostEstimate()[1].c35()).format('0,0.00')"></td>
@@ -615,7 +617,7 @@
                                         </tr>
                                         <tr data-bind="if: model.dataCostEstimate()[2]">
                                             <th>Bottle 90</th>
-                                            <th>300cc</th>
+                                            <th data-bind="text: numeral(model.dataCostEstimate()[2].costPerBottle()).format('0,0.00')"></th>
                                             <td data-bind="text: numeral(model.dataCostEstimate()[2].c25()).format('0,0.00')"></td>
                                             <td data-bind="text: numeral(model.dataCostEstimate()[2].c30()).format('0,0.00')"></td>
                                             <td data-bind="text: numeral(model.dataCostEstimate()[2].c35()).format('0,0.00')"></td>
@@ -682,7 +684,7 @@
                                 <span data-bind="text: numeral((customRequest.order() / 60)).format('0,0.00')"></span>  Box
                         </div>
                         <div>
-                             60  softgels/box
+                             <span data-bind="text: model.batchNoBox"></span>  softgels/box
                         </div>
                         <div >
                             <h4>Formulary Specification</h4>
@@ -801,11 +803,11 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form name="frmNumberModal">
+                    <div name="frmNumberModal">
                         <div class="row form-group">
                             <input type="text" data-bind="value: model.numberUsing" class="form-control"  placeholder="Enter number" />
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bind="click: addNumber" class="btn btn-primary">Add</button>
@@ -823,11 +825,11 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form name="frmStringModal">
+                        <div name="frmStringModal">
                             <div class="row form-group">
                                 <input type="text" data-bind="value: model.stringUsing" class="form-control"  placeholder="Enter string" />
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-bind="click: addString" class="btn btn-primary">Add</button>
@@ -882,6 +884,7 @@
             priceBottle60: ko.observable(0),
             priceBottle90: ko.observable(0),
             batchNo: ko.observable(0),
+            batchNoBox: ko.observable(0),
         }
 
         self.cost = {
@@ -988,7 +991,6 @@
                 case "typeBottles_num3":
                     self.posNumber().num3(numeral(self.model.numberUsing())._value);
                     break;
-
             }
             self.caculationAll();
             $("#modal-number").modal("hide");
@@ -1018,6 +1020,9 @@
                 case "typeBottles_name3":
                     self.model.stringUsing(obj.name3());
                     break;
+                case "hardcapsule_size_type":
+                    self.model.stringUsing(obj.size_type());
+                    break;
                 default:
                     $("#modal-string").modal("hide");
                     break;
@@ -1041,7 +1046,9 @@
                 case "typeBottles_name3":
                     self.posString().name3(self.model.stringUsing());
                     break;
-
+                case "hardcapsule_size_type":
+                    self.posString().size_type(self.model.stringUsing());
+                    break;
             }
             $("#modal-string").modal("hide");
         }
@@ -1056,8 +1063,8 @@
         /* ----------- Table Hardcapsule ----------- */
         self.addHardcapsule = function() {
             var obj = {
-                name: ko.observable("Name"),
-                size_type: ko.observable(self.model.sizeTypeCustomRequest()),
+                name: ko.observable("Enter"),
+                size_type: ko.observable("Enter"),
                 num1: ko.observable(0),
                 num2: ko.observable(0),
                 num3: ko.observable(0),
@@ -1074,7 +1081,7 @@
         self.addLabor = function() {
             var obj = {
                 person: ko.observable("0"),
-                process: ko.observable("Name"),
+                process: ko.observable("Enter"),
                 hour: ko.observable("0"),
                 cost: ko.observable("0"),
                 amount: ko.observable("0"),
@@ -1091,7 +1098,7 @@
         self.addLaborBottles = function() {
             var obj = {
                 person: ko.observable("0"),
-                process: ko.observable("Name"),
+                process: ko.observable("Enter"),
                 hour: ko.observable("0"),
                 cost: ko.observable("0"),
                 total: ko.observable("0"),
@@ -1107,11 +1114,11 @@
         /* ----------- Table Type Bottles ----------- */
         self.addTypeBottles = function() {
             var obj = {
-                name1: ko.observable("Name1"),
+                name1: ko.observable("Enter"),
                 num1: ko.observable(0),
-                name2: ko.observable("Name2"),
+                name2: ko.observable("Enter"),
                 num2: ko.observable(0),
-                name3: ko.observable("Name3"),
+                name3: ko.observable("Enter"),
                 num3: ko.observable(0),
             }
             self.model.dataTypeBottles.push(obj);
@@ -1217,9 +1224,9 @@
             var sum1 = 0, sum2 = 0, sum3 = 0; 
 
             $.each(arr, function( index, value ) {
-                sum1 += value.num1();
-                sum2 += value.num2();
-                sum3 += value.num3();
+                sum1 += Number(value.num1());
+                sum2 += Number(value.num2());
+                sum3 += Number(value.num3());
             });
             self.model.sumNum1TypeBottles(sum1);
             self.model.sumNum2TypeBottles(sum2);
@@ -1231,7 +1238,7 @@
         self.caculationCost = function() {
             var sumPricePerBatchInActive = Number(self.model.sumPricePerBatchInActive());
             var sumNum3Hardcapsule = Number(self.model.sumNum3Hardcapsule());
-            var num1 = sumPricePerBatchInActive * sumNum3Hardcapsule;
+            var num1 = sumPricePerBatchInActive + sumNum3Hardcapsule;
             var order = Number(self.customRequest.order());
             var num2 = num1 / order * 1000;
             var num21 = self.model.sumAmountLabor();
@@ -1401,6 +1408,7 @@
             }
             var po = self.reportFormula.po();
             var batchNo = self.model.batchNo();
+            var batchNoBox = self.model.batchNoBox();
             var listIngredientColorShell = self.model.dataIngredientsColor().concat(self.model.dataIngredientsShell());
             var listIngredientInActive = self.model.dataIngredientsActive().concat(self.model.dataIngredientsInActive());
             var listIngredient = listIngredientColorShell.concat(listIngredientInActive);
@@ -1429,6 +1437,7 @@
                 idCustomRequest: idCustomRequest,
                 po: po,
                 batchNo: batchNo,
+                batchNoBox: batchNoBox,
                 sumPricePerBatchColor: sumPricePerBatchColor,
                 sumPricePerBatchShell: sumPricePerBatchShell,
                 sumPricePerBatchInActive: sumPricePerBatchInActive,
@@ -1625,7 +1634,8 @@
                             self.model.dataTypeBottles.push(ko.mapping.fromJS(obj));
                         });
                         self.reportFormula.po(res.reportCost.po);
-                        self.model.batchNo(res.reportCost.po);
+                        self.model.batchNo(res.reportCost.batch_no);
+                        self.model.batchNoBox(res.reportCost.batch_no_box);
                     }
 
                     self.caculationAll();

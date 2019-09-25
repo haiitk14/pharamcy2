@@ -63,20 +63,19 @@ class ReportCostController
             $reportCost = new ReportCost();
             $reportCost->customrequest_id = $request->get('idCustomRequest');
             $reportCost->po = $request->get('po');
-            $reportCost->batch_no = $request->get('batch_no');
+            $reportCost->batch_no = $request->get('batchNo');
+            $reportCost->batch_no_box = $request->get('batchNoBox');
             $reportCost->sum_price_per_batch_color = $request->get('sumPricePerBatchColor');
             $reportCost->sum_price_per_batch_shell = $request->get('sumPricePerBatchShell');
             $reportCost->sum_price_per_batch_inactive = $request->get('sumPricePerBatchInActive');
             $reportCost->sum_num3_hardcapsule = $request->get('sumNum3Hardcapsule');
             $reportCost->sum_amount_labor = $request->get('sumAmountLabor');
-
             $reportCost->sum_cost1000 = $request->get('sumCost1000');
             $reportCost->sum_amount_cost = $request->get('sumAmountCost');
             $reportCost->sum_amount_labor_bottles = $request->get('sumAmountLaborBottles');
             $reportCost->sum_num1_type_bottles = $request->get('sumNum1TypeBottles');
             $reportCost->sum_num2_type_bottles = $request->get('sumNum2TypeBottles');
             $reportCost->sum_num3_type_bottles = $request->get('sumNum3TypeBottles');
-
             $response = $reportCost->save();
             $arrIngredients = json_decode($request->get('listIngredient'));
 
