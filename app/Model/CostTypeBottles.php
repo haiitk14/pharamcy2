@@ -16,9 +16,17 @@ class CostTypeBottles extends Model
         'name1',
         'name2', 
         'name3', 
+        'name4',
+        'name5', 
+        'name6', 
+        'name7', 
         'num1', 
         'num2', 
         'num3',
+        'num4', 
+        'num5', 
+        'num6',
+        'num7',
         'created_at', 
         'updated_at'
     ];

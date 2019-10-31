@@ -137,9 +137,17 @@ class ReportCostController
                 $item->name1 = $value->name1;
                 $item->name2 = $value->name2;
                 $item->name3 = $value->name3;
+                $item->name4 = $value->name4;
+                $item->name5 = $value->name5;
+                $item->name6 = $value->name6;
+                $item->name7 = $value->name7;
                 $item->num1 = $value->num1;
                 $item->num2 = $value->num2;
                 $item->num3 = $value->num3;
+                $item->num4 = $value->num4;
+                $item->num5 = $value->num5;
+                $item->num6 = $value->num6;
+                $item->num7 = $value->num7;
                 $item->save();
             }
 

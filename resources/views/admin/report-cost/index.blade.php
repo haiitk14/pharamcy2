@@ -90,7 +90,8 @@
                         </div>
                         <div class="row form-group">
                             <label for="address" class="col-sm-2 col-form-label">9. Filling Wt:</label>
-                            <div class="col-sm-4" data-bind="text: reportFormula.filling_wt">
+                            <div class="col-sm-4" > 
+                                <span data-bind="text: reportFormula.filling_wt"></span> mg +/-10%
                                 {{-- <input type="text" data-bind="value: reportFormula.filling_wt" title="Enter Filling Wt" placeholder="Enter Filling Wt" class="form-control"> --}}
                             </div>
                         </div>
@@ -109,7 +110,7 @@
                         <div class="row form-group">
                             <label for="order" class="col-sm-2 col-form-label"></label>
                             <div class="col-sm-8 col-form-label" > 
-                                 <span data-bind="text: numeral((customRequest.order() / 60)).format('0,0.00')"></span>  Box
+                                 <span data-bind="text: numeral((customRequest.order() / 60)).format('0,0.00')"></span>  Box(es)
                             </div>
                         </div>
                         <div class="row form-group">
@@ -124,7 +125,7 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label for="order" class="col-sm-2 col-form-label">12. </label>
+                            <label for="order" class="col-sm-2 col-form-label">12. Ingredients</label>
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 table-responsive">
@@ -163,7 +164,7 @@
                                         <!-- /ko -->
                                         <tr>
                                             <td colspan="3"></td>
-                                            <td>Total</td>
+                                            <th>Total</th>
                                             <td data-bind="text: numeral($root.model.sumPerBatchColor()).format('0,0.000')"></td>
                                             <td></td>
                                             <td data-bind="text: numeral($root.model.sumPricePerBatchColor()).format('0,0.00')"></td>
@@ -192,7 +193,7 @@
                                         <!-- /ko -->
                                         <tr>
                                             <td colspan="3"></td>
-                                            <td>Total</td>
+                                            <th>Total</th>
                                             <td data-bind="text: numeral($root.model.sumPerBatchShell()).format('0,0.000')"></td>
                                             <td></td>
                                             <td data-bind="text: numeral($root.model.sumPricePerBatchShell()).format('0,0.00')"></td>
@@ -264,19 +265,21 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <!-- ko foreach: model.dataHardcapsule -->
                                     <tr>
                                         <td>
+                                        
                                             <a href="javascript:;" data-bind="text: name, click: $root.clickString.bind($data, 'hardcapsule_name')"></a>
                                         </td>
                                         <td>
                                             <a href="javascript:;" data-bind="text: size_type, click: $root.clickString.bind($data, 'hardcapsule_size_type')"></a>
                                         </td>
-                                        <td> 
-                                            <a href="javascript:;" data-bind="text: num1, click: $root.clickNumber.bind($data, 'hardcapsule_num1')"></a>
+                                        <td data-bind="text: numeral(num1()).format('0,0.00')"> 
+                                            <!--<a href="javascript:;" data-bind="text: num1, click: $root.clickNumber.bind($data, 'hardcapsule_num1')"></a>-->
                                         </td>
                                         <td>
                                             <a href="javascript:;" data-bind="text: num2, click: $root.clickNumber.bind($data, 'hardcapsule_num2')"></a>
@@ -290,9 +293,9 @@
                                     <!-- /ko -->
                                     <tr>
                                         <td colspan="3"></td>
-                                        <td style="background-color: yellow; color: red"><b>Total</b></td>
+                                        <td style="background-color: yellow; color: red"><b>TOTAL</b></td>
                                         <td  data-bind="text: numeral(model.sumNum3Hardcapsule()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
-                                      
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -340,7 +343,7 @@
                                     <!-- /ko -->
                                     <tr>
                                         <td colspan="4"></td>
-                                        <td style="background-color: yellow; color: red"><b>Total</b></td>
+                                        <td style="background-color: yellow; color: red"><b>TOTAL</b></td>
                                         <td style="background-color: yellow; color: red; font-weight: bold" data-bind="text: numeral(model.sumAmountLabor()).format('0,0.00')"></td>
                                       
                                     </tr>
@@ -349,7 +352,7 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 ">
-                                15. 
+                                15. <span class="text-danger" style="margin-right: 30px;"><b> Bulk Qoutation </b></span>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -407,23 +410,23 @@
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td colspan="2" style="background-color: yellow; color: red"><b>Total : (Cost/1000)</b></td>
-                                            <td  colspan="2" data-bind="text: numeral(model.sumCost1000()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
-                                        
+                                            <td colspan="2" style="background-color: yellow; color: red"><b>TOTAL : </b></td>
+                                            <!--<td  colspan="2" data-bind="text: numeral(model.sumCost1000()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>-->
+                                            <td data-bind="text: numeral(model.sumAmountCost()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
+                                            <td data-bind="text: numeral(model.sumCost1000()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
                                         </tr>
-                                        <tr>
+                                        <!--<tr>
                                             <td></td>
                                             <td colspan="2" style="background-color: #0f9df7;"><b>Amount</b></td>
                                             <td colspan="2" data-bind="text: numeral(model.sumAmountCost()).format('0,0.00')" style="background-color: #0f9df7; color: red; font-weight: bold"></td>
-                                        
-                                        </tr>
+                                        </tr>-->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 ">
-                                16. <span class="text-danger" style="margin-right: 30px;"><b>Labor (Bottles)</b></span>
+                                16. <span class="text-danger" style="margin-right: 30px;"><b>Packaging</b></span>
                                 <a href="javascript:;" data-bind="click: addLaborBottles" title="Add Labor Bottles" class="btn btn-sm btn-outline-primary"><i class="fa fa-plus"></i> Add</a>
                             </div>
                         </div>
@@ -431,16 +434,22 @@
                             <table class="table table-bordered table-sm">
                                 <thead>
                                     <tr>
+                                        <th colspan="7" class="text-center">Labor (Bottles)</th>
+                                    </tr>
+                                    <tr>
+                                        <th>No.</th>
                                         <th>Person (s)</th>
                                         <th>Process</th>
                                         <th>Hour</th>
                                         <th>Cost</th>
                                         <th>Total</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <!-- ko foreach: model.dataLaborBottles -->
                                     <tr>
+                                        <td data-bind="text: $index() + 1"></td>
                                         <td>
                                             <a href="javascript:;" data-bind="text: person, click: $root.clickNumber.bind($data, 'labor_person')"></a>
                                         </td>
@@ -461,178 +470,298 @@
                                     </tr>
                                     <!-- /ko -->
                                     <tr>
-                                        <td colspan="3"></td>
-                                        <td style="background-color: yellow; color: red"><b>Total</b></td>
+                                        <td colspan="4"></td>
+                                        <td style="background-color: yellow; color: red"><b>TOTAL</b></td>
                                         <td  data-bind="text: numeral(model.sumAmountLaborBottles()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-sm-12 ">
-                                17. 
-                                <a href="javascript:;" data-bind="click: addTypeBottles" title="Add Type Bottle" class="btn btn-sm btn-outline-primary"><i class="fa fa-plus"></i> Add</a>
-                            </div>
-                        </div>
-                        <div class="row form-group">
                             <table class="table table-bordered table-sm">
+                                <!--<thead>
+                                    <tr>
+                                        <th>
+                                            <a href="javascript:;" data-bind="click: addTypeBottles" title="Add Type Bottle" class="btn btn-sm btn-outline-primary"><i class="fa fa-plus"></i> Add</a>
+                                        </th>
+                                        <th colspan="6" class="text-center">Container</th>
+                                    </tr>
+                                </thead>-->
                                 <tbody>
                                     <!-- ko foreach: model.dataTypeBottles -->
                                     <tr>
-                                        <td>
-                                            <a href="javascript:;" data-bind="text: name1, click: $root.clickString.bind($data, 'typeBottles_name1')"></a>
+                                        <td data-bind="text: name1">
+                                            <!--<a href="javascript:;" data-bind="text: name1, click: $root.clickString.bind($data, 'typeBottles_name1')"></a>-->
                                         </td>
                                         <td>
                                             <a href="javascript:;" data-bind="text: numeral(num1()).format('0,0.000'), click: $root.clickNumber.bind($data, 'typeBottles_num1')"></a>
                                         </td>
-                                        <td> 
-                                            <a href="javascript:;" data-bind="text: name2, click: $root.clickString.bind($data, 'typeBottles_name2')"></a>
+                                        <td data-bind="text: name2"> 
+                                            <!--<a href="javascript:;" data-bind="text: name2, click: $root.clickString.bind($data, 'typeBottles_name2')"></a>-->
                                         </td>
                                         <td>
                                             <a href="javascript:;" data-bind="text: numeral(num2()).format('0,0.000'), click: $root.clickNumber.bind($data, 'typeBottles_num2')"></a>
                                         </td>
-                                        <td> 
-                                            <a href="javascript:;" data-bind="text: name3, click: $root.clickString.bind($data, 'typeBottles_name3')"></a>
+                                        <td data-bind="text: name3"> 
+                                            <!--<a href="javascript:;" data-bind="text: name3, click: $root.clickString.bind($data, 'typeBottles_name3')"></a>-->
                                         </td>
                                         <td>
                                             <a href="javascript:;" data-bind="text: numeral(num3()).format('0,0.000'), click: $root.clickNumber.bind($data, 'typeBottles_num3')"></a>
                                         </td>
-                                        <td class="text-center">
-                                            <a href='javascript:;' data-bind="click: $root.deleteTypeBottles" title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a>
+                                        <td data-bind="text: name4"> 
                                         </td>
+                                        <td>
+                                            <a href="javascript:;" data-bind="text: numeral(num4()).format('0,0.000'), click: $root.clickNumber.bind($data, 'typeBottles_num4')"></a>
+                                        </td>
+                                        <td data-bind="text: name5"> 
+                                        </td>
+                                        <td>
+                                            <a href="javascript:;" data-bind="text: numeral(num5()).format('0,0.000'), click: $root.clickNumber.bind($data, 'typeBottles_num5')"></a>
+                                        </td>
+                                        <td data-bind="text: name6"> 
+                                        </td>
+                                        <td>
+                                            <a href="javascript:;" data-bind="text: numeral(num6()).format('0,0.000'), click: $root.clickNumber.bind($data, 'typeBottles_num6')"></a>
+                                        </td>
+                                        <td data-bind="text: name7"> 
+                                        </td>
+                                        <td>
+                                            <a href="javascript:;" data-bind="text: numeral(num7()).format('0,0.000'), click: $root.clickNumber.bind($data, 'typeBottles_num7')"></a>
+                                        </td>
+                                        <!--<td class="text-center">
+                                            <a href='javascript:;' data-bind="click: $root.deleteTypeBottles" title='Delete Item'><i class='fa fa-lg fa-trash' aria-hidden='true'></i></a>
+                                        </td>-->
                                     </tr>
                                     <!-- /ko -->
                                     <tr>
-                                        <td style="background-color: yellow; color: red"><b>Total</b></td>
+                                        <td style="background-color: yellow; color: red"><b>TOTAL</b></td>
                                         <td  data-bind="text: numeral(model.sumNum1TypeBottles()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
-                                        <td style="background-color: yellow; color: red"><b>Total</b></td>
+                                        <td style="background-color: yellow; color: red"><b>TOTAL</b></td>
                                         <td  data-bind="text: numeral(model.sumNum2TypeBottles()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
-                                        <td style="background-color: yellow; color: red"><b>Total</b></td>
+                                        <td style="background-color: yellow; color: red"><b>TOTAL</b></td>
                                         <td  data-bind="text: numeral(model.sumNum3TypeBottles()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
+                                        <td style="background-color: yellow; color: red"><b>TOTAL</b></td>
+                                        <td  data-bind="text: numeral(model.sumNum4TypeBottles()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
+                                        <td style="background-color: yellow; color: red"><b>TOTAL</b></td>
+                                        <td  data-bind="text: numeral(model.sumNum5TypeBottles()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
+                                        <td style="background-color: yellow; color: red"><b>TOTAL</b></td>
+                                        <td  data-bind="text: numeral(model.sumNum6TypeBottles()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
+                                        <td style="background-color: yellow; color: red"><b>TOTAL</b></td>
+                                        <td  data-bind="text: numeral(model.sumNum7TypeBottles()).format('0,0.00')" style="background-color: yellow; color: red; font-weight: bold"></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12 ">
-                                18. 
+                                17. <span class="text-danger" style="margin-right: 30px;"><b>Total cost</b></span>
                             </div>
                         </div>
                         <div class="row form-group">
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Price</th>
+                                    <th>Qty (boxes)</th>
+                                    <th>Container price</th>
+                                    <th>TOTAL COST</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-bind="if: model.dataPriceTypeBottles()[0]">
+                                    <th>Bottle 30</th>
+                                    <th>100cc</th>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[0].price()).format('0,0.0000')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[0].qty()).format('0,0.00')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[0].num1()).format('0,0.00')" style="color: red"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[0].num2()).format('0,0.00')" style="background-color: yellow; color: red"></td>
+                                </tr>
+                                <tr data-bind="if: model.dataPriceTypeBottles()[1]">
+                                    <th>Bottle 40</th>
+                                    <th>150cc</th>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[1].price()).format('0,0.0000')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[1].qty()).format('0,0.00')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[1].num1()).format('0,0.00')" style="color: red"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[1].num2()).format('0,0.00')" style="background-color: yellow; color: red"></td>
+                                </tr>
+                                <tr data-bind="if: model.dataPriceTypeBottles()[2]">
+                                    <th>Bottle 50</th>
+                                    <th>175cc</th>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[2].price()).format('0,0.0000')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[2].qty()).format('0,0.00')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[2].num1()).format('0,0.00')" style="color: red"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[2].num2()).format('0,0.00')" style="background-color: yellow; color: red"></td>
+                                </tr>
+                                <tr data-bind="if: model.dataPriceTypeBottles()[3]">
+                                    <th>Bottle 60</th>
+                                    <th>200cc</th>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[3].price()).format('0,0.0000')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[3].qty()).format('0,0.00')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[3].num1()).format('0,0.00')" style="color: red"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[3].num2()).format('0,0.00')" style="background-color: yellow; color: red"></td>
+                                </tr>
+                                <tr data-bind="if: model.dataPriceTypeBottles()[4]">
+                                    <th>Bottle 70</th>
+                                    <th>225cc</th>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[4].price()).format('0,0.0000')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[4].qty()).format('0,0.00')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[4].num1()).format('0,0.00')" style="color: red"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[4].num2()).format('0,0.00')" style="background-color: yellow; color: red"></td>
+                                </tr>
+                                <tr data-bind="if: model.dataPriceTypeBottles()[5]">
+                                    <th>Bottle 90</th>
+                                    <th>300cc</th>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[5].price()).format('0,0.0000')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[5].qty()).format('0,0.00')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[5].num1()).format('0,0.00')" style="color: red"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[5].num2()).format('0,0.00')" style="background-color: yellow; color: red"></td>
+                                </tr>
+                                <tr data-bind="if: model.dataPriceTypeBottles()[6]">
+                                    <th>Bottle 150</th>
+                                    <th>500cc</th>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[6].price()).format('0,0.0000')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[6].qty()).format('0,0.00')"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[6].num1()).format('0,0.00')" style="color: red"></td>
+                                    <td data-bind="text: numeral(model.dataPriceTypeBottles()[6].num2()).format('0,0.00')" style="background-color: yellow; color: red"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12 ">
+                                18. <span class="text-danger" style="margin-right: 30px;"><b>Cost Estimate</b></span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                        <div class="table-responsive">
                             <table class="table table-bordered table-sm">
                                 <thead>
                                     <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th>Price</th>
-                                        <th>Qty (boxes)</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th width="10%">Cost Estimate</th>
+                                        <th width="15%">Cost per bottle</th>
+                                        <th data-bind="text: cost.c25 + '%'"></th>
+                                        <th data-bind="text: cost.c30 + '%'"></th>
+                                        <th data-bind="text: cost.c35 + '%'"></th>
+                                        <th data-bind="text: cost.c40 + '%'"></th>
+                                        <th data-bind="text: cost.c45 + '%'"></th>
+                                        <th data-bind="text: cost.c50 + '%'"></th>
+                                        <th data-bind="text: cost.c60 + '%'"></th>
+                                        <th data-bind="text: cost.c70 + '%'"></th>
+                                        <th data-bind="text: cost.c80 + '%'"></th>
+                                        <th data-bind="text: cost.c90 + '%'"></th>
+                                        <th data-bind="text: cost.c160 + '%'"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr data-bind="if: model.dataPriceTypeBottles()[0]">
+                                    <tr data-bind="if: model.dataCostEstimate()[0]">
                                         <th>Bottle 30</th>
-                                        <th>100cc</th>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[0].price()).format('0,0.0000')"></td>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[0].qty()).format('0,0.00')"></td>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[0].num1()).format('0,0.00')" style="color: red"></td>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[0].num2()).format('0,0.00')" style="background-color: yellow; color: red"></td>
+                                        <th data-bind="text: numeral(model.dataCostEstimate()[0].costPerBottle()).format('0,0.00')"></th>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c25()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c30()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c35()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c40()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c45()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c50()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c60()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c70()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c80()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c90()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[0].c160()).format('0,0.00')"></td>    
                                     </tr>
-                                    <tr data-bind="if: model.dataPriceTypeBottles()[1]">
+                                    <tr data-bind="if: model.dataCostEstimate()[1]">
+                                        <th>Bottle 40</th>
+                                        <th data-bind="text: numeral(model.dataCostEstimate()[1].costPerBottle()).format('0,0.00')"></th>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c25()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c30()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c35()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c40()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c45()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c50()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c60()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c70()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c80()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c90()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[1].c160()).format('0,0.00')"></td>     
+                                    </tr>
+                                    <tr data-bind="if: model.dataCostEstimate()[2]">
+                                        <th>Bottle 50</th>
+                                        <th data-bind="text: numeral(model.dataCostEstimate()[2].costPerBottle()).format('0,0.00')"></th>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c25()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c30()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c35()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c40()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c45()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c50()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c60()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c70()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c80()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c90()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[2].c160()).format('0,0.00')"></td>     
+                                    </tr>
+                                    <tr data-bind="if: model.dataCostEstimate()[3]">
                                         <th>Bottle 60</th>
-                                        <th>200cc</th>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[1].price()).format('0,0.0000')"></td>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[1].qty()).format('0,0.00')"></td>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[1].num1()).format('0,0.00')" style="color: red"></td>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[1].num2()).format('0,0.00')" style="background-color: yellow; color: red"></td>
-                                   </tr>
-                                    <tr data-bind="if: model.dataPriceTypeBottles()[2]">
+                                        <th data-bind="text: numeral(model.dataCostEstimate()[3].costPerBottle()).format('0,0.00')"></th>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c25()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c30()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c35()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c40()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c45()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c50()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c60()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c70()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c80()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c90()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[3].c160()).format('0,0.00')"></td>    
+                                    </tr>
+                                    <tr data-bind="if: model.dataCostEstimate()[4]">
+                                        <th>Bottle 70</th>
+                                        <th data-bind="text: numeral(model.dataCostEstimate()[4].costPerBottle()).format('0,0.00')"></th>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c25()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c30()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c35()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c40()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c45()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c50()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c60()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c70()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c80()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c90()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[4].c160()).format('0,0.00')"></td>     
+                                    </tr>
+                                    <tr data-bind="if: model.dataCostEstimate()[5]">
                                         <th>Bottle 90</th>
-                                        <th>300cc</th>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[2].price()).format('0,0.0000')"></td>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[2].qty()).format('0,0.00')"></td>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[2].num1()).format('0,0.00')" style="color: red"></td>
-                                        <td data-bind="text: numeral(model.dataPriceTypeBottles()[2].num2()).format('0,0.00')" style="background-color: yellow; color: red"></td>
-                                   </tr>
+                                        <th data-bind="text: numeral(model.dataCostEstimate()[5].costPerBottle()).format('0,0.00')"></th>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c25()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c30()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c35()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c40()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c45()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c50()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c60()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c70()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c80()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c90()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[5].c160()).format('0,0.00')"></td>     
+                                    </tr>
+                                    <tr data-bind="if: model.dataCostEstimate()[6]">
+                                        <th>Bottle 90</th>
+                                        <th data-bind="text: numeral(model.dataCostEstimate()[6].costPerBottle()).format('0,0.00')"></th>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c25()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c30()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c35()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c40()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c45()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c50()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c60()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c70()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c80()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c90()).format('0,0.00')"></td>
+                                        <td data-bind="text: numeral(model.dataCostEstimate()[6].c160()).format('0,0.00')"></td>     
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-
-                        <div class="row form-group">
-                            <div class="col-sm-12 ">
-                                19. 
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th width="10%">Cost Estimate</th>
-                                            <th width="15%">Cost per bottle</th>
-                                            <th data-bind="text: cost.c25 + '%'"></th>
-                                            <th data-bind="text: cost.c30 + '%'"></th>
-                                            <th data-bind="text: cost.c35 + '%'"></th>
-                                            <th data-bind="text: cost.c40 + '%'"></th>
-                                            <th data-bind="text: cost.c45 + '%'"></th>
-                                            <th data-bind="text: cost.c50 + '%'"></th>
-                                            <th data-bind="text: cost.c60 + '%'"></th>
-                                            <th data-bind="text: cost.c70 + '%'"></th>
-                                            <th data-bind="text: cost.c80 + '%'"></th>
-                                            <th data-bind="text: cost.c90 + '%'"></th>
-                                            <th data-bind="text: cost.c160 + '%'"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr data-bind="if: model.dataCostEstimate()[0]">
-                                            <th>Bottle 30</th>
-                                            <th data-bind="text: numeral(model.dataCostEstimate()[0].costPerBottle()).format('0,0.00')"></th>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c25()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c30()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c35()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c40()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c45()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c50()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c60()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c70()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c80()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c90()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[0].c160()).format('0,0.00')"></td>    
-                                        </tr>
-                                        <tr data-bind="if: model.dataCostEstimate()[1]">
-                                            <th>Bottle 60</th>
-                                            <th data-bind="text: numeral(model.dataCostEstimate()[1].costPerBottle()).format('0,0.00')"></th>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c25()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c30()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c35()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c40()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c45()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c50()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c60()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c70()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c80()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c90()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[1].c160()).format('0,0.00')"></td>     
-                                        </tr>
-                                        <tr data-bind="if: model.dataCostEstimate()[2]">
-                                            <th>Bottle 90</th>
-                                            <th data-bind="text: numeral(model.dataCostEstimate()[2].costPerBottle()).format('0,0.00')"></th>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c25()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c30()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c35()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c40()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c45()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c50()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c60()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c70()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c80()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c90()).format('0,0.00')"></td>
-                                            <td data-bind="text: numeral(model.dataCostEstimate()[2].c160()).format('0,0.00')"></td>     
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                         </div>
                     </form>
                     <form id="dataprint"  class="d-none">
@@ -805,7 +934,7 @@
                 <div class="modal-body">
                     <div name="frmNumberModal">
                         <div class="row form-group">
-                            <input type="text" data-bind="value: model.numberUsing" class="form-control"  placeholder="Enter number" />
+                            <input type="text" autofocus data-bind="value: model.numberUsing" class="form-control"  placeholder="Enter number" />
                         </div>
                     </div>
                 </div>
@@ -827,7 +956,7 @@
                     <div class="modal-body">
                         <div name="frmStringModal">
                             <div class="row form-group">
-                                <input type="text" data-bind="value: model.stringUsing" class="form-control"  placeholder="Enter string" />
+                                <input type="text" autofocus data-bind="value: model.stringUsing" class="form-control"  placeholder="Enter string" />
                             </div>
                         </div>
                     </div>
@@ -876,13 +1005,21 @@
             sumNum1TypeBottles: ko.observable(0),
             sumNum2TypeBottles: ko.observable(0),
             sumNum3TypeBottles: ko.observable(0),
+            sumNum4TypeBottles: ko.observable(0),
+            sumNum5TypeBottles: ko.observable(0),
+            sumNum6TypeBottles: ko.observable(0),
+            sumNum7TypeBottles: ko.observable(0),
 
             sizeTypeCustomRequest: ko.observable(""),
             sumCost1000: ko.observable(0),
             sumAmountCost: ko.observable(0),
             priceBottle30: ko.observable(0),
+            priceBottle40: ko.observable(0),
+            priceBottle50: ko.observable(0),
             priceBottle60: ko.observable(0),
+            priceBottle70: ko.observable(0),
             priceBottle90: ko.observable(0),
+            priceBottle150: ko.observable(0),
             batchNo: ko.observable(0),
             batchNoBox: ko.observable(0),
         }
@@ -956,6 +1093,18 @@
                 case "typeBottles_num3":
                     self.model.numberUsing(obj.num3());
                     break;
+                case "typeBottles_num4":
+                    self.model.numberUsing(obj.num4());
+                    break;
+                case "typeBottles_num5":
+                    self.model.numberUsing(obj.num5());
+                    break;
+                case "typeBottles_num6":
+                    self.model.numberUsing(obj.num6());
+                    break;
+                case "typeBottles_num7":
+                    self.model.numberUsing(obj.num7());
+                    break;
                 default:
                     $("#modal-number").modal("hide");
                     break;
@@ -990,6 +1139,18 @@
                     break;
                 case "typeBottles_num3":
                     self.posNumber().num3(numeral(self.model.numberUsing())._value);
+                    break;
+                case "typeBottles_num4":
+                    self.posNumber().num4(numeral(self.model.numberUsing())._value);
+                    break;
+                case "typeBottles_num5":
+                    self.posNumber().num5(numeral(self.model.numberUsing())._value);
+                    break;
+                case "typeBottles_num6":
+                    self.posNumber().num6(numeral(self.model.numberUsing())._value);
+                    break;
+                case "typeBottles_num7":
+                    self.posNumber().num7(numeral(self.model.numberUsing())._value);
                     break;
             }
             self.caculationAll();
@@ -1056,7 +1217,7 @@
 
         /* ----------- Event change input number ----------- */
         self.model.numberUsing.subscribe(function (data) {
-            self.model.numberUsing(numeral(data).format("0,0.00"));
+            self.model.numberUsing(numeral(data).format("0,0.000"));
         });
         /* end */
 
@@ -1179,6 +1340,7 @@
             var sum = 0; 
 
             $.each(arr, function( index, value ) {
+                value.num1(Number(self.customRequest.order()) / 1000);
                 var num1 = Number(value.num1());
                 var num2 = Number(value.num2());
                 value.num3(num1 * num2);
@@ -1194,9 +1356,10 @@
             var sum = 0; 
 
             $.each(arr, function( index, value ) {
+                var person = Number(value.person());
                 var hour = Number(value.hour());
                 var cost = Number(value.cost());
-                value.amount(hour * cost);
+                value.amount( hour * cost * person );
                 sum += value.amount();
             });
             self.model.sumAmountLabor(sum);
@@ -1220,17 +1383,80 @@
 
         /* ----------- Caculation table LaborBottles ----------- */
         self.caculationTypeBottles = function() {
+            
+            var name1 = "Bottle 100cc", name2 = "Bottle 150cc", name3 = "Bottle 175cc", name4 = "Bottle 200cc", 
+            name5 = "Bottle 225cc", name6 = "Bottle 300cc", name7 = "Bottle 500cc";
+            var name11 = "CRC Cap", name22 = "Seal", name33 = "Desicant", name44 = "Label";
+            
             var arr = self.model.dataTypeBottles();
-            var sum1 = 0, sum2 = 0, sum3 = 0; 
 
-            $.each(arr, function( index, value ) {
+            if (arr.length == 0) {
+                self.model.dataTypeBottles.push( ko.mapping.fromJS({
+                    name1: name1, num1: "0", 
+                    name2: name2, num2: "0", 
+                    name3: name3, num3: "0", 
+                    name4: name4, num4: "0", 
+                    name5: name5, num5: "0",
+                    name6: name6, num6: "0", 
+                    name7: name7, num7: "0",
+                }));
+                self.model.dataTypeBottles.push( ko.mapping.fromJS({
+                    name1: name11, num1: "0", 
+                    name2: name11, num2: "0", 
+                    name3: name11, num3: "0", 
+                    name4: name11, num4: "0", 
+                    name5: name11, num5: "0",
+                    name6: name11, num6: "0", 
+                    name7: name11, num7: "0",
+                }));
+                self.model.dataTypeBottles.push( ko.mapping.fromJS({
+                    name1: name22, num1: "0", 
+                    name2: name22, num2: "0", 
+                    name3: name22, num3: "0", 
+                    name4: name22, num4: "0", 
+                    name5: name22, num5: "0",
+                    name6: name22, num6: "0", 
+                    name7: name22, num7: "0",
+                }));
+                self.model.dataTypeBottles.push( ko.mapping.fromJS({
+                    name1: name33, num1: "0", 
+                    name2: name33, num2: "0", 
+                    name3: name33, num3: "0", 
+                    name4: name33, num4: "0", 
+                    name5: name33, num5: "0",
+                    name6: name33, num6: "0", 
+                    name7: name33, num7: "0",
+                }));
+                self.model.dataTypeBottles.push( ko.mapping.fromJS({
+                    name1: name44, num1: "0", 
+                    name2: name44, num2: "0", 
+                    name3: name44, num3: "0", 
+                    name4: name44, num4: "0", 
+                    name5: name44, num5: "0",
+                    name6: name44, num6: "0", 
+                    name7: name44, num7: "0",
+                }));
+                //self.model.dataTypeBottles(ko.mapping.fromJS(arr));
+            }
+
+            var sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0, sum5 = 0, sum6 = 0, sum7 = 0; 
+            var array = self.model.dataTypeBottles();
+            $.each(array, function( index, value ) {
                 sum1 += Number(value.num1());
                 sum2 += Number(value.num2());
                 sum3 += Number(value.num3());
+                sum4 += Number(value.num4());
+                sum5 += Number(value.num5());
+                sum6 += Number(value.num6());
+                sum7 += Number(value.num7());
             });
             self.model.sumNum1TypeBottles(sum1);
             self.model.sumNum2TypeBottles(sum2);
             self.model.sumNum3TypeBottles(sum3);
+            self.model.sumNum4TypeBottles(sum4);
+            self.model.sumNum5TypeBottles(sum5);
+            self.model.sumNum6TypeBottles(sum6);
+            self.model.sumNum7TypeBottles(sum7);
         }
         /* end */
 
@@ -1284,6 +1510,12 @@
             var sumNum1TypeBottles = Number(self.model.sumNum1TypeBottles());
             var sumNum2TypeBottles = Number(self.model.sumNum2TypeBottles());
             var sumNum3TypeBottles = Number(self.model.sumNum3TypeBottles());
+            var sumNum4TypeBottles = Number(self.model.sumNum4TypeBottles());
+            var sumNum5TypeBottles = Number(self.model.sumNum5TypeBottles());
+            var sumNum6TypeBottles = Number(self.model.sumNum6TypeBottles());
+            var sumNum7TypeBottles = Number(self.model.sumNum7TypeBottles());
+
+
             var sumAmountCost = Number(self.model.sumAmountCost());
             var order = Number(self.customRequest.order());
 
@@ -1293,18 +1525,42 @@
             var num02 = sumAmountCost + num01;
 
             var price1 = sumNum2TypeBottles;
-            var qty1 = order / 60;
+            var qty1 = order / 40;
             var num11 = price1 * qty1;
             var num12 = sumAmountCost + num11;
 
             var price2 = sumNum3TypeBottles;
-            var qty2 = order / 90;
+            var qty2 = order / 50;
             var num21 = price2 * qty2;
             var num22 = sumAmountCost + num21;
 
+            var price3 = sumNum4TypeBottles;
+            var qty3 = order / 60;
+            var num31 = price3 * qty3;
+            var num32 = sumAmountCost + num31;
+
+            var price4 = sumNum5TypeBottles;
+            var qty4 = order / 70;
+            var num41 = price4 * qty4;
+            var num42 = sumAmountCost + num41;
+
+            var price5 = sumNum6TypeBottles;
+            var qty5 = order / 90;
+            var num51 = price5 * qty5;
+            var num52 = sumAmountCost + num51;
+
+            var price6 = sumNum7TypeBottles;
+            var qty6 = order / 150;
+            var num61 = price6 * qty6;
+            var num62 = sumAmountCost + num61;
+
             self.model.priceBottle30(num02);
-            self.model.priceBottle60(num12);
-            self.model.priceBottle90(num22);
+            self.model.priceBottle40(num12);
+            self.model.priceBottle50(num22);
+            self.model.priceBottle60(num32);
+            self.model.priceBottle70(num42);
+            self.model.priceBottle90(num52);
+            self.model.priceBottle150(num62);
 
             var arr = [
                 {
@@ -1324,6 +1580,30 @@
                     qty: ko.observable(qty2),
                     num1: ko.observable(num21),
                     num2: ko.observable(num22),
+                },
+                {
+                    price: ko.observable(price3),
+                    qty: ko.observable(qty3),
+                    num1: ko.observable(num31),
+                    num2: ko.observable(num32),
+                },
+                {
+                    price: ko.observable(price4),
+                    qty: ko.observable(qty4),
+                    num1: ko.observable(num41),
+                    num2: ko.observable(num42),
+                },
+                {
+                    price: ko.observable(price5),
+                    qty: ko.observable(qty5),
+                    num1: ko.observable(num51),
+                    num2: ko.observable(num52),
+                },
+                {
+                    price: ko.observable(price6),
+                    qty: ko.observable(qty6),
+                    num1: ko.observable(num61),
+                    num2: ko.observable(num62),
                 }
             ];
             self.model.dataPriceTypeBottles(arr);
@@ -1333,13 +1613,21 @@
         /* ----------- Caculation table Cost Estimate  -----------*/
         self.caculationCostEstimate = function() {
             var priceBottle30 = Number(self.model.priceBottle30());
+            var priceBottle40 = Number(self.model.priceBottle40());
+            var priceBottle50 = Number(self.model.priceBottle50());
             var priceBottle60 = Number(self.model.priceBottle60());
+            var priceBottle70 = Number(self.model.priceBottle70());
             var priceBottle90 = Number(self.model.priceBottle90());
+            var priceBottle150 = Number(self.model.priceBottle150());
             var order = Number(self.customRequest.order());
 
             var costPerBottle0 = (priceBottle30 / order) * 30;
-            var costPerBottle1 = (priceBottle60 / order) * 60;
-            var costPerBottle2 = (priceBottle90 / order) * 90;
+            var costPerBottle1 = (priceBottle40 / order) * 40;
+            var costPerBottle2 = (priceBottle50 / order) * 50;
+            var costPerBottle3 = (priceBottle60 / order) * 60;
+            var costPerBottle4 = (priceBottle70 / order) * 70;
+            var costPerBottle5 = (priceBottle90 / order) * 90;
+            var costPerBottle6 = (priceBottle150 / order) * 150;
            
             var arr = [
                 {
@@ -1383,6 +1671,62 @@
                     c80: ko.observable((costPerBottle2 * self.cost.c80 / 100) + costPerBottle2),
                     c90: ko.observable((costPerBottle2 * self.cost.c90 / 100) + costPerBottle2),
                     c160: ko.observable((costPerBottle2 * self.cost.c160 / 100) + costPerBottle2),
+                },
+                {
+                    costPerBottle: ko.observable(costPerBottle3),
+                    c25: ko.observable((costPerBottle3 * self.cost.c25 / 100) + costPerBottle3),
+                    c30: ko.observable((costPerBottle3 * self.cost.c30 / 100) + costPerBottle3),
+                    c35: ko.observable((costPerBottle3 * self.cost.c35 / 100) + costPerBottle3),
+                    c40: ko.observable((costPerBottle3 * self.cost.c40 / 100) + costPerBottle3),
+                    c45: ko.observable((costPerBottle3 * self.cost.c45 / 100) + costPerBottle3),
+                    c50: ko.observable((costPerBottle3 * self.cost.c50 / 100) + costPerBottle3),
+                    c60: ko.observable((costPerBottle3 * self.cost.c60 / 100) + costPerBottle3),
+                    c70: ko.observable((costPerBottle3 * self.cost.c70 / 100) + costPerBottle3),
+                    c80: ko.observable((costPerBottle3 * self.cost.c80 / 100) + costPerBottle3),
+                    c90: ko.observable((costPerBottle3 * self.cost.c90 / 100) + costPerBottle3),
+                    c160: ko.observable((costPerBottle3 * self.cost.c160 / 100) + costPerBottle3),
+                },
+                {
+                    costPerBottle: ko.observable(costPerBottle4),
+                    c25: ko.observable((costPerBottle4 * self.cost.c25 / 100) + costPerBottle4),
+                    c30: ko.observable((costPerBottle4 * self.cost.c30 / 100) + costPerBottle4),
+                    c35: ko.observable((costPerBottle4 * self.cost.c35 / 100) + costPerBottle4),
+                    c40: ko.observable((costPerBottle4 * self.cost.c40 / 100) + costPerBottle4),
+                    c45: ko.observable((costPerBottle4 * self.cost.c45 / 100) + costPerBottle4),
+                    c50: ko.observable((costPerBottle4 * self.cost.c50 / 100 ) + costPerBottle4),
+                    c60: ko.observable((costPerBottle4 * self.cost.c60 / 100) + costPerBottle4),
+                    c70: ko.observable((costPerBottle4 * self.cost.c70 / 100) + costPerBottle4),
+                    c80: ko.observable((costPerBottle4 * self.cost.c80 / 100) + costPerBottle4),
+                    c90: ko.observable((costPerBottle4 * self.cost.c90 / 100) + costPerBottle4),
+                    c160: ko.observable((costPerBottle4 * self.cost.c160 / 100) + costPerBottle4),
+                },
+                {
+                    costPerBottle: ko.observable(costPerBottle5),
+                    c25: ko.observable((costPerBottle5 * self.cost.c25 / 100) + costPerBottle5),
+                    c30: ko.observable((costPerBottle5 * self.cost.c30 / 100) + costPerBottle5),
+                    c35: ko.observable((costPerBottle5 * self.cost.c35 / 100) + costPerBottle5),
+                    c40: ko.observable((costPerBottle5 * self.cost.c40 / 100) + costPerBottle5),
+                    c45: ko.observable((costPerBottle5 * self.cost.c45 / 100) + costPerBottle5),
+                    c50: ko.observable((costPerBottle5 * self.cost.c50 / 100) + costPerBottle5),
+                    c60: ko.observable((costPerBottle5 * self.cost.c60 / 100) + costPerBottle5),
+                    c70: ko.observable((costPerBottle5 * self.cost.c70 / 100) + costPerBottle5),
+                    c80: ko.observable((costPerBottle5 * self.cost.c80 / 100) + costPerBottle5),
+                    c90: ko.observable((costPerBottle5 * self.cost.c90 / 100) + costPerBottle5),
+                    c160: ko.observable((costPerBottle5 * self.cost.c160 / 100) + costPerBottle5),
+                },
+                {
+                    costPerBottle: ko.observable(costPerBottle6),
+                    c25: ko.observable((costPerBottle6 * self.cost.c25 / 100) + costPerBottle6),
+                    c30: ko.observable((costPerBottle6 * self.cost.c30 / 100) + costPerBottle6),
+                    c35: ko.observable((costPerBottle6 * self.cost.c35 / 100) + costPerBottle6),
+                    c40: ko.observable((costPerBottle6 * self.cost.c40 / 100) + costPerBottle6),
+                    c45: ko.observable((costPerBottle6 * self.cost.c45 / 100) + costPerBottle6),
+                    c50: ko.observable((costPerBottle6 * self.cost.c50 / 100) + costPerBottle6),
+                    c60: ko.observable((costPerBottle6 * self.cost.c60 / 100) + costPerBottle6),
+                    c70: ko.observable((costPerBottle6 * self.cost.c70 / 100) + costPerBottle6),
+                    c80: ko.observable((costPerBottle6 * self.cost.c80 / 100) + costPerBottle6),
+                    c90: ko.observable((costPerBottle6 * self.cost.c90 / 100) + costPerBottle6),
+                    c160: ko.observable((costPerBottle6 * self.cost.c160 / 100) + costPerBottle6),
                 }
             ];
             self.model.dataCostEstimate(arr);
@@ -1627,9 +1971,17 @@
                                 name1: value.name1,
                                 name2: value.name2,
                                 name3: value.name3,
+                                name4: value.name4,
+                                name5: value.name5,
+                                name6: value.name6,
+                                name7: value.name7,
                                 num1: value.num1,
                                 num2: value.num2,
                                 num3: value.num3,
+                                num4: value.num4,
+                                num5: value.num5,
+                                num6: value.num6,
+                                num7: value.num7,
                             };
                             self.model.dataTypeBottles.push(ko.mapping.fromJS(obj));
                         });
