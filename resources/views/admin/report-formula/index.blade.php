@@ -188,6 +188,7 @@
                                             <td data-bind="text: per_tab() ? numeral(per_tab()).format('0,0.00') : 0"></td>
                                             <td data-bind="text: per_batch() ? numeral(per_batch()).format('0,0.0000') : 0 "></td>
                                             <td data-bind="text: tab100() ? numeral(tab100()).format('0,0.00') : 0"></td>
+                                            
                                             <td class='text-center'> 
                                                 <a href='javascript:;' data-bind="click: $root.removeColor" title='Delete Item'>
                                                     <i class='fa fa-lg fa-trash' aria-hidden='true'></i>
@@ -566,7 +567,7 @@
             var servingSize = self.model.servingSize() ? self.model.servingSize() : 0;
             var batchSize = self.model.batchSize() ? self.model.batchSize() : 0;
             var fillWt = 0,  sumPerBatch = 0,  sumTab= 0;
-            var fillWtInActive = self.model.fillWtInActive() ? self.model.fillWtInActive() : 0;
+           // var fillWtInActive = self.model.fillWtInActive() ? self.model.fillWtInActive() : 0;
 
             /* Change Active */
             var fillWtInActive = self.model.fillWtInActive() ? self.model.fillWtInActive() : 0;
@@ -775,6 +776,8 @@
         });
         var showDataCustomRequest = function(data) {
 
+            console.log(data);
+
             if (!data) return false;
             
             formDataView.removeClass("d-none");
@@ -783,69 +786,169 @@
             self.arraySalesOrderIngredientsColor([]);
             self.arraySalesOrderIngredientsShell([]);
 
-            if (data.customRequest) {
-                var customRequest = data.customRequest;
-                self.model.batchSize(customRequest.order);
-                formDataView.find(".product-name").html(customRequest.product);
-                formDataView.find(".customer-full-name").html(customRequest.customer);
-                formDataView.find(".formula-number").html(customRequest.formula_number);
-                formDataView.find(".revision").html(customRequest.revision);
-                formDataView.find(".show-date").html(moment(customRequest.date).format('MM/DD/YYYY'));
-                formDataView.find(".size-type").html(customRequest.size_type);
-                formDataView.find(".color-logo").html(customRequest.color_logo);
+            if (data.reportFormula == null) {
+                // Chưa có dữ liệu
+                if (data.customRequest) {
+                    var customRequest = data.customRequest;
+                    self.model.batchSize(customRequest.order);
+                    formDataView.find(".product-name").html(customRequest.product);
+                    formDataView.find(".customer-full-name").html(customRequest.customer);
+                    formDataView.find(".formula-number").html(customRequest.formula_number);
+                    formDataView.find(".revision").html(customRequest.revision);
+                    formDataView.find(".show-date").html(moment(customRequest.date).format('MM/DD/YYYY'));
+                    formDataView.find(".size-type").html(customRequest.size_type);
+                    formDataView.find(".color-logo").html(customRequest.color_logo);
 
-                formDataPrint.find(".product-name").html(customRequest.product);
-                formDataPrint.find(".customer-full-name").html(customRequest.customer);
-                formDataPrint.find(".formula-number").html(customRequest.formula_number);
-                formDataPrint.find(".revision").html(customRequest.revision);
-                formDataPrint.find(".show-date").html(moment(customRequest.date).format('MM/DD/YYYY'));
-                formDataPrint.find(".size-type").html(customRequest.size_type);
-                formDataPrint.find(".color-logo").html(customRequest.color_logo);
-                formDataPrint.find(".batch_size").html(customRequest.order);
-            }
-            if (data.manufature) {
-                var manufature = data.manufature;
-                formDataView.find(".manufature-name").html(manufature.name);
-                formDataView.find(".manufature-address").html(manufature.address);
-                formDataView.find(".manufature-phone").html(manufature.phone);
+                    formDataPrint.find(".product-name").html(customRequest.product);
+                    formDataPrint.find(".customer-full-name").html(customRequest.customer);
+                    formDataPrint.find(".formula-number").html(customRequest.formula_number);
+                    formDataPrint.find(".revision").html(customRequest.revision);
+                    formDataPrint.find(".show-date").html(moment(customRequest.date).format('MM/DD/YYYY'));
+                    formDataPrint.find(".size-type").html(customRequest.size_type);
+                    formDataPrint.find(".color-logo").html(customRequest.color_logo);
+                    formDataPrint.find(".batch_size").html(customRequest.order);
+                }
+                if (data.manufature) {
+                    var manufature = data.manufature;
+                    formDataView.find(".manufature-name").html(manufature.name);
+                    formDataView.find(".manufature-address").html(manufature.address);
+                    formDataView.find(".manufature-phone").html(manufature.phone);
 
-                formDataPrint.find(".manufature-name").html(manufature.name);
-                formDataPrint.find(".manufature-address").html(manufature.address);
-                formDataPrint.find(".manufature-phone").html(manufature.phone);
-            }
-            
-        
-            if (data.salesOrderIngredients) {
-                var dataSalesOrderIngredients = data.salesOrderIngredients;
+                    formDataPrint.find(".manufature-name").html(manufature.name);
+                    formDataPrint.find(".manufature-address").html(manufature.address);
+                    formDataPrint.find(".manufature-phone").html(manufature.phone);
+                }
+                if (data.salesOrderIngredients) {
+                    var dataSalesOrderIngredients = data.salesOrderIngredients;
 
-                for (var i = 0; i < dataSalesOrderIngredients.length; i++) {
-                    var item = dataSalesOrderIngredients[i];
-                    item.per_serving = ko.observable(item.per_serving);
-                    item.per_unit = ko.observable(0);
-                    item.purity = ko.observable(0);
-                    item.overage = ko.observable(0);
-                    item.per_tab = ko.observable(0);
-                    item.per_batch = ko.observable(0);
-                    item.tab100 = ko.observable(0);
+                    for (var i = 0; i < dataSalesOrderIngredients.length; i++) {
+                        var item = dataSalesOrderIngredients[i];
+                        item.per_serving = ko.observable(item.per_serving);
+                        item.per_unit = ko.observable(0);
+                        item.purity = ko.observable(0);
+                        item.overage = ko.observable(0);
+                        item.per_tab = ko.observable(0);
+                        item.per_batch = ko.observable(0);
+                        item.tab100 = ko.observable(0);
 
-                    switch(Number(item.ingredient.inactive)) {
-                        case 0:
-                            self.arraySalesOrderIngredientsActive.push(item);
-                            break;
-                        case 1:
-                            self.arraySalesOrderIngredientsInActive.push(item);
-                            break;
-                        case 2:
-                            item.per_serving = ko.observable(0);
-                            self.arraySalesOrderIngredientsColor.push(item);
-                            break;
-                        case 3: 
-                            item.per_serving = ko.observable(0);
-                            self.arraySalesOrderIngredientsShell.push(item);
-                            break;
+                        switch(Number(item.ingredient.inactive)) {
+                            case 0:
+                                self.arraySalesOrderIngredientsActive.push(item);
+                                break;
+                            case 1:
+                                self.arraySalesOrderIngredientsInActive.push(item);
+                                break;
+                            case 2:
+                                item.per_serving = ko.observable(0);
+                                self.arraySalesOrderIngredientsColor.push(item);
+                                break;
+                            case 3: 
+                                item.per_serving = ko.observable(0);
+                                self.arraySalesOrderIngredientsShell.push(item);
+                                break;
+                        }
                     }
                 }
+            } else {
+                // Đã có dữ liệu
+                if (data.customRequest) {
+                    var customRequest = data.customRequest;
+                    self.model.batchSize(customRequest.order);
+                    formDataView.find(".product-name").html(customRequest.product);
+                    formDataView.find(".customer-full-name").html(customRequest.customer);
+                    formDataView.find(".formula-number").html(customRequest.formula_number);
+                    formDataView.find(".revision").html(customRequest.revision);
+                    formDataView.find(".show-date").html(moment(customRequest.date).format('MM/DD/YYYY'));
+                    formDataView.find(".size-type").html(customRequest.size_type);
+                    formDataView.find(".color-logo").html(customRequest.color_logo);
+
+                    formDataPrint.find(".product-name").html(customRequest.product);
+                    formDataPrint.find(".customer-full-name").html(customRequest.customer);
+                    formDataPrint.find(".formula-number").html(customRequest.formula_number);
+                    formDataPrint.find(".revision").html(customRequest.revision);
+                    formDataPrint.find(".show-date").html(moment(customRequest.date).format('MM/DD/YYYY'));
+                    formDataPrint.find(".size-type").html(customRequest.size_type);
+                    formDataPrint.find(".color-logo").html(customRequest.color_logo);
+                    formDataPrint.find(".batch_size").html(customRequest.order);
+                }
+                if (data.manufature) {
+                    var manufature = data.manufature;
+                    formDataView.find(".manufature-name").html(manufature.name);
+                    formDataView.find(".manufature-address").html(manufature.address);
+                    formDataView.find(".manufature-phone").html(manufature.phone);
+
+                    formDataPrint.find(".manufature-name").html(manufature.name);
+                    formDataPrint.find(".manufature-address").html(manufature.address);
+                    formDataPrint.find(".manufature-phone").html(manufature.phone);
+                }
+                if (data.reportFormula) {
+                    var reportFormula = data.reportFormula;
+                    self.model.fillWtInActive(reportFormula.filling_wt);
+                    self.model.servingSize(reportFormula.serving_size);
+                    formDataView.find("input[name=po]").val(reportFormula.po);
+                    formDataView.find("input[name=gelatin_batch]").val(reportFormula.gelatin_batch);
+
+                    formDataPrint.find(".po").html(reportFormula.po);
+                    formDataPrint.find(".gelatin_batch").html(reportFormula.gelatin_batch);
+                }
+                if (data.formulaIngredients) {
+                    var dataSalesOrderIngredients = data.formulaIngredients;
+                    var fillWtInActive = 0,  sumPerBatch = 0,  sumTab= 0, 
+                    fillWtColor = 0, sumPerBatchColor = 0,  sumTabColor= 0, 
+                    fillWtShell = 0, sumPerBatchShell = 0,  sumTabShell = 0 ;
+
+                    for (var i = 0; i < dataSalesOrderIngredients.length; i++) {
+                        var item = dataSalesOrderIngredients[i];
+
+                        item.per_serving = ko.observable(Number(item.per_serving));
+                        item.per_unit = ko.observable(Number(item.per_unit));
+                        item.purity = ko.observable(Number(item.purity));
+                        item.overage = ko.observable(Number(item.overage));
+                        item.per_tab = ko.observable(Number(item.per_tab));
+                        item.per_batch = ko.observable(Number(item.per_batch));
+                        
+                        item.tab100 = ko.observable(Number(item.tab100));
+
+                        switch(Number(item.inactive)) {
+                            case 0: // Active
+                                self.arraySalesOrderIngredientsActive.push(item);
+                                sumPerBatch += item.per_batch();
+                                sumTab += item.tab100();
+                                break;
+                            case 1: // InActive
+                                self.arraySalesOrderIngredientsInActive.push(item);
+                                sumPerBatch += item.per_batch();
+                                sumTab += item.tab100();
+                                break;
+                            case 2: // Color
+                                self.arraySalesOrderIngredientsColor.push(item);
+                                fillWtColor += item.per_tab();
+                                sumPerBatchColor += item.per_batch();
+                                sumTabColor += item.tab100();
+                                break;
+                            case 3: // Shell
+                                self.arraySalesOrderIngredientsShell.push(item);
+                                fillWtShell += item.per_tab();
+                                sumPerBatchShell += item.per_batch();
+                                sumTabShell += item.tab100();
+                                break;
+                        }
+                    }
+                    // Active and InActive
+                    self.model.sumPerBatchInActive(sumPerBatch);
+                    self.model.sumTabInActive(sumTab);
+                    // Color
+                    self.model.fillWtColor(fillWtColor);
+                    self.model.sumPerBatch(sumPerBatchColor);
+                    self.model.sumTab(sumTabColor);
+                    // Shell
+                    self.model.fillWtShell(fillWtShell);
+                    self.model.sumPerBatchShell(sumPerBatchShell);
+                    self.model.sumTabShell(sumTabShell);
+                }
+                //self.eventChange();
             }
+           
         }
         var checkItemExistArrayIngredients = function(array, id) {
             var res = false;

@@ -123,18 +123,24 @@ class ReportFormulaController
             }
             $customRequest = CustomRequest::where('id', $id)->first();
             $salesOrderIngredients = SalesOrderIngredients::where('customrequest_id', $id)->get();
+            $reportFormula = ReportFormula::where('customrequest_id', $id)->first();
+            $formulaIngredients = $reportFormula != null ? FormulaIngredients::where('reportformula_id', $reportFormula['id'])->get() : null;
 
             foreach ($salesOrderIngredients as $value) {
                 $value['name_ingredient'] = $value->ingredient->name;
                 $value['code'] = $value->ingredient->code;
                 $value['inactive'] = $value->ingredient->inactive;
             }
+            
             $result = [
                 'customRequest' => $customRequest,
                 'manufature' => $customRequest->manufature,
                 'customer' => $customRequest->customer,
                 'product' => $customRequest->product,
                 'salesOrderIngredients' => $salesOrderIngredients,
+
+                'reportFormula' => $reportFormula,
+                'formulaIngredients' => $formulaIngredients
             ]; 
 
             return response()->json($result);
